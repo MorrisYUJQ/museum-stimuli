@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>实验阅读材料（DFT-GEN 改写）</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --accent:#2563eb;
+      --border:#e5e7eb;
+      --hl: rgba(250, 204, 21, .35);
+      --hl-border: rgba(250, 204, 21, .60);
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible','Lexend','Noto Sans SC','Source Han Sans SC','Microsoft YaHei UI','Microsoft YaHei','PingFang SC',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+    .hero{background:linear-gradient(135deg, rgba(37,99,235,.06), rgba(255,255,255,.0));border:1px solid var(--border);border-radius:16px;padding:18px 18px 12px}
+    .hero h1{font-size:22px;margin:0 0 8px}
+    .hero .sub{color:var(--muted);font-size:14px;line-height:1.5}
+    .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.22);color:var(--text);padding:8px 10px;border-radius:10px;font-size:13px}
+    .btn.secondary{background:transparent;border:1px solid var(--border);color:var(--muted)}
+    .toc{margin:18px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr;gap:10px}
+    .toc li{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px}
+    .toc .name{font-weight:650}
+    .toc .meta{color:var(--muted);font-size:13px;margin-top:6px}
+    section.item{margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+    .item h2{font-size:18px;margin:0 0 8px}
+    .item .meta{color:var(--muted);font-size:13px;margin:0 0 10px;display:flex;gap:10px;flex-wrap:wrap}
+    .hint{color:var(--muted);font-size:13px;margin:0 0 12px;line-height:1.6}
+    mark.hl{background:var(--hl);border:1px solid var(--hl-border);padding:0 3px;border-radius:6px;color:var(--text)}
+
+    /* Flash card */
+    .slide-container{border:1px solid var(--border);border-radius:16px;background:rgba(37,99,235,.03);padding:14px}
+    .slide{display:none}
+    .slide.active{display:block}
+    .slide-text{font-size:22px;line-height:2.05;letter-spacing:.2px;max-width:44rem}
+    .controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+    .btn-nav{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.22);color:var(--text);padding:8px 12px;border-radius:12px;font-size:14px;cursor:pointer}
+    .btn-nav:disabled{opacity:.35;cursor:not-allowed}
+    .page-indicator{color:var(--muted);font-size:13px}
+
+    /* Full view: split lines */
+    .full-toggle{margin-top:12px}
+    .full-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 10px;border-radius:12px;font-size:13px;cursor:pointer}
+    .full-content{display:none;margin-top:10px}
+    .full-lines{display:flex;flex-direction:column;gap:10px}
+    .full-line{margin:0;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:rgba(37,99,235,.03);max-width:44rem;font-size:20px;line-height:2.0}
+
+    .divider{height:1px;background:var(--border);margin:14px 0}
+    .foot{color:var(--muted);font-size:12px;margin-top:16px}
+    .top{position:fixed;right:16px;bottom:16px}
+    </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero" id="top">
+      <h1>实验阅读材料（DFT-GEN 改写）</h1>
+      <div class="sub">请阅读目录中的 5 条介绍，并在问卷中回答对应信息理解题。</div>
+      <div class="toolbar">
+        <a class="btn" id="backLink" href="#">返回问卷</a>
+        <a class="btn secondary" href="#top">回到目录</a>
+      </div>
+      <ul class="toc">
+        <li>
+              <div class="name"><a href="#s1-洮河石雕兰亭集会图砚">洮河石雕兰亭集会图砚</a></div>
+              <div class="meta">类别：文房用品 · 编号：S1</div>
+            </li><li>
+              <div class="name"><a href="#s2-秦石鼓">秦石鼓</a></div>
+              <div class="meta">类别：铭刻 · 编号：S2</div>
+            </li><li>
+              <div class="name"><a href="#s3-白玻璃单耳桃式杯">白玻璃单耳桃式杯</a></div>
+              <div class="meta">类别：玻璃器 · 编号：S3</div>
+            </li><li>
+              <div class="name"><a href="#s4-木筒望远镜">木筒望远镜</a></div>
+              <div class="meta">类别：钟表仪器 · 编号：S4</div>
+            </li><li>
+              <div class="name"><a href="#s5-小风扇">小风扇</a></div>
+              <div class="meta">类别：外国文物 · 编号：S5</div>
+            </li>
+      </ul>
+      <div class="foot">提示：本页为 DFT-GEN 条件阅读材料。默认 Focus Mode（翻页），可切换全文版（分行）。</div>
+    </div>
+    <section class="item" id="s1-洮河石雕兰亭集会图砚">
+              <h2>洮河石雕兰亭集会图砚</h2>
+              <div class="meta">
+                <span>类别：文房用品</span>
+                <span>编号：S1</span>
+                <span><a href="https://www.dpm.org.cn/collection/studie/233225.html" target="_blank" rel="noopener">来源链接</a></span>
+              </div>
+              <div class="divider"></div>
+              <div class="hint">默认显示 Focus Mode（可翻页的 flash card）。你也可以点击“查看全文版（分行）”。关键术语已高光。</div>
+              <div class="slide-container" id="card-1">
+                <div class="slides"></div>
+                <div class="controls">
+                  <button class="btn-nav btn-prev" onclick="prevSlide(1)">←</button>
+                  <span class="page-indicator">1 / 1</span>
+                  <button class="btn-nav btn-next" onclick="nextSlide(1)">→</button>
+                </div>
+                <div class="full-toggle">
+                  <button class="full-btn" onclick="toggleFull(1)">查看全文版（分行）</button>
+                  <div id="full-1" class="full-content"></div>
+                </div>
+              </div>
+            </section><section class="item" id="s2-秦石鼓">
+              <h2>秦石鼓</h2>
+              <div class="meta">
+                <span>类别：铭刻</span>
+                <span>编号：S2</span>
+                <span><a href="https://www.dpm.org.cn/collection/impres/234438.html" target="_blank" rel="noopener">来源链接</a></span>
+              </div>
+              <div class="divider"></div>
+              <div class="hint">默认显示 Focus Mode（可翻页的 flash card）。你也可以点击“查看全文版（分行）”。关键术语已高光。</div>
+              <div class="slide-container" id="card-2">
+                <div class="slides"></div>
+                <div class="controls">
+                  <button class="btn-nav btn-prev" onclick="prevSlide(2)">←</button>
+                  <span class="page-indicator">1 / 1</span>
+                  <button class="btn-nav btn-next" onclick="nextSlide(2)">→</button>
+                </div>
+                <div class="full-toggle">
+                  <button class="full-btn" onclick="toggleFull(2)">查看全文版（分行）</button>
+                  <div id="full-2" class="full-content"></div>
+                </div>
+              </div>
+            </section><section class="item" id="s3-白玻璃单耳桃式杯">
+              <h2>白玻璃单耳桃式杯</h2>
+              <div class="meta">
+                <span>类别：玻璃器</span>
+                <span>编号：S3</span>
+                <span><a href="https://www.dpm.org.cn/collection/glass/229873.html" target="_blank" rel="noopener">来源链接</a></span>
+              </div>
+              <div class="divider"></div>
+              <div class="hint">默认显示 Focus Mode（可翻页的 flash card）。你也可以点击“查看全文版（分行）”。关键术语已高光。</div>
+              <div class="slide-container" id="card-3">
+                <div class="slides"></div>
+                <div class="controls">
+                  <button class="btn-nav btn-prev" onclick="prevSlide(3)">←</button>
+                  <span class="page-indicator">1 / 1</span>
+                  <button class="btn-nav btn-next" onclick="nextSlide(3)">→</button>
+                </div>
+                <div class="full-toggle">
+                  <button class="full-btn" onclick="toggleFull(3)">查看全文版（分行）</button>
+                  <div id="full-3" class="full-content"></div>
+                </div>
+              </div>
+            </section><section class="item" id="s4-木筒望远镜">
+              <h2>木筒望远镜</h2>
+              <div class="meta">
+                <span>类别：钟表仪器</span>
+                <span>编号：S4</span>
+                <span><a href="https://www.dpm.org.cn/collection/clock/259986.html" target="_blank" rel="noopener">来源链接</a></span>
+              </div>
+              <div class="divider"></div>
+              <div class="hint">默认显示 Focus Mode（可翻页的 flash card）。你也可以点击“查看全文版（分行）”。关键术语已高光。</div>
+              <div class="slide-container" id="card-4">
+                <div class="slides"></div>
+                <div class="controls">
+                  <button class="btn-nav btn-prev" onclick="prevSlide(4)">←</button>
+                  <span class="page-indicator">1 / 1</span>
+                  <button class="btn-nav btn-next" onclick="nextSlide(4)">→</button>
+                </div>
+                <div class="full-toggle">
+                  <button class="full-btn" onclick="toggleFull(4)">查看全文版（分行）</button>
+                  <div id="full-4" class="full-content"></div>
+                </div>
+              </div>
+            </section><section class="item" id="s5-小风扇">
+              <h2>小风扇</h2>
+              <div class="meta">
+                <span>类别：外国文物</span>
+                <span>编号：S5</span>
+                <span><a href="https://www.dpm.org.cn/collection/foreign/232146.html" target="_blank" rel="noopener">来源链接</a></span>
+              </div>
+              <div class="divider"></div>
+              <div class="hint">默认显示 Focus Mode（可翻页的 flash card）。你也可以点击“查看全文版（分行）”。关键术语已高光。</div>
+              <div class="slide-container" id="card-5">
+                <div class="slides"></div>
+                <div class="controls">
+                  <button class="btn-nav btn-prev" onclick="prevSlide(5)">←</button>
+                  <span class="page-indicator">1 / 1</span>
+                  <button class="btn-nav btn-next" onclick="nextSlide(5)">→</button>
+                </div>
+                <div class="full-toggle">
+                  <button class="full-btn" onclick="toggleFull(5)">查看全文版（分行）</button>
+                  <div id="full-5" class="full-content"></div>
+                </div>
+              </div>
+            </section>
+  </div>
+  <a class="btn top" href="#top">回到目录</a>
+  <script>
+    const slideData = {"1": ["洮河石雕兰亭集会图砚，宋，长22.4厘米，", "宽13.5厘米，厚6.8厘米。", "这是一方长方形的砚台，", "其砚面与四个侧面均以浅浮雕技法雕刻了《兰亭修褉图》。", "这幅图描绘了东晋永和九年（公元353年），", "以王羲之为首，包括谢安等人在内的名士，", "于会稽山阴的兰亭举行“修褉”雅集时的场景。", "王羲之的著名法帖《兰亭序》描述的便是这次盛会。", "砚面的主体内容为兰亭图，图中楼台亭阁错落，", "远处山峦叠嶂，并有祥云环绕其间，", "整体宛如仙境。", "作者以曲水为墨池，其形如河渠半绕，", "池上设镂空树干、楼栏与小桥，池畔亦以桥相连，", "构思巧妙，布置得体。", "这是一方古代的砚。", "它的四面侧壁上，都刻有同一幅图画。", "这幅画名为修褉环景图，", "描绘了古人在水边聚会的场景。", "在其中一面侧壁上，\n还刻有“逋道人”这个名字", "，\n并盖有一方“元□”的印章。", "这可能是作者或收藏者的标记。", "这幅画作描绘了林间溪畔的景致，", "共有四十余位人物置身其中。", "画面中，有人于溪畔坐而论道，有人于林间烹茶，", "亦有人独自赏画沉思。", "此外，可见人物在溪流中捕鱼，于树下凝神读书，", "或在空地上练习拳法。", "整体场景洋溢着浓厚的生活气息，人物各具情态，", "共同构成了一幅生动和谐的人文画卷。", "这幅画名为《浴鹅图》，", "描绘了六只白鹅嬉戏的场景。", "有的在水中游动，有的在岸边休憩，", "还有的在树下纳凉。", "它们姿态各异：有的低头觅食，有的则昂首向天，", "仿佛正在高声鸣叫。", "砚背的覆手部分向内凹陷，呈平缓的斜坡状。", "这是一方宋代流传下来的砚台。", "它的石质极为细腻，表面覆有温厚的包浆，", "整体呈现淡雅的豆绿色。", "明末时由吴拭珍藏。", "洮河石砚，又称洮砚或洮石砚，", "是中国的四大名砚之一。", "它历史悠久，早在唐宋时期就已驰名海内外，", "至今已有一千三百多年。", "作为文房珍品，其石质细腻，利于发墨，", "是书写与创作的重要工具。", "洮河石砚的原料为洮河石，", "这是一种属于水成岩（亦称辉绿岩）的石材。", "其名称源于产地——甘肃省甘南藏族自治州卓尼县洮砚乡", "，位于洮河河畔，石材因此得名。", "以此石制成的砚台，即为著名的洮河石砚。", "此地原名古洮州，因此这件器物便以此地命名。", "洮河砚石料多含天然纹理，石色以绿色为基调，", "并有墨绿、碧绿、辉绿、翠绿、淡绿、", "灰绿等多种变体。", "因其色泽丰富，常易与松花江石或绿端石相混淆。", "唐代书法家柳公权在《论砚》中品评名砚，", "认为青州砚当居首位，绛州砚次之。", "后来，人们的喜好发生转变，开始推崇端砚、", "歙砚以及临洮砚。", "文中提到的临洮，", "其产地大致相当于今天的甘肃卓尼一带。", "这是目前发现最早的文字记载，", "一位古代文人对洮砚作出了评价。", "这一看法得以留存至今。", "这份评价极为珍贵，", "它让我们得以知晓\n古人对洮砚的珍视程度。", "由此可见，当时洮砚已与端砚、歙砚齐名，", "同被视为砚中珍品。", "洮砚自宋代开始盛行，被作为地方贡品进献朝廷，", "逐渐取代了当时已停采的红丝石砚，", "并跻身“四大名砚”之列。", "宋代鉴赏家赵希鹄在《洞天清禄集•古砚辨》中记载", "，除端砚、歙砚之外，以洮河绿石最为北方所重。", "其石色绿如蓝，质润如玉，", "发墨之佳不逊于端溪下岩所产。", "然此石取自大河深水之底，非人力易得，", "故获之者视若无价之宝。", "事实上，洮河砚的出身并不高贵，", "最初只是用作砺石的一种石材。", "古人常用其质地坚硬的特点来打磨刀具。", "后来，因其石质细腻、色泽雅润，逐渐被匠人发掘", "，经雕琢后成为砚台，最终进入文人雅士的文房，", "成为备受珍视的器物。", "洮河流域在宋代是西夏政权的领地。", "西夏人经常开采当地的一种石头，用来磨砺战刀，", "作为重要的军用物资。", "对于宋朝文人而言，洮河砚的石材极为难得。", "它产自边疆乃至域外，", "在当时犹如珍贵的“外国进口货”，因而格外紧俏", "，备受推崇。", "例如苏东坡在《鲁直所惠洮河石砚铭》中，", "称赞其友黄庭坚所藏的洮河石砚：“洗之砺、", "发金铁。", "”\n琢而泓，坚密泽。", "岁丙寅，斗南北。", "归予者，黄鲁直。", "”"], "2": ["石鼓共有十块，为花岗岩质，高约90厘米，", "直径约60厘米。", "石鼓文，因文字篆刻在鼓形石上而得名。", "石上刻有以大篆书写的十首游猎诗，", "因此也被称为《猎碣》。", "“碣”指圆顶的石碑。", "这首诗采用四言句式，", "与《诗经·小雅》中《车攻》一诗的体例和风格有相似之处。", "它是我国现存最早的一组石刻文字。", "唐代诗人韦应物和韩愈都创作了名为《石鼓歌》的诗篇来赞美石鼓。", "正是从他们题诗赞美开始，石鼓才声名远扬，", "真正为世人所广泛知晓和重视。", "关于石鼓的年代，学界曾有多种观点，包括西周、", "春秋战国、秦代、汉代、晋代、北魏、", "西魏及北周等不同说法。", "后经金石学家们从内容、", "字体及书法风格等多方面考证，", "认定其为秦国遗物。", "关于这件秦国器物的年代，学界存在多种观点，", "包括秦文公、秦穆公、秦襄公及秦献公等说，", "其确切年代尚未形成定论。", "石鼓于唐朝初年在陕西天兴（今陕西凤翔）的三畤原被发现。", "宋大观年间，此物迁至东京（今河南开封）。", "后金人破宋，将其辇运至燕京（今北京）。", "这些文字因历经多次迁徙，磨损残破之处甚多。", "这件器物最初在东京（今开封）被制作时，", "工匠曾用金色填涂文字。", "后来它被运至燕京（今北京），", "上面的金色文字却被刻意剔除了。", "其中一鼓已无字。", "石鼓文的部分字形与籀文相同。", "籀文也称大篆，", "传说为周宣王时期的史官太史籀所创。", "原文：\n籀文型体齐整稳定，", "春秋时期已在秦国流行，", "流行过程中又进一步简化和线条化。", "改写版本：\n籀文字形规整、结构稳定。", "它在春秋时期就已经在秦国流行开来，", "并在之后的流传使用中，", "形体进一步趋于简化和线条化。", "此石鼓文书法朴茂浑古，", "清代康有为曾以“如金钿委地，芝草团云，", "不烦整裁，自有奇采”赞誉。", "意指其笔法如珍宝洒落，自然成趣；", "气韵似瑞草萦云，浑然天成。", "全作无需刻意雕琢，便已独具瑰丽神采。", "清代一些书法家的篆书，", "其成就很大程度上得益于临摹学习此器物（或碑刻）。", "故宫收藏的这份石鼓文拓本是明初拓本，", "原为明代孙克弘旧藏，是国内公认的著名善本。", "唐代李吉甫的《元和郡县图志》，", "宋代欧阳修的《集古录》、", "赵明诚的《金石录》以及郑樵的《石鼓文考》等著作", "，均对石鼓文有所著录。"], "3": ["白玻璃单耳桃式杯，清代，高3厘米，", "口径7.9－6.7厘米。", "此杯为清代玻璃器，通体呈白色，材质晶莹透明。", "器形设计巧妙，杯口呈桃形，一侧附有单耳。", "其造型玲珑别致，工艺精湛，", "体现了清代玻璃制作的高超水平。", "在清代，玻璃制品尚属珍贵，", "此杯兼具实用与观赏价值，", "是一件颇具代表性的工艺品。", "杯体为桃形，带有折枝状柄，底部平整。", "这件器物由涅白玻璃制成，色泽近似羊脂，", "质地温润，呈半透光状。", "器物表面通体装饰桃叶纹，纹饰清晰，布局工整。", "清代玻璃酒具以杯最为常见。", "此杯料色洁白温润，宛若白玉，", "琢刻的纹饰简洁而写意。", "杯身由劈开的桃形制成，寓意“长寿”。"], "4": ["这是一个清代的单筒折射望远镜，", "全长34.7厘米，镜筒直径3.8厘米。", "镜筒为木质，采用单筒折射式结构，", "两端分别装有目镜和物镜。", "两个镜头均以铜鎏金工艺包镶，既起到保护作用，", "也增添了器物的华贵感。", "其镜片均为凸透镜，用于汇聚光线，", "形成远处物体的放大影像。", "望远镜可用于天文观测、作战指挥、", "观赏景物等方面。", "据清宫档案记载，", "清廷曾向西藏地方官员赏赐望远镜与文具等物，", "以表彰其卓越战功与出色政绩。"], "5": ["小风扇，清，长26.5 厘米，宽12 厘米，", "厚4厘米。", "清宫旧藏。", "这是一把玩具小风扇，", "其手柄与扇身为一体式结构。", "手柄部分采用化学合成材料制成。", "扇页部分使用了玳瑁材质。", "玳瑁取自海龟的甲壳。", "此种材质具有独特的斑纹。", "其质地光滑且坚硬。", "历史上常被用于制作各类装饰器物。", "扇页的背后标有“英格兰制造”字样。", "这件小风扇比手掌略大，用手捏动手柄，", "扇页即可转动。"]};
+    const fullData = {"1": ["洮河石雕兰亭集会图砚，宋，长22.4厘米，宽13.5厘米，厚6.8厘米。", "这是一方长方形的砚台，其砚面与四个侧面均以浅浮雕技法雕刻了《兰亭修褉图》。", "这幅图描绘了东晋永和九年（公元353年），以王羲之为首，", "包括谢安等人在内的名士，于会稽山阴的兰亭举行“修褉”雅集时的场景。", "王羲之的著名法帖《兰亭序》描述的便是这次盛会。", "砚面的主体内容为兰亭图，图中楼台亭阁错落，远处山峦叠嶂，并有祥云环绕其间，", "整体宛如仙境。", "作者以曲水为墨池，其形如河渠半绕，池上设镂空树干、楼栏与小桥，池畔亦以桥相连", "，构思巧妙，布置得体。", "这是一方古代的砚。", "它的四面侧壁上，都刻有同一幅图画。", "这幅画名为修褉环景图，描绘了古人在水边聚会的场景。", "在其中一面侧壁上，\n还刻有“逋道人”这个名字，\n并盖有一方“元□”的印章。", "这可能是作者或收藏者的标记。", "这幅画作描绘了林间溪畔的景致，共有四十余位人物置身其中。", "画面中，有人于溪畔坐而论道，有人于林间烹茶，亦有人独自赏画沉思。", "此外，可见人物在溪流中捕鱼，于树下凝神读书，或在空地上练习拳法。", "整体场景洋溢着浓厚的生活气息，人物各具情态，", "共同构成了一幅生动和谐的人文画卷。", "这幅画名为《浴鹅图》，描绘了六只白鹅嬉戏的场景。", "有的在水中游动，有的在岸边休憩，还有的在树下纳凉。", "它们姿态各异：有的低头觅食，有的则昂首向天，仿佛正在高声鸣叫。", "砚背的覆手部分向内凹陷，呈平缓的斜坡状。", "这是一方宋代流传下来的砚台。", "它的石质极为细腻，表面覆有温厚的包浆，整体呈现淡雅的豆绿色。", "明末时由吴拭珍藏。", "洮河石砚，又称洮砚或洮石砚，是中国的四大名砚之一。", "它历史悠久，早在唐宋时期就已驰名海内外，至今已有一千三百多年。", "作为文房珍品，其石质细腻，利于发墨，是书写与创作的重要工具。", "洮河石砚的原料为洮河石，这是一种属于水成岩（亦称辉绿岩）的石材。", "其名称源于产地——甘肃省甘南藏族自治州卓尼县洮砚乡，位于洮河河畔，", "石材因此得名。", "以此石制成的砚台，即为著名的洮河石砚。", "此地原名古洮州，因此这件器物便以此地命名。", "洮河砚石料多含天然纹理，石色以绿色为基调，并有墨绿、碧绿、辉绿、翠绿、淡绿、", "灰绿等多种变体。", "因其色泽丰富，常易与松花江石或绿端石相混淆。", "唐代书法家柳公权在《论砚》中品评名砚，认为青州砚当居首位，绛州砚次之。", "后来，人们的喜好发生转变，开始推崇端砚、歙砚以及临洮砚。", "文中提到的临洮，其产地大致相当于今天的甘肃卓尼一带。", "这是目前发现最早的文字记载，\n一位古代文人对洮砚作出了评价。", "这一看法得以留存至今。", "这份评价极为珍贵，\n它让我们得以知晓\n古人对洮砚的珍视程度。", "由此可见，当时洮砚已与端砚、歙砚齐名，同被视为砚中珍品。", "洮砚自宋代开始盛行，被作为地方贡品进献朝廷，逐渐取代了当时已停采的红丝石砚，", "并跻身“四大名砚”之列。", "宋代鉴赏家赵希鹄在《洞天清禄集•古砚辨》中记载，除端砚、歙砚之外，", "以洮河绿石最为北方所重。", "其石色绿如蓝，质润如玉，发墨之佳不逊于端溪下岩所产。", "然此石取自大河深水之底，非人力易得，故获之者视若无价之宝。", "事实上，洮河砚的出身并不高贵，最初只是用作砺石的一种石材。", "古人常用其质地坚硬的特点来打磨刀具。", "后来，因其石质细腻、色泽雅润，逐渐被匠人发掘，经雕琢后成为砚台，", "最终进入文人雅士的文房，成为备受珍视的器物。", "洮河流域在宋代是西夏政权的领地。", "西夏人经常开采当地的一种石头，用来磨砺战刀，作为重要的军用物资。", "对于宋朝文人而言，洮河砚的石材极为难得。", "它产自边疆乃至域外，在当时犹如珍贵的“外国进口货”，因而格外紧俏，备受推崇。", "例如苏东坡在《鲁直所惠洮河石砚铭》中，称赞其友黄庭坚所藏的洮河石砚：“洗之砺", "、发金铁。", "”\n琢而泓，坚密泽。", "岁丙寅，斗南北。", "归予者，黄鲁直。", "”"], "2": ["石鼓共有十块，为花岗岩质，高约90厘米，直径约60厘米。", "石鼓文，因文字篆刻在鼓形石上而得名。", "石上刻有以大篆书写的十首游猎诗，因此也被称为《猎碣》。", "“碣”指圆顶的石碑。", "这首诗采用四言句式，与《诗经·小雅》中《车攻》一诗的体例和风格有相似之处。", "它是我国现存最早的一组石刻文字。", "唐代诗人韦应物和韩愈都创作了名为《石鼓歌》的诗篇来赞美石鼓。", "正是从他们题诗赞美开始，石鼓才声名远扬，\n真正为世人所广泛知晓和重视。", "关于石鼓的年代，学界曾有多种观点，包括西周、春秋战国、秦代、汉代、晋代、北魏", "、西魏及北周等不同说法。", "后经金石学家们从内容、字体及书法风格等多方面考证，认定其为秦国遗物。", "关于这件秦国器物的年代，学界存在多种观点，包括秦文公、秦穆公、", "秦襄公及秦献公等说，其确切年代尚未形成定论。", "石鼓于唐朝初年在陕西天兴（今陕西凤翔）的三畤原被发现。", "宋大观年间，此物迁至东京（今河南开封）。", "后金人破宋，将其辇运至燕京（今北京）。", "这些文字因历经多次迁徙，磨损残破之处甚多。", "这件器物最初在东京（今开封）被制作时，工匠曾用金色填涂文字。", "后来它被运至燕京（今北京），上面的金色文字却被刻意剔除了。", "其中一鼓已无字。", "石鼓文的部分字形与籀文相同。", "籀文也称大篆，传说为周宣王时期的史官太史籀所创。", "原文：\n籀文型体齐整稳定，春秋时期已在秦国流行，", "流行过程中又进一步简化和线条化。", "改写版本：\n籀文字形规整、结构稳定。", "它在春秋时期就已经在秦国流行开来，并在之后的流传使用中，", "形体进一步趋于简化和线条化。", "此石鼓文书法朴茂浑古，清代康有为曾以“如金钿委地，芝草团云，不烦整裁，", "自有奇采”赞誉。", "意指其笔法如珍宝洒落，自然成趣；", "气韵似瑞草萦云，浑然天成。", "全作无需刻意雕琢，便已独具瑰丽神采。", "清代一些书法家的篆书，其成就很大程度上得益于临摹学习此器物（或碑刻）。", "故宫收藏的这份石鼓文拓本是明初拓本，原为明代孙克弘旧藏，", "是国内公认的著名善本。", "唐代李吉甫的《元和郡县图志》，宋代欧阳修的《集古录》、", "赵明诚的《金石录》以及郑樵的《石鼓文考》等著作，均对石鼓文有所著录。"], "3": ["白玻璃单耳桃式杯，清代，高3厘米，口径7.9－6.7厘米。", "此杯为清代玻璃器，通体呈白色，材质晶莹透明。", "器形设计巧妙，杯口呈桃形，一侧附有单耳。", "其造型玲珑别致，工艺精湛，体现了清代玻璃制作的高超水平。", "在清代，玻璃制品尚属珍贵，此杯兼具实用与观赏价值，是一件颇具代表性的工艺品。", "杯体为桃形，带有折枝状柄，底部平整。", "这件器物由涅白玻璃制成，色泽近似羊脂，质地温润，呈半透光状。", "器物表面通体装饰桃叶纹，纹饰清晰，布局工整。", "清代玻璃酒具以杯最为常见。", "此杯料色洁白温润，宛若白玉，琢刻的纹饰简洁而写意。", "杯身由劈开的桃形制成，寓意“长寿”。"], "4": ["这是一个清代的单筒折射望远镜，全长34.7厘米，镜筒直径3.8厘米。", "镜筒为木质，采用单筒折射式结构，两端分别装有目镜和物镜。", "两个镜头均以铜鎏金工艺包镶，既起到保护作用，也增添了器物的华贵感。", "其镜片均为凸透镜，用于汇聚光线，形成远处物体的放大影像。", "望远镜可用于天文观测、作战指挥、观赏景物等方面。", "据清宫档案记载，清廷曾向西藏地方官员赏赐望远镜与文具等物，", "以表彰其卓越战功与出色政绩。"], "5": ["小风扇，清，长26.5 厘米，宽12 厘米，厚4厘米。", "清宫旧藏。", "这是一把玩具小风扇，其手柄与扇身为一体式结构。", "手柄部分采用化学合成材料制成。", "扇页部分使用了玳瑁材质。", "玳瑁取自海龟的甲壳。", "此种材质具有独特的斑纹。", "其质地光滑且坚硬。", "历史上常被用于制作各类装饰器物。", "扇页的背后标有“英格兰制造”字样。", "这件小风扇比手掌略大，用手捏动手柄，扇页即可转动。"]};
+    const highlightTerms = {"1": ["柳公权", "《论砚》", "赵希鹄", "《洞天清禄集", "西夏", "辉绿岩", "端砚", "歙砚", "临洮"], "2": ["康有为", "孙克弘", "韦应物", "韩愈", "《石鼓歌》", "燕京", "《集古录》"], "3": ["桃式", "桃叶纹", "羊脂", "白玉", "长寿"], "4": ["望远镜", "目镜", "物镜", "铜鎏金", "凸透镜", "天文观测", "作战指挥"], "5": ["玳瑁", "英格兰制造", "玩具", "手柄"]};
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    function escReg(s) {
+      return s.replace(/[.*+?^{}()|[\]\\]/g, '\\$&');
+    }
+
+    function autoHighlight(html) {
+      // highlight book titles 《...》 and years / numbers with units
+      html = html.replace(/(《[^》]{1,24}》)/g, '<mark class="hl">$1</mark>');
+      html = html.replace(/(\b\d{3,4}\b)/g, '<mark class="hl">$1</mark>');
+      html = html.replace(/(\d+(?:\.\d+)?\s*(?:厘米|年|块|首|人|只|卷|字))/g, '<mark class="hl">$1</mark>');
+      return html;
+    }
+
+    function applyHighlight(text, id) {
+      let html = escapeHtml(text);
+      const terms = (highlightTerms[String(id)] || []).slice().sort((a,b)=>b.length-a.length);
+      for(const t of terms) {
+        if(!t) continue;
+        const re = new RegExp(escReg(t), 'g');
+        html = html.replace(re, '<mark class="hl">' + escapeHtml(t) + '</mark>');
+      }
+      html = autoHighlight(html);
+      return html.replace(/\n/g, '<br>');
+    }
+
+    function renderSlides(id) {
+      const container = document.querySelector('#card-' + id + ' .slides');
+      const slides = slideData[String(id)] || [];
+      let html = '';
+      slides.forEach((t, idx) => {
+        const active = idx === 0 ? 'active' : '';
+        html += '<div class="slide ' + active + '"><div class="slide-text">' + applyHighlight(t, id) + '</div></div>';
+      });
+      if(!slides.length) {
+        html = `<div class="slide active"><div class="slide-text">(No content)</div></div>`;
+      }
+      container.innerHTML = html;
+      updateControls(id, 0, Math.max(1, slides.length));
+    }
+
+    function renderFull(id) {
+      const el = document.getElementById('full-' + id);
+      const lines = fullData[String(id)] || [];
+      const html = '<div class="full-lines">' + lines.map(l => '<p class="full-line">' + applyHighlight(l, id) + '</p>').join('') + '</div>';
+      el.innerHTML = html;
+    }
+
+    function updateControls(id, idx, total) {
+      const card = document.getElementById('card-' + id);
+      card.querySelector('.btn-prev').disabled = idx === 0;
+      card.querySelector('.btn-next').disabled = idx === total - 1;
+      card.querySelector('.page-indicator').innerText = (idx + 1) + ' / ' + total;
+    }
+
+    function navigate(id, dir) {
+      const container = document.querySelector('#card-' + id + ' .slides');
+      const slides = container.querySelectorAll('.slide');
+      let currIdx = 0;
+      slides.forEach((s, i) => { if(s.classList.contains('active')) currIdx = i; });
+      const total = slides.length || 1;
+      const newIdx = currIdx + dir;
+      if (newIdx >= 0 && newIdx < total) {
+        slides[currIdx].classList.remove('active');
+        slides[newIdx].classList.add('active');
+        updateControls(id, newIdx, total);
+      }
+    }
+
+    function nextSlide(id) { navigate(id, 1); }
+    function prevSlide(id) { navigate(id, -1); }
+
+    function toggleFull(id) {
+      const el = document.getElementById('full-' + id);
+      if(el.style.display === 'block') {
+        el.style.display = 'none';
+      } else {
+        if(!el.innerHTML) renderFull(id);
+        el.style.display = 'block';
+      }
+    }
+
+    // allow survey to pass ?back=<url>
+    (function(){
+      try {
+        const p = new URLSearchParams(location.search);
+        const back = p.get('back');
+        if(back) {
+          const a = document.getElementById('backLink');
+          a.href = back;
+        }
+      } catch(e) {}
+    })();
+
+    window.onload = function() {
+      Object.keys(slideData).forEach((id) => {
+        renderSlides(parseInt(id));
+      });
+    };
+  </script>
+</body>
+</html>

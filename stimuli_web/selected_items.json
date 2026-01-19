@@ -1,0 +1,47 @@
+[
+  {
+    "stimulus_id": "S1",
+    "title": "洮河石雕兰亭集会图砚",
+    "category": "文房用品",
+    "url": "https://www.dpm.org.cn/collection/studie/233225.html",
+    "original_len": 934,
+    "difficulty_score": 1424,
+    "anchor": "s1-洮河石雕兰亭集会图砚"
+  },
+  {
+    "stimulus_id": "S2",
+    "title": "秦石鼓",
+    "category": "铭刻",
+    "url": "https://www.dpm.org.cn/collection/impres/234438.html",
+    "original_len": 554,
+    "difficulty_score": 870,
+    "anchor": "s2-秦石鼓"
+  },
+  {
+    "stimulus_id": "S3",
+    "title": "白玻璃单耳桃式杯",
+    "category": "玻璃器",
+    "url": "https://www.dpm.org.cn/collection/glass/229873.html",
+    "original_len": 108,
+    "difficulty_score": 170,
+    "anchor": "s3-白玻璃单耳桃式杯"
+  },
+  {
+    "stimulus_id": "S4",
+    "title": "木筒望远镜",
+    "category": "钟表仪器",
+    "url": "https://www.dpm.org.cn/collection/clock/259986.html",
+    "original_len": 123,
+    "difficulty_score": 175,
+    "anchor": "s4-木筒望远镜"
+  },
+  {
+    "stimulus_id": "S5",
+    "title": "小风扇",
+    "category": "外国文物",
+    "url": "https://www.dpm.org.cn/collection/foreign/232146.html",
+    "original_len": 108,
+    "difficulty_score": 176,
+    "anchor": "s5-小风扇"
+  }
+]

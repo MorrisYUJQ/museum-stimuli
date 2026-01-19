@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>实验阅读材料入口</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --accent:#2563eb;
+      --border:#e5e7eb;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Atkinson Hyperlegible','Lexend','Noto Sans SC','Source Han Sans SC','Microsoft YaHei UI','Microsoft YaHei','PingFang SC',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+    .hero{border:1px solid var(--border);border-radius:16px;padding:18px;background:linear-gradient(135deg, rgba(37,99,235,.06), rgba(255,255,255,.0))}
+    h1{font-size:22px;margin:0 0 10px}
+    .sub{color:var(--muted);font-size:14px;line-height:1.6}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+    .card{border:1px solid var(--border);border-radius:16px;padding:14px;background:var(--card)}
+    .card h2{font-size:16px;margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+    .btn{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(37,99,235,.22);background:rgba(37,99,235,.08);color:var(--text);font-size:14px}
+    .note{margin-top:16px;color:var(--muted);font-size:12px;line-height:1.6}
+    code{background:rgba(37,99,235,.06);border:1px solid var(--border);padding:1px 6px;border-radius:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>实验阅读材料入口</h1>
+      <div class="sub">
+        请根据问卷跳转到对应条件页面阅读，再返回问卷作答。
+        <br>
+        DFT-GEN 页默认是 Focus Mode（翻页），可点击“查看全文版（分行）”。
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>条件 A：原文</h2>
+        <p>5 条器物介绍的原始版本。</p>
+        <a class="btn" href="./original.html">打开原文页</a>
+      </div>
+      <div class="card">
+        <h2>条件 B：Dyslexia Helper（基线）</h2>
+        <p>一键简化版本。</p>
+        <a class="btn" href="./dyslexia_helper.html">打开基线页</a>
+      </div>
+      <div class="card">
+        <h2>条件 C：DFT-GEN（你的系统）</h2>
+        <p>默认 Focus Mode + 关键术语高光，可切换全文。</p>
+        <a class="btn" href="./dftgen.html">打开 DFT-GEN 页</a>
+      </div>
+    </div>
+
+    <div class="note">
+      锚点跳转示例：<code>dftgen.html#s3-殷王武乙（文丁？）贞问祭祀先公先王刻辞卜骨</code>
+      <br>
+      （目录里点条目即可复制/跳转到对应锚点。）
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Morris</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --accent:#2563eb;
+      --border:#e5e7eb;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font-family:'Atkinson Hyperlegible','Lexend','Noto Sans SC','Source Han Sans SC','Microsoft YaHei UI','Microsoft YaHei','PingFang SC',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 18px 60px}
+    .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    select{padding:8px 10px;border-radius:10px;border:1px solid var(--border);font-size:14px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+    @media (min-width: 980px){ .grid{grid-template-columns:1fr 1fr 1fr;} }
+    .col{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
+    .col h2{font-size:15px;margin:0 0 8px}
+    .text{font-size:18px;line-height:2.0;letter-spacing:.2px;max-width:44rem}
+    .text p{margin:0 0 12px}
+
+    /* DFT flashcard */
+    .cardbox{border:1px solid var(--border);border-radius:14px;background:rgba(37,99,235,.03);padding:12px}
+    .cardtext{font-size:20px;line-height:2.05;letter-spacing:.2px}
+    .controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+    .btn{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.22);color:var(--text);padding:8px 12px;border-radius:12px;font-size:14px;cursor:pointer}
+    .btn:disabled{opacity:.35;cursor:not-allowed}
+    .btn.secondary{background:transparent;border:1px solid var(--border);color:var(--muted)}
+    .page{color:var(--muted);font-size:13px}
+    .full{display:none;margin-top:10px}
+    mark.hl{background: rgba(250, 204, 21, .35); border:1px solid rgba(250, 204, 21, .60); padding:0 3px; border-radius:6px; color:var(--text)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bar">
+      <select id="itemSelect"></select>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <h2>原文（未改写）</h2>
+        <div id="colOriginal" class="text"></div>
+      </div>
+      <div class="col">
+        <h2>Dyslexia Helper</h2>
+        <div id="colHelper" class="text"></div>
+      </div>
+      <div class="col">
+        <h2>DFT-GEN</h2>
+        <div class="cardbox">
+          <div id="dftCardText" class="cardtext"></div>
+          <div class="controls">
+            <button id="btnPrev" class="btn" type="button">←</button>
+            <div id="page" class="page">1 / 1</div>
+            <button id="btnNext" class="btn" type="button">→</button>
+          </div>
+          <div style="margin-top:10px">
+            <button id="btnToggleFull" class="btn secondary" type="button">查看全文</button>
+            <div id="dftFull" class="full text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ITEMS = [{"title": "白玻璃渣斗", "original_html": "<p>白玻璃渣斗，高8.7厘米，口径7.7厘米。<br>通体磨制大小龟背纹，具有玲珑剔透、晶莹澄澈的视觉效果。<br>在赏赐西藏的物品中，有玻璃渣斗的记录，渣斗，又名奓（音乍）斗，造型来源于瓷器，或可溯源至商周时期的青铜觚。当渣斗作为实用器使用时，其功能相当于唾盂。玻璃渣斗只流行于清康熙、雍正、乾隆三朝。据清宫档案，清廷对西藏地方僧俗官员，无论官阶大小，赏赐品中都有玻璃器的身影。</p>", "helper_html": "<p>这是一个白色玻璃渣斗。  <br>它高8.7厘米，口宽7.7厘米。  <br>表面刻有大小龟背花纹。  <br>看起来透明光亮，非常清澈。</p>\n<p>渣斗也叫“奓斗”。  <br>它的样子来自瓷器和古代青铜器。  <br>过去人们用它来装吐出的食物残渣。</p>\n<p>这种玻璃渣斗只在清朝早期流行。  <br>清朝皇帝赏赐给西藏官员时，  <br>经常赠送玻璃制品。  <br>无论官员大小，都可能得到。</p>", "dft_full_html": "<p><mark class=\"hl\">白玻璃渣斗</mark>。<br>高 <mark class=\"hl\">8.7 厘米</mark>。<br>口径 <mark class=\"hl\">7.7 厘米</mark>。</p>\n<p>表面有<mark class=\"hl\">龟背纹</mark>。<br>看起来透明、发亮。</p>\n<p>渣斗也叫“<mark class=\"hl\">奓斗</mark>”。<br>外形来自瓷器。<br>也可能源自<mark class=\"hl\">青铜觚</mark>。</p>\n<p>它常用作<mark class=\"hl\">唾盂</mark>。<br>用来盛放残渣或漱口水。</p>\n<p>它主要流行在<mark class=\"hl\">清代</mark>。<br>尤其是<mark class=\"hl\">康熙</mark>、雍正、乾隆三朝。<br>大约一百三十年。<br>之后就不常见了。</p>\n<p><mark class=\"hl\">清宫档案</mark>里有记录：<br>清廷赏赐<mark class=\"hl\">西藏</mark>僧俗官员时，常包含玻璃器。<br>这些玻璃器来自<mark class=\"hl\">宫廷造办处</mark>，或由西洋进口。<br>它们是贵重礼物，也反映当时的礼仪与外交。</p>", "dft_units": ["<mark class=\"hl\">白玻璃渣斗</mark>。", "高 <mark class=\"hl\">8.7 厘米</mark>。", "口径 <mark class=\"hl\">7.7 厘米</mark>。", "表面有<mark class=\"hl\">龟背纹</mark>。", "看起来透明、发亮。", "渣斗也叫“<mark class=\"hl\">奓斗</mark>”。", "外形来自瓷器。", "也可能源自<mark class=\"hl\">青铜觚</mark>。", "它常用作<mark class=\"hl\">唾盂</mark>。", "用来盛放残渣或漱口水。", "它主要流行在<mark class=\"hl\">清代</mark>。", "尤其是<mark class=\"hl\">康熙</mark>、雍正、乾隆三朝。", "大约一百三十年。", "之后就不常见了。", "<mark class=\"hl\">清宫档案</mark>里有记录：", "清廷赏赐<mark class=\"hl\">西藏</mark>僧俗官员时，常包含玻璃器。", "这些玻璃器来自<mark class=\"hl\">宫廷造办处</mark>，或由西洋进口。", "它们是贵重礼物，也反映当时的礼仪与外交。"]}, {"title": "掐丝珐琅花朵纹玉壶春瓶", "original_html": "<p>掐丝珐琅花朵纹玉壶春瓶，明早期，高27.1厘米，口径7.4厘米，足径9厘米。清宫旧藏。瓶小撇口，细颈，垂腹，双凤耳。除颈部两周鎏金弦纹间饰紫地红白两色灵芝纹外，瓶体余皆浅蓝地，通饰各色缠枝花朵纹，有栀子、梅花、菊花等，腹下部饰红色菊瓣纹一周。此瓶为明代御用监所造，釉质细润，色泽纯正，打磨光滑。其装饰集多种花卉于一器，繁而不乱，艺术效果极佳，在早期珐琅器中风格独特。</p>", "helper_html": "<p>这是一个明代早期的瓶子。  <br>它叫掐丝珐琅玉壶春瓶。  <br>瓶高27.1厘米。  <br>原来收藏在清朝皇宫里。</p>\n<p>瓶口微微外撇。  <br>脖子细长，腹部下垂。  <br>装有两个凤凰形状的耳朵。</p>\n<p>瓶身主要是浅蓝色。  <br>上面装饰着彩色的缠枝花纹。  <br>有栀子花、梅花、菊花等。  <br>脖子处有金色的弦纹和灵芝纹。  <br>腹部下方有一圈红色菊瓣纹。</p>\n<p>这个瓶子由明代御用监制造。  <br>釉质细腻，颜色纯正，表面光滑。  <br>它把多种花纹组合在一起。  <br>看起来繁复但不杂乱。  <br>艺术效果很好，风格独特。</p>", "dft_full_html": "<p><mark class=\"hl\">掐丝珐琅</mark>花朵纹玉壶春瓶。<br><mark class=\"hl\">明早期</mark>。</p>\n<p>高 <mark class=\"hl\">27.1 厘米</mark>。<br><mark class=\"hl\">口径</mark> <mark class=\"hl\">7.4 厘米</mark>。<br><mark class=\"hl\">足径</mark> <mark class=\"hl\">9 厘米</mark>。</p>\n<p><mark class=\"hl\">清宫旧藏</mark>。</p>\n<p>瓶口：小撇口。<br>瓶颈：细长。<br>瓶腹：下垂。<br>两侧有<mark class=\"hl\">双凤耳</mark>。</p>\n<p>这件器物用的是“<mark class=\"hl\">掐丝珐琅</mark>”工艺。<br>先用铜丝勾出花纹轮廓。<br>再填入彩色釉料烧制。</p>\n<p>瓶身底色：<mark class=\"hl\">浅蓝色</mark>。<br>全身有各色<mark class=\"hl\">缠枝花朵纹</mark>。<br>能看到<mark class=\"hl\">栀子</mark>、梅花、菊花等花纹。</p>\n<p>颈部有两周<mark class=\"hl\">鎏金弦纹</mark>。<br>弦纹之间是紫色地。<br>上面画红白两色的<mark class=\"hl\">灵芝纹</mark>。</p>\n<p>腹部下方有一圈红色<mark class=\"hl\">菊瓣纹</mark>。</p>\n<p>此瓶为明代<mark class=\"hl\">御用监</mark>所造。<br>釉质细润。<br>色泽纯正。<br>表面打磨光滑。</p>\n<p>花卉很多，但不杂乱。<br>在早期珐琅器中风格独特。</p>", "dft_units": ["<mark class=\"hl\">掐丝珐琅</mark>花朵纹玉壶春瓶。", "<mark class=\"hl\">明早期</mark>。", "高 <mark class=\"hl\">27.1 厘米</mark>。", "<mark class=\"hl\">口径</mark> <mark class=\"hl\">7.4 厘米</mark>。", "<mark class=\"hl\">足径</mark> <mark class=\"hl\">9 厘米</mark>。", "<mark class=\"hl\">清宫旧藏</mark>。", "瓶口：小撇口。", "瓶颈：细长。", "瓶腹：下垂。", "两侧有<mark class=\"hl\">双凤耳</mark>。", "这件器物用的是“<mark class=\"hl\">掐丝珐琅</mark>”工艺。", "先用铜丝勾出花纹轮廓。", "再填入彩色釉料烧制。", "瓶身底色：<mark class=\"hl\">浅蓝色</mark>。", "全身有各色<mark class=\"hl\">缠枝花朵纹</mark>。", "能看到<mark class=\"hl\">栀子</mark>、梅花、菊花等花纹。", "颈部有两周<mark class=\"hl\">鎏金弦纹</mark>。", "弦纹之间是紫色地。", "上面画红白两色的<mark class=\"hl\">灵芝纹</mark>。", "腹部下方有一圈红色<mark class=\"hl\">菊瓣纹</mark>。", "此瓶为明代<mark class=\"hl\">御用监</mark>所造。", "釉质细润。", "色泽纯正。", "表面打磨光滑。", "花卉很多，但不杂乱。", "在早期珐琅器中风格独特。"]}];
+    const sel = document.getElementById('itemSelect');
+    const colO = document.getElementById('colOriginal');
+    const colH = document.getElementById('colHelper');
+    const dftCardText = document.getElementById('dftCardText');
+    const dftFull = document.getElementById('dftFull');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnToggleFull = document.getElementById('btnToggleFull');
+    const page = document.getElementById('page');
+
+    let units = [];
+    let idx = 0;
+
+    function updateCard() {
+      const total = Math.max(1, units.length);
+      if(!units.length) {
+        dftCardText.textContent = '(空)';
+        idx = 0;
+      } else {
+        idx = Math.max(0, Math.min(idx, total - 1));
+        dftCardText.innerHTML = units[idx];
+      }
+      page.textContent = (idx + 1) + ' / ' + total;
+      btnPrev.disabled = idx <= 0;
+      btnNext.disabled = idx >= total - 1;
+    }
+
+    btnPrev.addEventListener('click', () => { idx -= 1; updateCard(); });
+    btnNext.addEventListener('click', () => { idx += 1; updateCard(); });
+    btnToggleFull.addEventListener('click', () => {
+      if(dftFull.style.display === 'block') {
+        dftFull.style.display = 'none';
+        btnToggleFull.textContent = '查看全文';
+      } else {
+        dftFull.style.display = 'block';
+        btnToggleFull.textContent = '收起全文';
+      }
+    });
+
+    function render(idx) {
+      const it = ITEMS[idx];
+      colO.innerHTML = it.original_html;
+      colH.innerHTML = it.helper_html;
+      dftFull.innerHTML = it.dft_full_html;
+      units = (it.dft_units && it.dft_units.length) ? it.dft_units : ['(空)'];
+      idx = 0;
+      dftFull.style.display = 'none';
+      btnToggleFull.textContent = '查看全文';
+      updateCard();
+    }
+
+    function init() {
+      ITEMS.forEach((it, i) => {
+        const opt = document.createElement('option');
+        opt.value = String(i);
+        opt.textContent = it.title;
+        sel.appendChild(opt);
+      });
+      sel.addEventListener('change', () => render(parseInt(sel.value, 10)));
+      render(0);
+    }
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Appendix Web Example | Original vs DFT-GEN (Bilingual)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#111;
+      --muted:#4b5563;
+      --card:#f8fafc;
+      --border:#e5e7eb;
+      --hl:#fff1a8;
+    }
+    html,body{background:var(--bg); color:var(--fg); margin:0; padding:0;}
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height:1.65;
+    }
+    .wrap{max-width:1040px; margin:0 auto; padding:24px;}
+    .top{
+      display:flex; gap:12px; align-items:flex-end; justify-content:space-between;
+      border-bottom:1px solid var(--border); padding-bottom:14px; margin-bottom:18px;
+    }
+    .title{
+      font-size:18px; font-weight:700; margin:0;
+    }
+    .subtitle{margin:6px 0 0 0; color:var(--muted); font-size:13px;}
+    .btn{
+      border:1px solid var(--border); background:#fff; color:#111;
+      padding:8px 10px; border-radius:10px; cursor:pointer; font-size:13px;
+    }
+    .btn:hover{background:#f9fafb;}
+
+    .section{margin:18px 0 22px 0;}
+    .sectionHead{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin:0 0 10px 0;
+    }
+    .badge{
+      display:inline-block;
+      background:#111; color:#fff;
+      padding:4px 10px; border-radius:999px;
+      font-size:12px; font-weight:700; letter-spacing:.2px;
+    }
+    .artifact{
+      font-weight:700;
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:12px;
+      padding:14px 14px;
+      margin:12px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr;}
+    }
+    .panel{
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .panelHead{
+      padding:10px 12px;
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      font-weight:700;
+      font-size:13px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .panelBody{padding:12px 12px;}
+    p{margin:0 0 10px 0;}
+    p:last-child{margin-bottom:0;}
+    mark.hl{
+      background:var(--hl);
+      padding:0 2px;
+      border-radius:3px;
+    }
+    .note{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:10px;
+    }
+
+    /* Focus mode (flashcard): show one unit per page */
+    .focus .panelBody{padding:14px;}
+    .card{
+      border:1px dashed #e5e7eb;
+      border-radius:12px;
+      padding:14px 14px;
+      background:#ffffff;
+      min-height:120px;
+      display:flex;
+      align-items:flex-start;
+    }
+    .cardText{width:100%;}
+    .cardText p{margin:0;}
+    .controls{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      justify-content:flex-end;
+      margin-left:auto;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      color:#111;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      white-space:nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1 class="title">Appendix Web Example: Original vs DFT-GEN (Bilingual)</h1>
+        <p class="subtitle">One exhibit item, Chinese–English parallel text, with manually selected keyword highlights.</p>
+      </div>
+      <button class="btn" type="button" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="artifact">
+      Exhibit item: 白玻璃渣斗 / White Glass Zhadou
+    </div>
+
+    <!-- ORIGINAL -->
+    <div class="section">
+      <div class="sectionHead">
+        <span class="badge">原文 / Original</span>
+      </div>
+      <div class="grid">
+        <div class="panel">
+        <div class="panelHead"><span>中文（原文）</span></div>
+          <div class="panelBody">
+            <p>白玻璃渣斗，高 8.7 厘米，口径 7.7 厘米。通体磨制大小龟背纹，具有玲珑剔透、晶莹澄澈的视觉效果。</p>
+            <p>在赏赐西藏的物品中，有玻璃渣斗的记录。渣斗，又名奓（音乍）斗，造型来源于瓷器，或可溯源至商周时期的青铜觚。当渣斗作为实用器使用时，其功能相当于唾盂。</p>
+            <p>玻璃渣斗只流行于清康熙、雍正、乾隆三朝。据清宫档案，清廷对西藏地方僧俗官员，无论官阶大小，赏赐品中都有玻璃器的身影。</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead"><span>English (Translation)</span></div>
+          <div class="panelBody">
+            <p>White glass zhadou, height 8.7 cm, mouth diameter 7.7 cm. The entire surface is ground with a turtle-shell pattern, creating a clear and crystalline visual effect.</p>
+            <p>Records show glass zhadou among items bestowed on Tibet. The zhadou (also written 奓斗, pronounced “zha”) takes its shape from porcelain and may trace back to a bronze gu vessel from the Shang–Zhou period. When used as a practical object, it functioned like a spittoon.</p>
+            <p>Glass zhadou were popular only during the Qing Kangxi, Yongzheng, and Qianlong reigns. According to the Qing court archives, when the Qing court rewarded Tibetan monastic and secular officials—regardless of rank—glassware was included among the gifts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DFT-GEN -->
+    <div class="section" id="dftSection">
+      <div class="sectionHead">
+        <span class="badge">DFT-GEN（示例）/ DFT-GEN (Example)</span>
+        <div class="controls">
+          <button class="btn" id="btnPrev" type="button" disabled>←</button>
+          <span class="pill" id="page">1 / 1</span>
+          <button class="btn" id="btnNext" type="button" disabled>→</button>
+          <button class="btn" id="btnFocus" type="button">Focus mode (flashcard): OFF</button>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="panel">
+          <div class="panelHead"><span>中文（DFT-GEN）</span></div>
+          <div class="panelBody" id="dftZhBody">
+            <p><mark class="hl">白玻璃渣斗</mark>。高 <mark class="hl">8.7 厘米</mark>。口径 <mark class="hl">7.7 厘米</mark>。</p>
+            <p>表面有<mark class="hl">龟背纹</mark>。看起来透明、发亮。</p>
+            <p>渣斗也叫“<mark class="hl">奓斗</mark>”。外形来自<mark class="hl">瓷器</mark>。也可能源自商周时期的<mark class="hl">青铜觚</mark>。</p>
+            <p>它常用作<mark class="hl">唾盂</mark>。</p>
+            <p>玻璃渣斗只流行于清<mark class="hl">康熙</mark>、雍正、乾隆三朝。</p>
+            <p><mark class="hl">清宫档案</mark>里有记录：清廷赏赐<mark class="hl">西藏</mark>地方僧俗官员时，赏赐品中常包含玻璃器。</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead"><span>English (DFT-GEN Translation)</span></div>
+          <div class="panelBody" id="dftEnBody">
+            <p><mark class="hl">White glass zhadou</mark>. Height <mark class="hl">8.7 cm</mark>. Mouth diameter <mark class="hl">7.7 cm</mark>.</p>
+            <p>It has a <mark class="hl">turtle-shell pattern</mark>. It looks clear and glossy.</p>
+            <p>The zhadou is also called <mark class="hl">奓斗</mark>. Its shape comes from <mark class="hl">porcelain</mark>. It may also trace back to a Shang–Zhou <mark class="hl">bronze gu</mark> vessel.</p>
+            <p>It was often used as a <mark class="hl">spittoon</mark>.</p>
+            <p>Glass zhadou were popular only during the Qing <mark class="hl">Kangxi</mark>, Yongzheng, and Qianlong reigns.</p>
+            <p>The <mark class="hl">Qing court archives</mark> record that when the court rewarded monastic and secular officials in <mark class="hl">Tibet</mark>, glassware was often included among the gifts.</p>
+          </div>
+        </div>
+      </div>
+      <p class="note">Note: Keywords were selected manually (e.g., object name, dimensions, key terms, dynasty/reigns, and archival source) and highlighted by hand to ensure consistency and precision.</p>
+    </div>
+  </div>
+
+  <script>
+    const dft = document.getElementById('dftSection');
+    const btn = document.getElementById('btnFocus');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const page = document.getElementById('page');
+    const zhBody = document.getElementById('dftZhBody');
+    const enBody = document.getElementById('dftEnBody');
+
+    const zhFullHtml = zhBody.innerHTML;
+    const enFullHtml = enBody.innerHTML;
+
+    function extractUnits(bodyEl) {
+      return Array.from(bodyEl.querySelectorAll('p')).map(p => p.innerHTML.trim()).filter(Boolean);
+    }
+
+    const zhUnits = extractUnits(zhBody);
+    const enUnits = extractUnits(enBody);
+    const total = Math.max(zhUnits.length, enUnits.length, 1);
+    let idx = 0;
+    let on = false;
+
+    function updateNav() {
+      page.textContent = (idx + 1) + ' / ' + total;
+      btnPrev.disabled = !on || idx <= 0;
+      btnNext.disabled = !on || idx >= total - 1;
+    }
+
+    function renderCard() {
+      const zh = zhUnits[idx] ?? '';
+      const en = enUnits[idx] ?? '';
+      zhBody.innerHTML = '<div class="card"><div class="cardText"><p>' + zh + '</p></div></div>';
+      enBody.innerHTML = '<div class="card"><div class="cardText"><p>' + en + '</p></div></div>';
+      updateNav();
+    }
+
+    function restoreFull() {
+      zhBody.innerHTML = zhFullHtml;
+      enBody.innerHTML = enFullHtml;
+      updateNav();
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (!on) return;
+      idx = Math.max(0, idx - 1);
+      renderCard();
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (!on) return;
+      idx = Math.min(total - 1, idx + 1);
+      renderCard();
+    });
+
+    btn.addEventListener('click', () => {
+      on = !on;
+      dft.classList.toggle('focus', on);
+      btn.textContent = 'Focus mode (flashcard): ' + (on ? 'ON' : 'OFF');
+      if (on) {
+        idx = 0;
+        renderCard();
+      } else {
+        restoreFull();
+      }
+    });
+
+    // init
+    updateNav();
+  </script>
+</body>
+</html>
+

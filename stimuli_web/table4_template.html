@@ -391,11 +391,14 @@
         window.getComputedStyle(stage).getPropertyValue('--focus-height')
       ) || lineHeight;
       const step = Math.max(lineHeight, focusHeight * 0.75);
-      const maxVisibleIndex = Math.max(0, Math.floor((stage.clientHeight - focusHeight - 16) / step));
+      const visibleSlots = Math.max(0, Math.floor((stage.clientHeight - focusHeight - 16) / step));
+      const scrollSlots = Math.max(0, Math.ceil((content.scrollHeight - content.clientHeight) / step));
+      const maxVisibleIndex = Math.max(visibleSlots, scrollSlots);
       const nextIndex = Math.max(0, Math.min(index, maxVisibleIndex));
       stage.dataset.focusIndex = String(nextIndex);
-      const focusTop = 12 + nextIndex * step;
+      const focusTop = 12 + Math.min(nextIndex, visibleSlots) * step;
       stage.style.setProperty('--focus-top', focusTop + 'px');
+      content.scrollTop = Math.max(0, (nextIndex - visibleSlots) * step);
     }
 
     function textPanel(panelId, title, body, options = {}) {
@@ -423,8 +426,9 @@
     }
 
     function initReaderTools(root) {
-      if (root.dataset.readerToolsBound === 'true') return;
-      root.dataset.readerToolsBound = 'true';
+      const bindTarget = root === document ? document.documentElement : root;
+      if (bindTarget.dataset.readerToolsBound === 'true') return;
+      bindTarget.dataset.readerToolsBound = 'true';
       root.addEventListener('click', (event) => {
         const toggle = event.target.closest('[data-mask-toggle]');
         const move = event.target.closest('[data-mask-move]');
@@ -452,7 +456,12 @@
       catch { return { ...DEFAULT_PREFS }; }
     }
     function savePrefs(prefs) {
-      localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
+      try {
+        localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
+      } catch {
+        // Local files or strict browser settings may block localStorage.
+        // Reading controls should still apply immediately.
+      }
     }
     function currentPrefsFromControls() {
       return {

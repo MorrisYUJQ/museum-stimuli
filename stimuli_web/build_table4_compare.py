@@ -7,7 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-HIGHLIGHT_TERMS = [
+# Same controlled list as dftgen.html highlightTerms["1"] for S1.
+# Ava Vandiar: excessive highlighting causes visual overload — use light mark only,
+# not blanket **bold** on numbers / book titles / common words.
+DFT_HIGHLIGHT_TERMS = [
     "柳公权",
     "《论砚》",
     "赵希鹄",
@@ -17,12 +20,6 @@ HIGHLIGHT_TERMS = [
     "端砚",
     "歙砚",
     "临洮",
-    "苏东坡",
-    "黄庭坚",
-    "兰亭",
-    "修褉",
-    "洮河",
-    "四大名砚",
 ]
 
 
@@ -53,19 +50,18 @@ def char_count(html_or_text: str) -> int:
     return len(text)
 
 
-def wrap_rich_terms(text: str, terms: list[str]) -> str:
-    """Mark key terms with **bold** (expert spot-check convention)."""
-    out = text.replace("\n", " ").strip()
+def apply_light_highlight(unit: str, terms: list[str]) -> str:
+    """At most one yellow mark (==term==) per term per micro-unit — matches revised DFT-GEN cueing."""
+    out = unit.replace("\n", " ").strip()
     for t in sorted(terms, key=len, reverse=True):
-        if t and t in out and f"**{t}**" not in out:
-            out = out.replace(t, f"**{t}**")
-    out = re.sub(r"(《[^》]{1,24}》)", r"**\1**", out)
-    out = re.sub(r"(\d+(?:\.\d+)?\s*(?:厘米|年|块|首|人|只|卷|字))", r"**\1**", out)
+        if not t or t not in out or f"=={t}==" in out:
+            continue
+        out = out.replace(t, f"=={t}==", 1)
     return out
 
 
 def build_dft_focus_text(units: list[str]) -> str:
-    return "\n\n".join(wrap_rich_terms(u, HIGHLIGHT_TERMS) for u in units)
+    return "\n\n".join(apply_light_highlight(u, DFT_HIGHLIGHT_TERMS) for u in units)
 
 
 def main() -> None:

@@ -6,125 +6,194 @@
   <title>Table 4 — Museum text comparison (S1)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
+    /* UI copied from dft-gen-expert-spot-check (index.html) */
     :root {
       --ink: #1d2533;
       --muted: #657084;
+      --paper: #f8f5ee;
       --panel: #fffdf8;
       --line: #d8d0c2;
       --blue: #235789;
+      --blue-soft: #d9eafa;
+      --green: #31785f;
       --shadow: 0 18px 45px rgba(50, 45, 35, .12);
       --reader-font: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
       --reader-size: 16px;
-      --reader-line-height: 1.85;
+      --reader-line-height: 1.8;
       --reader-letter-spacing: .018em;
-      --reader-word-spacing: .06em;
-      --mask-height: 38px;
+      --reader-word-spacing: .08em;
+      --mask-height: 34px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: var(--reader-font);
+      font-family: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
       color: var(--ink);
       background:
         radial-gradient(circle at 20% 0%, rgba(35, 87, 137, .14), transparent 32rem),
+        radial-gradient(circle at 90% 20%, rgba(49, 120, 95, .12), transparent 28rem),
         linear-gradient(135deg, #fbf8f0, #efe8dc);
+      line-height: 1.55;
     }
-    .wrap { max-width: 1320px; margin: 0 auto; padding: 28px 22px 48px; }
-    .hero {
-      margin-bottom: 18px;
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 253, 248, .92);
-      box-shadow: var(--shadow);
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 22px 12px;
     }
     .eyebrow {
       display: inline-block;
-      padding: 5px 10px;
+      padding: 6px 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
+      background: rgba(255, 255, 255, .62);
       color: var(--blue);
-      font: 700 11px/1.2 "Lexend", sans-serif;
+      font: 700 12px/1.2 "Lexend", sans-serif;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    h1 { margin: 12px 0 6px; font: 800 28px/1.1 "Lexend", sans-serif; letter-spacing: -.03em; }
-    .sub { margin: 0; color: var(--muted); font-size: 15px; }
-    .counts { margin-top: 12px; color: var(--muted); font-size: 13px; }
-    .sample {
+    h1 {
+      margin: 14px 0 8px;
+      font-family: "Lexend", "Atkinson Hyperlegible", sans-serif;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+    .subtitle { max-width: 900px; margin: 0; color: var(--muted); font-size: 16px; }
+    .counts { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    main {
+      max-width: 1180px;
+      margin: 0 auto 48px;
+      padding: 0 22px 32px;
+    }
+    .display-controls {
+      margin-bottom: 18px;
+      padding: 18px;
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 22px;
+      background: rgba(255, 253, 248, .82);
+      box-shadow: var(--shadow);
+    }
+    .display-controls h2 { margin: 0 0 6px; font-size: 22px; }
+    .display-controls p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .control {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.62);
+      padding: 12px;
+    }
+    .control label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font: 800 12px "Lexend", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    .control output { color: var(--blue); font-weight: 800; text-transform: none; letter-spacing: 0; }
+    .control input[type="range"], .control select {
+      width: 100%;
+      accent-color: var(--blue);
+    }
+    .control select {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 8px;
+      background: #fffdf8;
+      color: var(--ink);
+      font: 13px "Lexend", sans-serif;
+    }
+    .control-actions { display: flex; align-items: end; }
+    .control-actions button { width: 100%; }
+    button {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
       background: var(--panel);
+      color: var(--ink);
+      font: 700 13px "Lexend", sans-serif;
+    }
+    button:hover { box-shadow: 0 8px 22px rgba(0,0,0,.10); }
+    .sample {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 253, 248, .95);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
     .sample-head {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 22px;
       background: linear-gradient(90deg, rgba(35,87,137,.10), rgba(49,120,95,.08));
+      border-bottom: 1px solid var(--line);
     }
-    .sample-head h2 { margin: 0; font: 800 18px "Lexend", sans-serif; }
-    .sample-head p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .sample-id { font: 800 15px "Lexend", sans-serif; }
+    .badge {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--blue);
+      font: 700 12px "Lexend", sans-serif;
+    }
     .texts {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 14px;
-      padding: 16px;
-      align-items: stretch;
+      padding: 18px;
     }
-    @media (max-width: 980px) { .texts { grid-template-columns: 1fr; } }
     .text-box {
+      min-height: 190px;
       border: 1px solid var(--line);
       border-radius: 18px;
+      padding: 0;
       background: #fffaf0;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 420px;
     }
     .text-box h3 {
       margin: 0;
-      padding: 12px 14px 10px;
-      font: 800 12px "Lexend", sans-serif;
+      padding: 13px 15px 9px;
+      font: 800 13px "Lexend", sans-serif;
       color: var(--blue);
       letter-spacing: .04em;
       text-transform: uppercase;
-      border-bottom: 1px solid var(--line);
-      background: rgba(35,87,137,.06);
     }
-    .text-box--focus h3 { background: linear-gradient(90deg, rgba(35,87,137,.12), rgba(49,120,95,.08)); }
     .reading-tools {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      padding: 8px 12px 6px;
-      border-bottom: 1px solid var(--line);
-      background: #f3efe6;
+      padding: 0 12px 10px;
     }
     .reading-tools button {
-      cursor: pointer;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: white;
-      font: 600 11px "Lexend", sans-serif;
-      color: var(--ink);
+      padding: 6px 9px;
+      font-size: 11px;
+      background: #f3efe6;
     }
-    .reading-tools button:hover { background: var(--blue-soft, #d9eafa); }
     .reader-stage {
       --focus-top: 22px;
       --focus-height: var(--mask-height);
       position: relative;
-      flex: 1;
-      min-height: 340px;
+      border-top: 1px solid var(--line);
       background: #fffdf8;
     }
     .text-content {
-      max-height: 380px;
+      max-height: 365px;
       overflow: auto;
-      padding: 14px 15px 20px;
+      padding: 16px 17px 22px;
       white-space: pre-wrap;
       font-family: var(--reader-font);
       font-size: var(--reader-size);
@@ -132,7 +201,8 @@
       letter-spacing: var(--reader-letter-spacing);
       word-spacing: var(--reader-word-spacing);
     }
-    .text-content p { margin: 0 0 10px; white-space: normal; }
+    .text-content.reader-html { white-space: normal; }
+    .text-content.reader-html p { margin: 0 0 10px; }
     .text-content strong {
       font-weight: 800;
       color: #0f3f6b;
@@ -177,61 +247,136 @@
     }
     .reader-stage.focus-on .focus-mask,
     .reader-stage.focus-on .focus-window { display: block; }
-    .badge-focus {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(35,87,137,.12);
-      color: var(--blue);
-      font: 700 10px "Lexend", sans-serif;
-      text-transform: none;
-      letter-spacing: 0;
+    .hint-bar {
+      margin: 0 18px 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.55);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
     }
     .footnote { margin-top: 14px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 900px) {
+      .texts, .control-grid { grid-template-columns: 1fr; }
+    }
     @media print {
+      .display-controls, .hint-bar, .footnote a { display: none !important; }
       body { background: white; }
-      .reading-tools, .footnote a { display: none !important; }
-      .reader-stage.focus-on .focus-mask,
-      .reader-stage.focus-on .focus-window { display: block !important; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <span class="eyebrow">Table 4 · Study 3 stimulus S1</span>
-      <h1 id="artifact-title"></h1>
-      <p class="sub" id="artifact-subtitle"></p>
-      <p class="counts" id="char-counts"></p>
-    </div>
+  <header>
+    <span class="eyebrow">Table 4 · Study 3 stimulus</span>
+    <h1 id="artifact-title"></h1>
+    <p class="subtitle" id="artifact-subtitle"></p>
+    <p class="counts" id="char-counts"></p>
+  </header>
 
-    <div class="sample" id="screenshot-area">
+  <main>
+    <section class="display-controls" aria-label="Reading display controls">
+      <h2>Reading display</h2>
+      <p>Same controls as the <a href="https://morrisyujq.github.io/dft-gen-expert-spot-check/">expert spot-check</a> page. Applies to all three columns. Click <strong>Focus line</strong> to turn the reading mask on; click <strong>Hide mask</strong> to turn it off.</p>
+      <div class="control-grid">
+        <div class="control">
+          <label for="fontSelect">Friendly font <output id="fontLabel">Atkinson</output></label>
+          <select id="fontSelect">
+            <option value="atkinson">Atkinson Hyperlegible</option>
+            <option value="lexend">Lexend</option>
+            <option value="yahei">Microsoft YaHei UI</option>
+            <option value="verdana">Verdana</option>
+            <option value="arial">Arial</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="textSize">Text size <output id="textSizeLabel">16px</output></label>
+          <input id="textSize" type="range" min="14" max="24" step="1" value="16">
+        </div>
+        <div class="control">
+          <label for="lineSpacing">Line spacing <output id="lineSpacingLabel">1.80</output></label>
+          <input id="lineSpacing" type="range" min="1.3" max="2.4" step="0.05" value="1.8">
+        </div>
+        <div class="control">
+          <label for="letterSpacing">Letter spacing <output id="letterSpacingLabel">0.02em</output></label>
+          <input id="letterSpacing" type="range" min="0" max="0.12" step="0.005" value="0.018">
+        </div>
+        <div class="control">
+          <label for="wordSpacing">Word spacing <output id="wordSpacingLabel">0.08em</output></label>
+          <input id="wordSpacing" type="range" min="0" max="0.35" step="0.01" value="0.08">
+        </div>
+        <div class="control">
+          <label for="maskHeight">Mask window size <output id="maskHeightLabel">34px</output></label>
+          <input id="maskHeight" type="range" min="24" max="90" step="2" value="34">
+        </div>
+        <div class="control control-actions">
+          <button type="button" id="resetReading">Reset reading display</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="hint-bar" id="screenshot-hint">
+      Screenshot target: the three-column panel below (≥1280px width). Toggle <em>Focus line / Hide mask</em> per column for Table 4 figures (mask off = full text; mask on = Focus Mode).
+    </p>
+
+    <article class="sample" id="screenshot-area">
       <div class="sample-head">
-        <h2>Palace Museum (Gugong) interpretive label — three rewriting conditions</h2>
-        <p>Screenshot at ≥1280px width. DFT-GEN column uses Focus Mode reading mask (70% overlay) with term highlighting.</p>
+        <div>
+          <span class="sample-id" id="sample-id">S1</span>
+          <span class="badge">Palace Museum · Gugong</span>
+        </div>
       </div>
       <div class="texts" id="texts-root"></div>
-    </div>
+    </article>
 
     <p class="footnote">
       <a href="https://github.com/MorrisYUJQ/museum-stimuli">museum-stimuli</a> ·
-      UI aligned with <a href="https://github.com/MorrisYUJQ/dft-gen-expert-spot-check">dft-gen-expert-spot-check</a> ·
-      counts in <code>table4_word_counts.json</code>
+      UI from <a href="https://github.com/MorrisYUJQ/dft-gen-expert-spot-check">dft-gen-expert-spot-check</a>
     </p>
-  </div>
+  </main>
 
   <script>
     const DATA = {"title": "洮河石雕兰亭集会图砚", "title_en": "Taohé stone inkstone with Lanting gathering motif (Song dynasty)", "stimulus_id": "S1", "original_html": "<p>洮河石雕兰亭集会图砚，宋，长22.4厘米，宽13.5厘米，厚6.8厘米。砚长方形，砚面及四侧面浅浮雕兰亭修褉图，描绘东晋永和九年（353年）王羲之同谢安等人在会稽山阴之兰亭修褉聚会时的场景。王羲之的著名法帖《兰亭序》描述的便是这次盛会。砚面主体内容为兰亭图，楼台亭阁，山峦叠嶂，祥云环绕，宛如仙境。作者又以曲水作墨池，为河渠式半环绕，墨池上有镂空的树干、楼栏、小桥，池畔以小桥连接，巧妙而又得体。砚的四面侧壁刻修褉环景图，其中一侧面阴刻“逋道人”及“元□”印。环景中40多个人物，坐立于林间溪边，或高谈阔论，或烹茶、赏画、沉思、捕鱼、读书、打拳等。另有浴鹅图，描绘群鹅6只嬉戏于水中、岸上、树下，或游水，或啄食，或引吭高歌。砚背覆手下凹，呈斜坡状。此砚石质细腻古朴，包浆厚，呈豆绿色，为宋砚传世之品。明末时由吴拭珍藏。洮河石砚又称洮砚、洮石砚、洮河石砚，为我国四大名砚之一，早在唐宋时期就已驰名海内外，迄今已有1300多年历史。洮河石砚的原料洮河石是水成岩的一种，又名辉绿岩，因产于甘肃省甘南藏族自治州卓尼县洮砚乡洮河之滨而得名。此地原属古洮州，故名。洮河砚石质多有纹理，石色基本为绿色，又有墨绿、碧绿、辉绿、翠绿、淡绿、灰绿等色的变种，故而有人将其与松花江石、绿端石相混淆。唐代著名书法家柳公权在其《论砚》中写道：“蓄砚以青州为第一，绛州次之，后始重端、歙、临洮（今指甘肃卓尼一带）。”这是迄今所见文人对洮砚的最早评价。可见在当时洮砚已享有同端、歙砚齐名的地位。洮砚的盛行始于宋代，被作为当地物产进贡于朝廷，逐步取代了停采的红丝石砚，成为“四大名砚”之一。宋代鉴赏家赵希鹄曾经在他的《洞天清禄集•古砚辨》中说：“除端、歙二石外，惟洮河绿石，北方最贵重，绿如蓝，润如玉，发墨不减端溪下岩，然石在大河深水之底，非人力所致，得之为无价之宝。”事实上，洮河砚出身并不高贵，原本只是砺石的一种。洮河流域在宋代为西夏政权的领地，西夏人经常使用此石作为磨砺战刀的军用物资。对于宋朝文人来讲，洮河砚石材难得，是非常紧俏的“外国进口货”，因而倍加推崇。例如苏东坡在《鲁直所惠洮河石砚铭》中赞扬黄庭坚所收藏的洮河石砚：“洗之砺、发金铁。琢而泓，坚密泽。岁丙寅，斗南北。归予者，黄鲁直。”</p>", "helper_html": "<p>这是一方宋代洮河石砚。</p>\n<p>它长约22厘米，宽约13厘米。</p>\n<p>砚台上刻着兰亭聚会的画面。</p>\n<p>这是王羲之和朋友们的著名聚会。</p>\n<p>画中有山水、亭子和祥云。</p>\n<p>还有弯曲的水池用来磨墨。</p>\n<p>水池上有小桥和栏杆。</p>\n<p>砚的四面刻了四十多个人。</p>\n<p>人们在聊天、喝茶、看书。</p>\n<p>还有六只鹅在玩耍。</p>\n<p>砚底是斜坡形状。</p>\n<p>石头是豆绿色的，很光滑。</p>\n<p>这是宋代的传世古砚。</p>\n<p>明末由吴拭收藏。</p>\n<p>洮河砚是中国四大名砚之一。</p>\n<p>它有一千三百多年历史。</p>\n<p>石料来自甘肃的洮河。</p>\n<p>石头多是绿色的。</p>\n<p>唐代书法家就称赞过它。</p>\n<p>宋代开始成为贡品。</p>\n<p>它原本是磨刀的石料。</p>\n<p>在宋代是很珍贵的文具。</p>\n<p>苏东坡也写诗赞美过它。</p>", "dft_focus_text": "**洮河**石雕**兰亭**集会图砚，宋，长**22.4厘米**，\n\n宽**13.5厘米**，厚**6.8厘米**。\n\n这是一方长方形的砚台，\n\n其砚面与四个侧面均以浅浮雕技法雕刻了**《**兰亭****修褉**图》**。\n\n这幅图描绘了东晋永和九年（公元**353年**），\n\n以王羲之为首，包括谢安等人在内的名士，\n\n于会稽山阴的**兰亭**举行“**修褉**”雅集时的场景。\n\n王羲之的著名法帖**《**兰亭**序》**描述的便是这次盛会。\n\n砚面的主体内容为**兰亭**图，图中楼台亭阁错落，\n\n远处山峦叠嶂，并有祥云环绕其间，\n\n整体宛如仙境。\n\n作者以曲水为墨池，其形如河渠半绕，\n\n池上设镂空树干、楼栏与小桥，池畔亦以桥相连，\n\n构思巧妙，布置得体。\n\n这是一方古代的砚。\n\n它的四面侧壁上，都刻有同一幅图画。\n\n这幅画名为**修褉**环景图，\n\n描绘了古人在水边聚会的场景。\n\n在其中一面侧壁上， 还刻有“逋道人”这个名字\n\n， 并盖有一方“元□”的印章。\n\n这可能是作者或收藏者的标记。\n\n这幅画作描绘了林间溪畔的景致，\n\n共有四十余位人物置身其中。\n\n画面中，有人于溪畔坐而论道，有人于林间烹茶，\n\n亦有人独自赏画沉思。\n\n此外，可见人物在溪流中捕鱼，于树下凝神读书，\n\n或在空地上练习拳法。\n\n整体场景洋溢着浓厚的生活气息，人物各具情态，\n\n共同构成了一幅生动和谐的人文画卷。\n\n这幅画名为**《浴鹅图》**，\n\n描绘了六只白鹅嬉戏的场景。\n\n有的在水中游动，有的在岸边休憩，\n\n还有的在树下纳凉。\n\n它们姿态各异：有的低头觅食，有的则昂首向天，\n\n仿佛正在高声鸣叫。\n\n砚背的覆手部分向内凹陷，呈平缓的斜坡状。\n\n这是一方宋代流传下来的砚台。\n\n它的石质极为细腻，表面覆有温厚的包浆，\n\n整体呈现淡雅的豆绿色。\n\n明末时由吴拭珍藏。\n\n**洮河**石砚，又称洮砚或洮石砚，\n\n是中国的**四大名砚**之一。\n\n它历史悠久，早在唐宋时期就已驰名海内外，\n\n至今已有一千三百多年。\n\n作为文房珍品，其石质细腻，利于发墨，\n\n是书写与创作的重要工具。\n\n**洮河**石砚的原料为**洮河**石，\n\n这是一种属于水成岩（亦称**辉绿岩**）的石材。\n\n其名称源于产地——甘肃省甘南藏族自治州卓尼县洮砚乡\n\n，位于**洮河**河畔，石材因此得名。\n\n以此石制成的砚台，即为著名的**洮河**石砚。\n\n此地原名古洮州，因此这件器物便以此地命名。\n\n**洮河**砚石料多含天然纹理，石色以绿色为基调，\n\n并有墨绿、碧绿、辉绿、翠绿、淡绿、\n\n灰绿等多种变体。\n\n因其色泽丰富，常易与松花江石或绿端石相混淆。\n\n唐代书法家**柳公权**在****《论砚》****中品评名砚，\n\n认为青州砚当居首位，绛州砚次之。\n\n后来，人们的喜好发生转变，开始推崇**端砚**、\n\n**歙砚**以及**临洮**砚。\n\n文中提到的**临洮**，\n\n其产地大致相当于今天的甘肃卓尼一带。\n\n这是目前发现最早的文字记载，\n\n一位古代文人对洮砚作出了评价。\n\n这一看法得以留存至今。\n\n这份评价极为珍贵，\n\n它让我们得以知晓 古人对洮砚的珍视程度。\n\n由此可见，当时洮砚已与**端砚**、**歙砚**齐名，\n\n同被视为砚中珍品。\n\n洮砚自宋代开始盛行，被作为地方贡品进献朝廷，\n\n逐渐取代了当时已停采的红丝石砚，\n\n并跻身“**四大名砚**”之列。\n\n宋代鉴赏家**赵希鹄**在****《洞天清禄集**•古砚辨》**中记载\n\n，除**端砚**、**歙砚**之外，以**洮河**绿石最为北方所重。\n\n其石色绿如蓝，质润如玉，\n\n发墨之佳不逊于端溪下岩所产。\n\n然此石取自大河深水之底，非人力易得，\n\n故获之者视若无价之宝。\n\n事实上，**洮河**砚的出身并不高贵，\n\n最初只是用作砺石的一种石材。\n\n古人常用其质地坚硬的特点来打磨刀具。\n\n后来，因其石质细腻、色泽雅润，逐渐被匠人发掘\n\n，经雕琢后成为砚台，最终进入文人雅士的文房，\n\n成为备受珍视的器物。\n\n**洮河**流域在宋代是**西夏**政权的领地。\n\n**西夏**人经常开采当地的一种石头，用来磨砺战刀，\n\n作为重要的军用物资。\n\n对于宋朝文人而言，**洮河**砚的石材极为难得。\n\n它产自边疆乃至域外，\n\n在当时犹如珍贵的“外国进口货”，因而格外紧俏\n\n，备受推崇。\n\n例如**苏东坡**在**《鲁直所惠**洮河**石砚铭》**中，\n\n称赞其友**黄庭坚**所藏的**洮河**石砚：“洗之砺、\n\n发金铁。\n\n” 琢而泓，坚密泽。\n\n岁丙寅，斗南北。\n\n归予者，黄鲁直。\n\n”", "word_counts": {"stimulus_id": "S1", "title": "洮河石雕兰亭集会图砚", "original_chars": 934, "helper_chars": 253, "dft_focus_chars": 1511}};
 
-    function escapeHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    const PREFS_STORAGE_KEY = 'table4-reading-display-v1';
+    const DEFAULT_PREFS = {
+      font: 'atkinson',
+      textSize: 16,
+      lineSpacing: 1.8,
+      letterSpacing: 0.018,
+      wordSpacing: 0.08,
+      maskHeight: 34
+    };
+    const FONT_STACKS = {
+      atkinson: '"Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif',
+      lexend: '"Lexend", "Atkinson Hyperlegible", "Noto Sans SC", sans-serif',
+      yahei: '"Microsoft YaHei UI", "Noto Sans SC", "Atkinson Hyperlegible", sans-serif',
+      verdana: 'Verdana, "Microsoft YaHei UI", sans-serif',
+      arial: 'Arial, "Microsoft YaHei UI", sans-serif'
+    };
+    const FONT_LABELS = {
+      atkinson: 'Atkinson',
+      lexend: 'Lexend',
+      yahei: 'YaHei UI',
+      verdana: 'Verdana',
+      arial: 'Arial'
+    };
+
+    const fontSelect = document.getElementById('fontSelect');
+    const textSizeInput = document.getElementById('textSize');
+    const lineSpacingInput = document.getElementById('lineSpacing');
+    const letterSpacingInput = document.getElementById('letterSpacing');
+    const wordSpacingInput = document.getElementById('wordSpacing');
+    const maskHeightInput = document.getElementById('maskHeight');
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[ch]));
     }
 
-    function renderRichText(value) {
+    function renderText(value) {
       let s = escapeHtml(value);
       s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       s = s.replace(/==([^=]+)==/g, '<mark>$1</mark>');
@@ -249,12 +394,35 @@
       const maxVisibleIndex = Math.max(0, Math.floor((stage.clientHeight - focusHeight - 16) / step));
       const nextIndex = Math.max(0, Math.min(index, maxVisibleIndex));
       stage.dataset.focusIndex = String(nextIndex);
-      const visibleIndex = nextIndex;
-      const focusTop = 12 + visibleIndex * step;
+      const focusTop = 12 + nextIndex * step;
       stage.style.setProperty('--focus-top', focusTop + 'px');
     }
 
-    function bindReaderTools(root) {
+    function textPanel(panelId, title, body, options = {}) {
+      const { asHtml = false } = options;
+      const content = asHtml
+        ? `<div class="text-content reader-html">${body}</div>`
+        : `<div class="text-content">${renderText(body)}</div>`;
+      return `
+        <section class="text-box">
+          <h3>${escapeHtml(title)}</h3>
+          <div class="reading-tools" aria-label="Reading focus controls for ${escapeHtml(title)}">
+            <button type="button" data-mask-toggle="${panelId}">Focus line</button>
+            <button type="button" data-mask-move="${panelId}" data-direction="-1">Move up</button>
+            <button type="button" data-mask-move="${panelId}" data-direction="1">Move down</button>
+          </div>
+          <div class="reader-stage" id="${panelId}" data-focus-index="0">
+            ${content}
+            <div class="focus-mask top"></div>
+            <div class="focus-window"></div>
+            <div class="focus-mask bottom"></div>
+          </div>
+        </section>`;
+    }
+
+    function initReaderTools(root) {
+      if (root.dataset.readerToolsBound === 'true') return;
+      root.dataset.readerToolsBound = 'true';
       root.addEventListener('click', (event) => {
         const toggle = event.target.closest('[data-mask-toggle]');
         const move = event.target.closest('[data-mask-move]');
@@ -277,63 +445,91 @@
       });
     }
 
-    function textPanel(panelId, title, innerHtmlOrText, options = {}) {
-      const { focusDefault = false, badge = '', showTools = false } = options;
-      const focusClass = focusDefault ? ' focus-on' : '';
-      const toolsHtml = showTools ? `
-        <div class="reading-tools" aria-label="Reading focus controls">
-          <button type="button" data-mask-toggle="${panelId}">${focusDefault ? 'Hide mask' : 'Focus line'}</button>
-          <button type="button" data-mask-move="${panelId}" data-direction="-1">Move up</button>
-          <button type="button" data-mask-move="${panelId}" data-direction="1">Move down</button>
-        </div>` : '';
-      const maskHtml = showTools ? `
-        <div class="focus-mask top"></div>
-        <div class="focus-window"></div>
-        <div class="focus-mask bottom"></div>` : '';
-      const isHtml = innerHtmlOrText.trim().startsWith('<');
-      const contentBlock = isHtml
-        ? `<div class="text-content">${innerHtmlOrText}</div>`
-        : `<div class="text-content">${renderRichText(innerHtmlOrText)}</div>`;
-      return `
-        <section class="text-box${focusDefault ? ' text-box--focus' : ''}">
-          <h3>${escapeHtml(title)}${badge ? `<span class="badge-focus">${badge}</span>` : ''}</h3>
-          ${toolsHtml}
-          <div class="reader-stage${focusClass}" id="${panelId}" data-focus-index="0">
-            ${contentBlock}
-            ${maskHtml}
-          </div>
-        </section>`;
+    function loadPrefs() {
+      try { return { ...DEFAULT_PREFS, ...(JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY)) || {}) }; }
+      catch { return { ...DEFAULT_PREFS }; }
+    }
+    function savePrefs(prefs) {
+      localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs));
+    }
+    function currentPrefsFromControls() {
+      return {
+        font: fontSelect.value,
+        textSize: Number(textSizeInput.value),
+        lineSpacing: Number(lineSpacingInput.value),
+        letterSpacing: Number(letterSpacingInput.value),
+        wordSpacing: Number(wordSpacingInput.value),
+        maskHeight: Number(maskHeightInput.value)
+      };
+    }
+    function setControlValues(prefs) {
+      fontSelect.value = prefs.font;
+      textSizeInput.value = prefs.textSize;
+      lineSpacingInput.value = prefs.lineSpacing;
+      letterSpacingInput.value = prefs.letterSpacing;
+      wordSpacingInput.value = prefs.wordSpacing;
+      maskHeightInput.value = prefs.maskHeight;
+    }
+    function updateControlLabels(prefs) {
+      document.getElementById('fontLabel').textContent = FONT_LABELS[prefs.font] || 'Custom';
+      document.getElementById('textSizeLabel').textContent = `${prefs.textSize}px`;
+      document.getElementById('lineSpacingLabel').textContent = prefs.lineSpacing.toFixed(2);
+      document.getElementById('letterSpacingLabel').textContent = `${prefs.letterSpacing.toFixed(3)}em`;
+      document.getElementById('wordSpacingLabel').textContent = `${prefs.wordSpacing.toFixed(2)}em`;
+      document.getElementById('maskHeightLabel').textContent = `${prefs.maskHeight}px`;
+    }
+    function applyReadingPrefs(prefs) {
+      document.documentElement.style.setProperty('--reader-font', FONT_STACKS[prefs.font] || FONT_STACKS.atkinson);
+      document.documentElement.style.setProperty('--reader-size', `${prefs.textSize}px`);
+      document.documentElement.style.setProperty('--reader-line-height', prefs.lineSpacing);
+      document.documentElement.style.setProperty('--reader-letter-spacing', `${prefs.letterSpacing}em`);
+      document.documentElement.style.setProperty('--reader-word-spacing', `${prefs.wordSpacing}em`);
+      document.documentElement.style.setProperty('--mask-height', `${prefs.maskHeight}px`);
+      updateControlLabels(prefs);
+      document.querySelectorAll('.reader-stage.focus-on').forEach(stage => {
+        setFocusPosition(stage, Number(stage.dataset.focusIndex || 0));
+      });
+    }
+    function bindReadingControls() {
+      const controls = [fontSelect, textSizeInput, lineSpacingInput, letterSpacingInput, wordSpacingInput, maskHeightInput];
+      controls.forEach(control => {
+        const handler = () => {
+          const prefs = currentPrefsFromControls();
+          savePrefs(prefs);
+          applyReadingPrefs(prefs);
+        };
+        control.addEventListener('input', handler);
+        control.addEventListener('change', handler);
+      });
+      document.getElementById('resetReading').addEventListener('click', () => {
+        const prefs = { ...DEFAULT_PREFS };
+        setControlValues(prefs);
+        savePrefs(prefs);
+        applyReadingPrefs(prefs);
+      });
     }
 
     function init() {
       document.getElementById('artifact-title').textContent = DATA.title;
       document.getElementById('artifact-subtitle').textContent =
-        DATA.title_en + ' · ' + DATA.stimulus_id + ' · Palace Museum (Gugong)';
+        DATA.title_en + ' · ' + DATA.stimulus_id;
+      document.getElementById('sample-id').textContent = DATA.stimulus_id;
       const wc = DATA.word_counts;
       document.getElementById('char-counts').textContent =
         'Characters (no whitespace): Original ' + wc.original_chars +
         ' · Dyslexia Helper ' + wc.helper_chars +
         ' · DFT-GEN Focus ' + wc.dft_focus_chars;
 
-      const root = document.getElementById('texts-root');
-      root.innerHTML =
-        textPanel('panel-original', 'Original (museum label)', DATA.original_html) +
-        textPanel('panel-helper', 'Dyslexia Helper (one-step LLM)', DATA.helper_html) +
-        textPanel(
-          'panel-dft',
-          'DFT-GEN (Focus Mode)',
-          DATA.dft_focus_text,
-          { focusDefault: true, badge: 'reading mask on', showTools: true }
-        );
+      document.getElementById('texts-root').innerHTML =
+        textPanel('panel-original', 'Original text', DATA.original_html, { asHtml: true }) +
+        textPanel('panel-helper', 'Dyslexia Helper', DATA.helper_html, { asHtml: true }) +
+        textPanel('panel-dft', 'DFT-GEN (Focus Mode)', DATA.dft_focus_text, { asHtml: false });
 
-      bindReaderTools(document);
-      const dftStage = document.getElementById('panel-dft');
-      requestAnimationFrame(() => {
-        setFocusPosition(dftStage, 0);
-        window.addEventListener('resize', () => {
-          setFocusPosition(dftStage, Number(dftStage.dataset.focusIndex || 0));
-        });
-      });
+      initReaderTools(document);
+      const prefs = loadPrefs();
+      setControlValues(prefs);
+      applyReadingPrefs(prefs);
+      bindReadingControls();
     }
 
     init();

@@ -278,7 +278,7 @@
   <main>
     <section class="display-controls" aria-label="Reading display controls">
       <h2>Reading display</h2>
-      <p>Same controls as the <a href="https://morrisyujq.github.io/dft-gen-expert-spot-check/">expert spot-check</a> page. DFT-GEN uses light yellow marks on a small set of domain terms only (no blanket bolding). Click <strong>Focus line</strong> / <strong>Hide mask</strong> per column.</p>
+      <p>Same controls as the <a href="https://morrisyujq.github.io/dft-gen-expert-spot-check/">expert spot-check</a> page. DFT-GEN opens with the Focus Mode mask on; Original and Dyslexia Helper open with mask off for comparison. Click <strong>Focus line</strong> / <strong>Hide mask</strong> per column.</p>
       <div class="control-grid">
         <div class="control">
           <label for="fontSelect">Friendly font <output id="fontLabel">Atkinson</output></label>
@@ -317,7 +317,7 @@
     </section>
 
     <p class="hint-bar" id="screenshot-hint">
-      Screenshot target: the three-column panel below (≥1280px width). Toggle <em>Focus line / Hide mask</em> per column for Table 4 figures (mask off = full text; mask on = Focus Mode).
+      Screenshot target: the three-column panel below (≥1280px width). DFT-GEN starts as Focus Mode (mask on); use <em>Hide mask</em> if you want the unmasked version.
     </p>
 
     <article class="sample" id="screenshot-area">
@@ -399,19 +399,21 @@
     }
 
     function textPanel(panelId, title, body, options = {}) {
-      const { asHtml = false } = options;
+      const { asHtml = false, focusDefault = false } = options;
       const content = asHtml
         ? `<div class="text-content reader-html">${body}</div>`
         : `<div class="text-content">${renderText(body)}</div>`;
+      const focusClass = focusDefault ? ' focus-on' : '';
+      const toggleLabel = focusDefault ? 'Hide mask' : 'Focus line';
       return `
         <section class="text-box">
           <h3>${escapeHtml(title)}</h3>
           <div class="reading-tools" aria-label="Reading focus controls for ${escapeHtml(title)}">
-            <button type="button" data-mask-toggle="${panelId}">Focus line</button>
+            <button type="button" data-mask-toggle="${panelId}">${toggleLabel}</button>
             <button type="button" data-mask-move="${panelId}" data-direction="-1">Move up</button>
             <button type="button" data-mask-move="${panelId}" data-direction="1">Move down</button>
           </div>
-          <div class="reader-stage" id="${panelId}" data-focus-index="0">
+          <div class="reader-stage${focusClass}" id="${panelId}" data-focus-index="0">
             ${content}
             <div class="focus-mask top"></div>
             <div class="focus-window"></div>
@@ -523,13 +525,18 @@
       document.getElementById('texts-root').innerHTML =
         textPanel('panel-original', 'Original text', DATA.original_html, { asHtml: true }) +
         textPanel('panel-helper', 'Dyslexia Helper', DATA.helper_html, { asHtml: true }) +
-        textPanel('panel-dft', 'DFT-GEN (Focus Mode)', DATA.dft_focus_text, { asHtml: false });
+        textPanel('panel-dft', 'DFT-GEN (Focus Mode)', DATA.dft_focus_text, { asHtml: false, focusDefault: true });
 
       initReaderTools(document);
       const prefs = loadPrefs();
       setControlValues(prefs);
       applyReadingPrefs(prefs);
       bindReadingControls();
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.reader-stage.focus-on').forEach(stage => {
+          setFocusPosition(stage, Number(stage.dataset.focusIndex || 0));
+        });
+      });
     }
 
     init();

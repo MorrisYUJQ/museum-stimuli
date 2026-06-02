@@ -13,4 +13,4 @@ https://<user-or-org>.github.io/<repo>/?stimulus=S2&condition=helper_2025&label=
 https://<user-or-org>.github.io/<repo>/?stimulus=S2&condition=dftgen&label=S2_dftgen
 ```
 
-No backend submission or timing is used in this static version. For Credamo/JianShu, S1 and S2 are intended to be opened separately so each exhibit can have its own reading-time record.
+No backend submission is used in this static version. The page starts a local hidden timer on load and shows the reading time only after the participant clicks "我已读完". For Credamo/JianShu, S1 and S2 are intended to be opened separately so each exhibit can have its own reading-time record.

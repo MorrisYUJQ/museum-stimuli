@@ -4,6 +4,7 @@ const stimulusId = params.get('stimulus') || params.get('item') || 'S1';
 const stimulusIds = (params.get('stimuli') || stimulusId).split(',').map((id) => id.trim()).filter(Boolean);
 const conditionRaw = params.get('condition') || params.get('version') || 'original';
 const label = params.get('label') || `${stimulusIds.join('-')}_${conditionRaw}`;
+const readingStartMs = performance.now();
 
 function normalizeCondition(condition) {
   if (condition === 'helper_2025' || condition === 'dyslexia_helper_2025') return 'helper';
@@ -76,6 +77,15 @@ function conditionLabelText(condition, rawCondition) {
   if (condition === 'dftgen') return 'DFT-GEN';
   return 'Original';
 }
+function formatReadingTime(ms) {
+  const totalSeconds = Math.max(0, Math.round(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return {
+    totalSeconds,
+    display: `${minutes}分${String(seconds).padStart(2, '0')}秒`
+  };
+}
 function setupDftgenControls() {
   document.querySelectorAll('.reading-card-dftgen').forEach((card) => {
     card.querySelectorAll('[data-dftgen-toggle]').forEach((button) => {
@@ -97,6 +107,22 @@ function setupDftgenControls() {
         line.classList.add('dftgen-line-active');
       });
     });
+  });
+}
+function setupFinishReading() {
+  const button = document.getElementById('finishReadingButton');
+  const result = document.getElementById('readingTimeResult');
+  if (!button || !result) return;
+  button.addEventListener('click', () => {
+    const elapsed = formatReadingTime(performance.now() - readingStartMs);
+    button.disabled = true;
+    button.textContent = '已记录阅读时间';
+    result.hidden = false;
+    result.innerHTML = `
+      <strong>本次阅读时间：${elapsed.display}</strong>
+      <span>请在见数问卷中填写：${elapsed.totalSeconds} 秒</span>
+    `;
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }
 function render() {
@@ -121,7 +147,13 @@ function render() {
           ${renderMaterialBody(item.conditions[condition] || [], condition)}
         </section>
       `).join('')}
+      <section class="finish-panel" aria-label="阅读完成与计时">
+        <button class="btn primary finish-reading-button" id="finishReadingButton" type="button">我已读完</button>
+        <p class="muted small">点击后会显示本次阅读时间。阅读过程中不会显示计时器。</p>
+        <div class="reading-time-result" id="readingTimeResult" hidden></div>
+      </section>
     </section>`;
   setupDftgenControls();
+  setupFinishReading();
 }
 render();

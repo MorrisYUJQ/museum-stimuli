@@ -18,5 +18,7 @@ No backend submission is used in this static version. The page starts a local hi
 Decode completion codes after export:
 
 ```bash
-node decode_completion_codes.js M-S1O-XXXX-YY
+node decode_completion_codes.js OS1173
 ```
+
+Completion code format: condition + stimulus + octal seconds. Example: `OS1173` means Original, S1, 123 seconds because octal `173` equals decimal `123`.

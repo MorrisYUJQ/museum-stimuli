@@ -82,18 +82,10 @@ function conditionCode(condition) {
   if (condition === 'dftgen') return 'D';
   return 'O';
 }
-function codeSalt(key) {
-  return Array.from(key).reduce((sum, char) => sum + char.charCodeAt(0), 73);
-}
-function checksum(value) {
-  const sum = Array.from(value).reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 3), 0);
-  return (sum % 1296).toString(36).toUpperCase().padStart(2, '0');
-}
 function generateCompletionCode(seconds, condition) {
-  const materialKey = `${stimulusIds.join('')}${conditionCode(condition)}`.toUpperCase();
-  const encodedSeconds = (seconds * 17 + codeSalt(materialKey)).toString(36).toUpperCase();
-  const check = checksum(`${materialKey}:${encodedSeconds}`);
-  return `M-${materialKey}-${encodedSeconds}-${check}`;
+  const materialKey = stimulusIds.join('').toUpperCase();
+  const encodedSeconds = seconds.toString(8).padStart(3, '0');
+  return `${conditionCode(condition)}${materialKey}${encodedSeconds}`;
 }
 function setupDftgenControls() {
   document.querySelectorAll('.reading-card-dftgen').forEach((card) => {

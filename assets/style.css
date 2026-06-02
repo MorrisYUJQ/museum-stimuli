@@ -97,6 +97,7 @@ textarea { min-height: 92px; resize: vertical; }
 .reading-time-result { margin-top: 12px; border: 1px solid rgba(4, 120, 87, .24); background: rgba(4, 120, 87, .08); color: #065f46; border-radius: 14px; padding: 12px 14px; line-height: 1.8; }
 .reading-time-result strong { display: block; font-size: 18px; }
 .reading-time-result span { display: block; }
+.completion-code { display: inline-block; margin: 6px 0; padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid rgba(4, 120, 87, .24); color: #064e3b; font-size: 18px; font-weight: 800; letter-spacing: .08em; }
 .error { color: var(--danger); }
 .success { color: var(--ok); }
 .small { font-size: 13px; }

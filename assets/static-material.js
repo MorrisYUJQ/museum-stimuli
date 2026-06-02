@@ -77,14 +77,23 @@ function conditionLabelText(condition, rawCondition) {
   if (condition === 'dftgen') return 'DFT-GEN';
   return 'Original';
 }
-function formatReadingTime(ms) {
-  const totalSeconds = Math.max(0, Math.round(ms / 1000));
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return {
-    totalSeconds,
-    display: `${minutes}分${String(seconds).padStart(2, '0')}秒`
-  };
+function conditionCode(condition) {
+  if (condition === 'helper') return 'H';
+  if (condition === 'dftgen') return 'D';
+  return 'O';
+}
+function codeSalt(key) {
+  return Array.from(key).reduce((sum, char) => sum + char.charCodeAt(0), 73);
+}
+function checksum(value) {
+  const sum = Array.from(value).reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 3), 0);
+  return (sum % 1296).toString(36).toUpperCase().padStart(2, '0');
+}
+function generateCompletionCode(seconds, condition) {
+  const materialKey = `${stimulusIds.join('')}${conditionCode(condition)}`.toUpperCase();
+  const encodedSeconds = (seconds * 17 + codeSalt(materialKey)).toString(36).toUpperCase();
+  const check = checksum(`${materialKey}:${encodedSeconds}`);
+  return `M-${materialKey}-${encodedSeconds}-${check}`;
 }
 function setupDftgenControls() {
   document.querySelectorAll('.reading-card-dftgen').forEach((card) => {
@@ -114,13 +123,15 @@ function setupFinishReading() {
   const result = document.getElementById('readingTimeResult');
   if (!button || !result) return;
   button.addEventListener('click', () => {
-    const elapsed = formatReadingTime(performance.now() - readingStartMs);
+    const totalSeconds = Math.max(0, Math.round((performance.now() - readingStartMs) / 1000));
+    const completionCode = generateCompletionCode(totalSeconds, normalizeCondition(conditionRaw));
     button.disabled = true;
-    button.textContent = '已记录阅读时间';
+    button.textContent = '已生成完成码';
     result.hidden = false;
     result.innerHTML = `
-      <strong>本次阅读时间：${elapsed.display}</strong>
-      <span>请在见数问卷中填写：${elapsed.totalSeconds} 秒</span>
+      <strong>完成码</strong>
+      <code class="completion-code">${completionCode}</code>
+      <span>请将这个完成码填写到见数问卷中，用于确认本页已完成。</span>
     `;
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
@@ -148,8 +159,8 @@ function render() {
         </section>
       `).join('')}
       <section class="finish-panel" aria-label="阅读完成与计时">
-        <button class="btn primary finish-reading-button" id="finishReadingButton" type="button">我已读完</button>
-        <p class="muted small">点击后会显示本次阅读时间。阅读过程中不会显示计时器。</p>
+        <button class="btn primary finish-reading-button" id="finishReadingButton" type="button">我已读完，生成完成码</button>
+        <p class="muted small">请在确认阅读完成后点击按钮，并将页面显示的完成码填写回见数问卷。</p>
         <div class="reading-time-result" id="readingTimeResult" hidden></div>
       </section>
     </section>`;

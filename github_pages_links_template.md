@@ -2,13 +2,21 @@
 
 部署后把 `BASE_URL` 替换为 GitHub Pages 地址，例如 `https://用户名.github.io/仓库名/`。
 
-## 推荐：每个条件只跳转一次（S4 + S5）
+## 推荐：S4 和 S5 各跳转一次（共 6 条）
 
-- Original: BASE_URL?stimuli=S4,S5&condition=original&label=S4_S5_original
-- Dyslexia Helper 2025 ver.: BASE_URL?stimuli=S4,S5&condition=helper_2025&label=S4_S5_helper_2025
-- DFT-GEN: BASE_URL?stimuli=S4,S5&condition=dftgen&label=S4_S5_dftgen
+### S4 木筒望远镜
+- Original: BASE_URL?stimulus=S4&condition=original&label=S4_original
+- Dyslexia Helper 2025 ver.: BASE_URL?stimulus=S4&condition=helper_2025&label=S4_helper_2025
+- DFT-GEN: BASE_URL?stimulus=S4&condition=dftgen&label=S4_dftgen
 
-说明：这三条链接每条都会在同一页连续展示 2 个展品（木筒望远镜 + 小风扇），用于减少见数中的反复跳转。单展品链接保留如下，作为备用。
+### S5 小风扇
+- Original: BASE_URL?stimulus=S5&condition=original&label=S5_original
+- Dyslexia Helper 2025 ver.: BASE_URL?stimulus=S5&condition=helper_2025&label=S5_helper_2025
+- DFT-GEN: BASE_URL?stimulus=S5&condition=dftgen&label=S5_dftgen
+
+说明：这 6 条链接让 S4 和 S5 分开计时，各点一次。Dyslexia Helper 2025 ver. 保留了过度简化后的信息丢失状态，用于体现 oversimplification 会影响部分理解题。
+
+## 单展品链接备用全集
 
 ## S1 洮河石雕兰亭集会图砚
 - Original: BASE_URL?stimulus=S1&condition=original&label=S1_original

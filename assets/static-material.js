@@ -1,8 +1,9 @@
 
 const params = new URLSearchParams(location.search);
 const stimulusId = params.get('stimulus') || params.get('item') || 'S1';
+const stimulusIds = (params.get('stimuli') || stimulusId).split(',').map((id) => id.trim()).filter(Boolean);
 const conditionRaw = params.get('condition') || params.get('version') || 'original';
-const label = params.get('label') || `${stimulusId}_${conditionRaw}`;
+const label = params.get('label') || `${stimulusIds.join('-')}_${conditionRaw}`;
 
 function normalizeCondition(condition) {
   if (condition === 'helper_2025' || condition === 'dyslexia_helper_2025') return 'helper';
@@ -66,6 +67,15 @@ function renderDftgen(paragraphs) {
       </div>
     </article>`;
 }
+function renderMaterialBody(paragraphs, condition) {
+  if (condition === 'dftgen') return renderDftgen(paragraphs);
+  return renderOriginalOrHelper(paragraphs, condition === 'original' ? 'reading-card-original' : 'reading-card-helper');
+}
+function conditionLabelText(condition, rawCondition) {
+  if (rawCondition === 'helper_2025' || condition === 'helper') return 'Dyslexia Helper 2025 ver.';
+  if (condition === 'dftgen') return 'DFT-GEN';
+  return 'Original';
+}
 function setupDftgenControls() {
   document.querySelectorAll('.reading-card-dftgen').forEach((card) => {
     card.querySelectorAll('[data-dftgen-toggle]').forEach((button) => {
@@ -90,24 +100,27 @@ function setupDftgenControls() {
   });
 }
 function render() {
-  const item = getItem(stimulusId);
   const condition = normalizeCondition(conditionRaw);
   const app = document.getElementById('app');
-  if (!item || !item.conditions[condition]) {
-    app.innerHTML = `<section class="card"><h1>材料链接无效</h1><p class="error">请检查 stimulus 和 condition 参数。</p></section>`;
+  const items = stimulusIds.map(getItem);
+  const invalidItem = items.find((item) => !item || !item.conditions[condition]);
+  if (invalidItem || !items.length) {
+    app.innerHTML = `<section class="card"><h1>材料链接无效</h1><p class="error">请检查 stimulus/stimuli 和 condition 参数。</p></section>`;
     return;
   }
-  const paragraphs = item.conditions[condition] || [];
-  const conditionLabel = conditionRaw === 'helper_2025' ? 'Dyslexia Helper 2025 ver.' : condition === 'dftgen' ? 'DFT-GEN' : condition === 'helper' ? 'Dyslexia Helper 2025 ver.' : 'Original';
-  const body = condition === 'dftgen'
-    ? renderDftgen(paragraphs)
-    : renderOriginalOrHelper(paragraphs, condition === 'original' ? 'reading-card-original' : 'reading-card-helper');
+  const conditionLabel = conditionLabelText(condition, conditionRaw);
   app.innerHTML = `
-    <section class="card material-shell">
+    <section class="card material-shell ${items.length > 1 ? 'material-shell-multiple' : ''}">
       <span class="badge">${escapeHtml(label)}</span>
-      <h1>${escapeHtml(item.title)}</h1>
-      <p class="muted">版本：${escapeHtml(conditionLabel)}。请认真阅读下面的展品说明，读完后返回见数问卷继续作答。</p>
-      ${body}
+      <h1>${items.length > 1 ? '博物馆展品阅读材料' : escapeHtml(items[0].title)}</h1>
+      <p class="muted">版本：${escapeHtml(conditionLabel)}。请认真阅读下面${items.length > 1 ? `${items.length}个` : '的'}展品说明，读完后返回见数问卷继续作答。</p>
+      ${items.map((item, index) => `
+        <section class="exhibit-block">
+          ${items.length > 1 ? `<p class="badge exhibit-order">展品 ${index + 1} / ${items.length}</p>` : ''}
+          ${items.length > 1 ? `<h2>${escapeHtml(item.title)}</h2>` : ''}
+          ${renderMaterialBody(item.conditions[condition] || [], condition)}
+        </section>
+      `).join('')}
     </section>`;
   setupDftgenControls();
 }

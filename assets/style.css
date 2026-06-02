@@ -41,6 +41,10 @@ textarea { min-height: 92px; resize: vertical; }
 .reading-card-helper { background: #fff; }
 .reading-card-helper p { border-bottom: 1px solid rgba(229, 231, 235, .72); margin: 0; padding: 9px 0; }
 .reading-card-helper p:last-child { border-bottom: 0; }
+.material-shell-multiple { display: grid; gap: 18px; }
+.exhibit-block { border-top: 1px solid var(--line); padding-top: 18px; }
+.exhibit-block:first-of-type { border-top: 0; padding-top: 4px; }
+.exhibit-order { margin-bottom: 8px; }
 .reading-card-dftgen { background: #fff; border: 1px solid rgba(148, 163, 184, .26); box-shadow: 0 10px 26px rgba(15, 23, 42, .035); }
 .reading-card-dftgen .dftgen-blocks { max-width: 40rem; }
 .reading-card-layout-only { background: linear-gradient(180deg, #ffffff, #f8fafc); border-color: rgba(100, 116, 139, .28); }

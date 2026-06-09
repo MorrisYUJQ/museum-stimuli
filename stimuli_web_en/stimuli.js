@@ -1,5 +1,5 @@
-window.STIMULI = {
-  items: window.STIMULI_EN ? window.STIMULI_EN.items : [
+window.STIMULI_EN = {
+  items: [
     {
       id: "S1",
       title: "The Parthenon",
@@ -44,7 +44,14 @@ window.STIMULI = {
           "[Gallery layout] The main room includes pediment sculptures such as Iris and Dionysos.",
           "[Accessibility] The gallery includes video displays and a touch tour for visually impaired visitors."
         ]
-      }
+      },
+      questions: [
+        { id: "S1_Q1", questionNo: 1, prompt: "Which goddess was the Parthenon dedicated to?", options: [{ key: "A", text: "Athena" }, { key: "B", text: "Bastet" }, { key: "C", text: "Isis" }, { key: "D", text: "Aphrodite" }], correctOption: "A", answerText: "Athena" },
+        { id: "S1_Q2", questionNo: 2, prompt: "What did the temple's great size and white marble show?", options: [{ key: "A", text: "Athens' power and wealth" }, { key: "B", text: "A private family collection" }, { key: "C", text: "A Roman fort" }, { key: "D", text: "A temple for Bastet" }], correctOption: "A", answerText: "Athens' power and wealth" },
+        { id: "S1_Q3", questionNo: 3, prompt: "What does the frieze represent?", options: [{ key: "A", text: "Athenians in a religious procession" }, { key: "B", text: "A decree in three scripts" }, { key: "C", text: "A bronze cat from Egypt" }, { key: "D", text: "A Roman birthday invitation" }], correctOption: "A", answerText: "Athenians in a religious procession" },
+        { id: "S1_Q4", questionNo: 4, prompt: "Who designed the Parthenon sculptures?", options: [{ key: "A", text: "Pheidias" }, { key: "B", text: "Ramesses II" }, { key: "C", text: "Major Gayer-Anderson" }, { key: "D", text: "Giovanni Belzoni" }], correctOption: "A", answerText: "Pheidias" },
+        { id: "S1_Q5", questionNo: 5, prompt: "Since when have the Parthenon sculptures been on permanent display?", options: [{ key: "A", text: "1817" }, { key: "B", text: "1799" }, { key: "C", text: "1939" }, { key: "D", text: "AD 100" }], correctOption: "A", answerText: "1817" }
+      ]
     },
     {
       id: "S2",
@@ -91,7 +98,14 @@ window.STIMULI = {
           "[Symbols] The scarab means rebirth; the wedjat-eye means protection and healing.",
           "[Science] X-ray fluorescence showed that the bronze contains copper, tin, arsenic and lead."
         ]
-      }
+      },
+      questions: [
+        { id: "S2_Q1", questionNo: 1, prompt: "Which goddess does the Gayer-Anderson Cat depict?", options: [{ key: "A", text: "Bastet" }, { key: "B", text: "Athena" }, { key: "C", text: "Iris" }, { key: "D", text: "Aphrodite" }], correctOption: "A", answerText: "Bastet" },
+        { id: "S2_Q2", questionNo: 2, prompt: "Where was Bastet's main cult centre?", options: [{ key: "A", text: "Bubastis in the Nile Delta" }, { key: "B", text: "The Acropolis of Athens" }, { key: "C", text: "Vindolanda" }, { key: "D", text: "The Ramesseum" }], correctOption: "A", answerText: "Bubastis in the Nile Delta" },
+        { id: "S2_Q3", questionNo: 3, prompt: "Who donated the statue to the British Museum in 1939?", options: [{ key: "A", text: "Major Robert Grenville Gayer-Anderson" }, { key: "B", text: "Pheidias" }, { key: "C", text: "Ramesses II" }, { key: "D", text: "Claudia Severa" }], correctOption: "A", answerText: "Major Robert Grenville Gayer-Anderson" },
+        { id: "S2_Q4", questionNo: 4, prompt: "What does the scarab beetle symbolise?", options: [{ key: "A", text: "Rebirth" }, { key: "B", text: "Military victory" }, { key: "C", text: "White marble" }, { key: "D", text: "A birthday procession" }], correctOption: "A", answerText: "Rebirth" },
+        { id: "S2_Q5", questionNo: 5, prompt: "Which method did scientists use to study the cat's metal content?", options: [{ key: "A", text: "X-ray fluorescence" }, { key: "B", text: "Audio recording" }, { key: "C", text: "Ink analysis" }, { key: "D", text: "Carbon dating only" }], correctOption: "A", answerText: "X-ray fluorescence" }
+      ]
     }
   ]
 };

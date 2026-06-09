@@ -1,6 +1,6 @@
-# Museum Materials Static Site
+# British Museum Reading Materials Static Site
 
-This folder is a pure static version for GitHub Pages.
+This folder is a pure static version for GitHub Pages. The deployed version contains two longer English British Museum exhibit texts and ten English comprehension questions.
 
 URL format after deployment:
 
@@ -13,7 +13,14 @@ https://<user-or-org>.github.io/<repo>/?stimulus=S2&condition=helper_2025&label=
 https://<user-or-org>.github.io/<repo>/?stimulus=S2&condition=dftgen&label=S2_dftgen
 ```
 
-No backend submission is used in this static version. The page starts a local hidden timer on load and only shows a completion code after the participant clicks "我已读完，生成完成码". For Credamo/JianShu, S1 and S2 are intended to be opened separately so each exhibit can have its own completion-code field.
+No backend submission is used in this static version. The page starts a local hidden timer on load and only shows a completion code after the participant clicks "I have finished reading". For Credamo/JianShu, S1 and S2 are intended to be opened separately so each exhibit can have its own completion-code field.
+
+Current stimuli:
+
+- S1: The Parthenon
+- S2: The Gayer-Anderson Cat
+
+The ten English multiple-choice comprehension questions are in `stimuli_web_en/questions.csv`.
 
 Decode completion codes after export:
 

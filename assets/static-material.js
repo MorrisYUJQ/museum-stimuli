@@ -18,7 +18,9 @@ function getItem(id) {
 }
 function highlightDftgenText(value) {
   let html = escapeHtml(value);
+  html = html.replace(/(^\[[^\]]{1,24}\])/, '<mark class="tag">$1</mark>');
   html = html.replace(/(^\u3010[^\u3011]{1,10}\u3011)/, '<mark class="tag">$1</mark>');
+  html = html.replace(/(<mark class="tag">\[(?:Object|Place|Purpose|Visual message|Museum display|Myth|Civic life|Festival|Key term|Lost statue|Artist|Display history|Gallery layout|Accessibility|Deity|Cult centre|Role|Date|Name|Donation|Collector|Original setting|Religious use|Status|Jewellery|Symbols|Science)\]<\/mark>)([^.;:]{2,80})/, '$1<strong class="key-info">$2</strong>');
   html = html.replace(/(<mark class="tag">\u3010(?:器物|主题|内容|价值|用途|看点|寓意|形制|材质|名称|产地|画面|细节)\u3011<\/mark>)([^，。；;]{2,22})/, '$1<strong class="key-info">$2</strong>');
   return html;
 }
@@ -46,9 +48,9 @@ function visualChunksForDftgen(value) {
 }
 function dftgenControlsHtml() {
   return `
-    <div class="dftgen-controls" aria-label="DFT-GEN 阅读辅助设置">
-      <button class="dftgen-toggle" type="button" data-dftgen-toggle="space" aria-pressed="false">宽松间距</button>
-      <button class="dftgen-toggle" type="button" data-dftgen-toggle="mask" aria-pressed="false">聚焦遮罩</button>
+    <div class="dftgen-controls" aria-label="DFT-GEN reading support settings">
+      <button class="dftgen-toggle" type="button" data-dftgen-toggle="space" aria-pressed="false">Spacious spacing</button>
+      <button class="dftgen-toggle" type="button" data-dftgen-toggle="mask" aria-pressed="false">Focus mask</button>
     </div>`;
 }
 function renderOriginalOrHelper(paragraphs, cls) {
@@ -58,7 +60,7 @@ function renderDftgen(paragraphs) {
   return `
     <article class="reading-card reading-card-dftgen">
       <div class="dftgen-toolbar"><span>DFT-GEN Focus</span></div>
-      <p class="dftgen-help">你可以点击“宽松间距”或“聚焦遮罩”来改善自己的阅读体验。</p>
+      <p class="dftgen-help">You can use spacious spacing or focus mask if it helps you read.</p>
       ${dftgenControlsHtml()}
       <div class="dftgen-blocks">
         ${paragraphs.map((p, index) => {
@@ -118,12 +120,12 @@ function setupFinishReading() {
     const totalSeconds = Math.max(0, Math.round((performance.now() - readingStartMs) / 1000));
     const completionCode = generateCompletionCode(totalSeconds, normalizeCondition(conditionRaw));
     button.disabled = true;
-    button.textContent = '已生成完成码';
+    button.textContent = 'Completion code generated';
     result.hidden = false;
     result.innerHTML = `
-      <strong>完成码</strong>
+      <strong>Completion code</strong>
       <code class="completion-code">${completionCode}</code>
-      <span>请将这个完成码填写到见数问卷中，用于确认本页已完成。</span>
+      <span>Please enter this code in the survey to confirm that you have finished this page.</span>
     `;
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
@@ -134,25 +136,25 @@ function render() {
   const items = stimulusIds.map(getItem);
   const invalidItem = items.find((item) => !item || !item.conditions[condition]);
   if (invalidItem || !items.length) {
-    app.innerHTML = `<section class="card"><h1>材料链接无效</h1><p class="error">请检查 stimulus/stimuli 和 condition 参数。</p></section>`;
+    app.innerHTML = `<section class="card"><h1>Invalid material link</h1><p class="error">Please check the stimulus/stimuli and condition parameters.</p></section>`;
     return;
   }
   const conditionLabel = conditionLabelText(condition, conditionRaw);
   app.innerHTML = `
     <section class="card material-shell ${items.length > 1 ? 'material-shell-multiple' : ''}">
       <span class="badge">${escapeHtml(label)}</span>
-      <h1>${items.length > 1 ? '博物馆展品阅读材料' : escapeHtml(items[0].title)}</h1>
-      <p class="muted">版本：${escapeHtml(conditionLabel)}。请认真阅读下面${items.length > 1 ? `${items.length}个` : '的'}展品说明，读完后返回见数问卷继续作答。</p>
+      <h1>${items.length > 1 ? 'Museum Reading Materials' : escapeHtml(items[0].title)}</h1>
+      <p class="muted">Version: ${escapeHtml(conditionLabel)}. Please read the exhibit description carefully. When you finish, return to the survey and continue answering the questions.</p>
       ${items.map((item, index) => `
         <section class="exhibit-block">
-          ${items.length > 1 ? `<p class="badge exhibit-order">展品 ${index + 1} / ${items.length}</p>` : ''}
+          ${items.length > 1 ? `<p class="badge exhibit-order">Exhibit ${index + 1} / ${items.length}</p>` : ''}
           ${items.length > 1 ? `<h2>${escapeHtml(item.title)}</h2>` : ''}
           ${renderMaterialBody(item.conditions[condition] || [], condition)}
         </section>
       `).join('')}
       <section class="finish-panel" aria-label="阅读完成与计时">
-        <button class="btn primary finish-reading-button" id="finishReadingButton" type="button">我已读完，生成完成码</button>
-        <p class="muted small">请在确认阅读完成后点击按钮，并将页面显示的完成码填写回见数问卷。</p>
+        <button class="btn primary finish-reading-button" id="finishReadingButton" type="button">I have finished reading</button>
+        <p class="muted small">Click the button only after you have finished reading. Then copy the completion code back to the survey.</p>
         <div class="reading-time-result" id="readingTimeResult" hidden></div>
       </section>
     </section>`;

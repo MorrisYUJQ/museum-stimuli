@@ -1,0 +1,18 @@
+[
+  {
+    "stimulus_id": "S1",
+    "title": "The Parthenon",
+    "category": "Greek sculpture",
+    "source": "British Museum",
+    "url": "https://www.britishmuseum.org/collection/galleries/greece-parthenon",
+    "anchor": "s1-the-parthenon"
+  },
+  {
+    "stimulus_id": "S2",
+    "title": "The Gayer-Anderson Cat",
+    "category": "Egyptian sculpture",
+    "source": "British Museum",
+    "url": "https://www.britishmuseum.org/collection/animals/gayer-anderson-cat",
+    "anchor": "s2-gayer-anderson-cat"
+  }
+]

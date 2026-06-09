@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>British Museum English Stimuli</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #24437c;
+      --helper: #7c4a03;
+      --dft: #0f766e;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    header {
+      padding: 28px 20px;
+      background: #111827;
+      color: #fff;
+    }
+    header h1 { margin: 0 0 6px; font-size: 28px; }
+    header p { margin: 0; color: #d1d5db; }
+    main {
+      max-width: 1120px;
+      margin: 24px auto;
+      padding: 0 16px 48px;
+    }
+    .item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+    .item h2 { margin: 0; font-size: 23px; }
+    .meta { margin: 4px 0 14px; color: var(--muted); font-size: 14px; }
+    .conditions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .condition {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fff;
+    }
+    .condition h3 { margin: 0 0 10px; font-size: 17px; }
+    .original h3 { color: var(--accent); }
+    .helper h3 { color: var(--helper); }
+    .dftgen h3 { color: var(--dft); }
+    .condition p {
+      margin: 0 0 10px;
+    }
+    .dftgen p {
+      padding: 6px 8px;
+      border-left: 3px solid var(--dft);
+      background: #f0fdfa;
+    }
+    .questions {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .questions h3 { margin: 0 0 8px; }
+    .questions ol { margin: 0; padding-left: 22px; }
+    .questions li { margin-bottom: 10px; }
+    .options { color: var(--muted); font-size: 14px; }
+    a { color: #1d4ed8; }
+    @media (max-width: 900px) {
+      .conditions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>British Museum English Stimuli</h1>
+    <p>Original, Dyslexia Helper, and DFT-GEN Focus versions with English comprehension questions.</p>
+  </header>
+  <main id="app"></main>
+  <script src="stimuli.js"></script>
+  <script>
+    function esc(value) {
+      return String(value || "").replace(/[&<>"']/g, function (ch) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+      });
+    }
+    function conditionBlock(item, key, label) {
+      const paragraphs = item.conditions[key] || [];
+      return `<section class="condition ${key}">
+        <h3>${label}</h3>
+        ${paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
+      </section>`;
+    }
+    function questionBlock(item) {
+      return `<section class="questions">
+        <h3>Comprehension Questions</h3>
+        <ol>
+          ${item.questions.map((q) => `<li>
+            <strong>${esc(q.prompt)}</strong>
+            <div class="options">${q.options.map((o) => `${o.key}. ${esc(o.text)}`).join(" | ")}</div>
+            <div class="options">Correct answer: ${esc(q.correctOption)} (${esc(q.answerText)})</div>
+          </li>`).join("")}
+        </ol>
+      </section>`;
+    }
+    document.getElementById("app").innerHTML = window.STIMULI_EN.items.map((item) => `
+      <article class="item" id="${esc(item.anchor)}">
+        <h2>${esc(item.id)}. ${esc(item.title)}</h2>
+        <div class="meta">${esc(item.category)} | <a href="${esc(item.url)}" target="_blank" rel="noreferrer">official source</a></div>
+        <div class="conditions">
+          ${conditionBlock(item, "original", "Original")}
+          ${conditionBlock(item, "helper", "Dyslexia Helper")}
+          ${conditionBlock(item, "dftgen", "DFT-GEN Focus")}
+        </div>
+        ${questionBlock(item)}
+      </article>
+    `).join("");
+  </script>
+</body>
+</html>

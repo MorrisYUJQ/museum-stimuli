@@ -17,10 +17,21 @@ function getItem(id) {
   return window.STIMULI.items.find((item) => item.id === id);
 }
 function highlightDftgenText(value) {
+  const englishTagged = String(value ?? '').match(/^(\[[^\]]{1,24}\])\s*(.*)$/);
+  if (englishTagged) {
+    const tag = escapeHtml(englishTagged[1]);
+    const body = englishTagged[2].trim();
+    let bodyHtml = escapeHtml(body);
+    const keyMatch = body.match(/^(.{2,42}?)(?=\s+(?:was|is|were|are|stood|stands|shows|show|includes|include|contains|dates|date|gave|gives|collected|wears|means|meant|helped|helps|could|has|have|once|comes|came)\b)/i);
+    const key = keyMatch ? keyMatch[1].trim() : '';
+    if (key && !/^(it|he|she|they|this|these|that|those)$/i.test(key)) {
+      const keyHtml = escapeHtml(key);
+      bodyHtml = bodyHtml.replace(keyHtml, `<strong class="key-info">${keyHtml}</strong>`);
+    }
+    return `<mark class="tag">${tag}</mark> ${bodyHtml}`;
+  }
   let html = escapeHtml(value);
-  html = html.replace(/(^\[[^\]]{1,24}\])/, '<mark class="tag">$1</mark>');
   html = html.replace(/(^\u3010[^\u3011]{1,10}\u3011)/, '<mark class="tag">$1</mark>');
-  html = html.replace(/(<mark class="tag">\[(?:Object|Place|Purpose|Visual message|Museum display|Myth|Civic life|Festival|Key term|Lost statue|Artist|Display history|Gallery layout|Accessibility|Deity|Cult centre|Role|Date|Name|Donation|Collector|Original setting|Religious use|Status|Jewellery|Symbols|Science)\]<\/mark>)([^.;:]{2,80})/, '$1<strong class="key-info">$2</strong>');
   html = html.replace(/(<mark class="tag">\u3010(?:器物|主题|内容|价值|用途|看点|寓意|形制|材质|名称|产地|画面|细节)\u3011<\/mark>)([^，。；;]{2,22})/, '$1<strong class="key-info">$2</strong>');
   return html;
 }

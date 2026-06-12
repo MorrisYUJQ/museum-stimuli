@@ -13,6 +13,9 @@ function normalizeCondition(condition) {
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
 }
+function escapeRegex(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 function getItem(id) {
   return window.STIMULI.items.find((item) => item.id === id);
 }
@@ -22,6 +25,30 @@ function highlightDftgenText(value) {
     const tag = escapeHtml(englishTagged[1]);
     const body = englishTagged[2].trim();
     let bodyHtml = escapeHtml(body);
+    const answerTerms = [
+      'X-ray fluorescence',
+      'Panathenaic festival',
+      'religious procession',
+      'power and wealth',
+      'Late Period',
+      'Bubastis',
+      '432 BC',
+      'Athena',
+      'Bastet',
+      'rebirth',
+      'Scientists'
+    ];
+    let answerHighlighted = false;
+    for (const term of answerTerms) {
+      const escapedTerm = escapeHtml(term);
+      const pattern = new RegExp(`\\b${escapeRegex(escapedTerm)}\\b`, 'i');
+      bodyHtml = bodyHtml.replace(pattern, (match) => {
+        answerHighlighted = true;
+        return `<strong class="key-info">${match}</strong>`;
+      });
+    }
+    if (answerHighlighted) return `<mark class="tag">${tag}</mark> ${bodyHtml}`;
+
     const keyMatch = body.match(/^(.{2,58}?)(?=\s+(?:was|is|were|are|stood|stands|show|shows|showed|display|displays|exhibit|exhibits|feature|features|illustrate|illustrates|represent|represents|explain|explains|include|includes|contain|contains|date|dates|gave|gives|donated|collected|wears|symbolise|symbolises|invoke|invoked|investigate|investigated|mean|means|meant|hoped|helped|helps|could|has|have|come|comes|came)\b)/i);
     let key = keyMatch ? keyMatch[1].trim() : '';
     key = key.replace(/^(the|a|an|its|her|his|their|this|these)\s+/i, '');

@@ -140,7 +140,7 @@ function setupFinishReading() {
       <strong>Completion code</strong>
       <code class="completion-code">${completionCode}</code>
       <span>Please enter this code in the survey to confirm that you have finished this page.</span>
-      <span class="return-survey-hint">After copying the code, please use your browser's Back button to return to the survey.</span>
+      <span class="return-survey-hint">After copying the code, please close this reading-material tab and return to the survey tab that is still open.</span>
     `;
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });

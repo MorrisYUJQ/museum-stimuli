@@ -140,7 +140,18 @@ function setupFinishReading() {
       <strong>Completion code</strong>
       <code class="completion-code">${completionCode}</code>
       <span>Please enter this code in the survey to confirm that you have finished this page.</span>
+      <button class="btn primary close-tab-button" id="closeReadingTabButton" type="button">Close this tab</button>
+      <span class="close-tab-hint" id="closeReadingTabHint" hidden>If this tab does not close automatically, please close it manually and return to the survey tab.</span>
     `;
+    const closeButton = document.getElementById('closeReadingTabButton');
+    const closeHint = document.getElementById('closeReadingTabHint');
+    closeButton?.addEventListener('click', () => {
+      window.close();
+      window.open('', '_self')?.close();
+      setTimeout(() => {
+        if (closeHint) closeHint.hidden = false;
+      }, 250);
+    });
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }

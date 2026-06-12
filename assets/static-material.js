@@ -22,9 +22,12 @@ function highlightDftgenText(value) {
     const tag = escapeHtml(englishTagged[1]);
     const body = englishTagged[2].trim();
     let bodyHtml = escapeHtml(body);
-    const keyMatch = body.match(/^(.{2,42}?)(?=\s+(?:was|is|were|are|stood|stands|shows|show|includes|include|contains|dates|date|gave|gives|collected|wears|means|meant|helped|helps|could|has|have|once|comes|came)\b)/i);
-    const key = keyMatch ? keyMatch[1].trim() : '';
-    if (key && !/^(it|he|she|they|this|these|that|those)$/i.test(key)) {
+    const keyMatch = body.match(/^(.{2,58}?)(?=\s+(?:was|is|were|are|stood|stands|show|shows|showed|display|displays|exhibit|exhibits|feature|features|illustrate|illustrates|represent|represents|explain|explains|include|includes|contain|contains|date|dates|gave|gives|donated|collected|wears|symbolise|symbolises|invoke|invoked|investigate|investigated|mean|means|meant|hoped|helped|helps|could|has|have|come|comes|came)\b)/i);
+    let key = keyMatch ? keyMatch[1].trim() : '';
+    key = key.replace(/^(the|a|an|its|her|his|their|this|these)\s+/i, '');
+    const words = key.split(/\s+/).filter(Boolean);
+    if (words.length > 5) key = '';
+    if (key && !/^(it|he|she|they|this|these|that|those|inside)$/i.test(key)) {
       const keyHtml = escapeHtml(key);
       bodyHtml = bodyHtml.replace(keyHtml, `<strong class="key-info">${keyHtml}</strong>`);
     }

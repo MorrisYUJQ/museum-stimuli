@@ -15,10 +15,20 @@ def js_block_for_item(text: str, stimulus_id: str) -> str:
 
 
 def condition_parts(block: str, condition: str) -> list[str]:
-    match = re.search(condition + r': \[([\s\S]*?)\]\s*[,}]', block)
-    if not match:
-        return []
-    return re.findall(r'"([^"]*)"', match.group(1))
+    key = f"{condition}: ["
+    start = block.index(key) + len(key)
+    depth = 1
+    idx = start
+    while idx < len(block):
+        char = block[idx]
+        if char == "[":
+            depth += 1
+        elif char == "]":
+            depth -= 1
+            if depth == 0:
+                return re.findall(r'"([^"]*)"', block[start:idx])
+        idx += 1
+    return []
 
 
 def word_count(parts: list[str]) -> int:
@@ -34,7 +44,7 @@ def main() -> None:
     for name in required:
         print(f"  {name}: {(BASE / name).exists()}")
 
-    rows = list(csv.DictReader((BASE / "questions.csv").open(encoding="utf-8")))
+    rows = list(csv.DictReader((BASE / "questions.csv").open(encoding="utf-8-sig")))
     items = json.loads((BASE / "selected_items.json").read_text(encoding="utf-8"))
 
     print(f"Selected items: {len(items)}")

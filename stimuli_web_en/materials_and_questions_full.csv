@@ -1,0 +1,44 @@
+﻿record_type,stimulus_id,title,condition,unit_or_question_no,text_or_question,option_a,option_b,option_c,option_d,correct_option,answer_text
+material,S1,The Parthenon,original,1,The Parthenon was built as a temple dedicated to the goddess Athena. It was the centrepiece of an ambitious building programme on the Acropolis of Athens. The temple's great size and lavish use of white marble was intended to show off the city's power and wealth at the height of its empire. Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.,,,,,,
+material,S1,The Parthenon,original,2,"The pediments and metopes, the square spaces between triglyphs in a Doric frieze, illustrate episodes from Greek myth. The frieze represents the people of contemporary Athens in religious procession. Rooms 18a and 18b feature fragments of the Parthenon sculpture and pieces of architecture. Video displays using computer graphics explain how the sculptures were placed on the building.",,,,,,
+material,S1,The Parthenon,original,3,"The word parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'. Inside the original building stood a colossal image of Athena Parthenos, constructed of gold and ivory. The temple was richly decorated with sculptures designed by the famous artist Pheidias, which took until 432 BC to complete.",,,,,,
+material,S1,The Parthenon,original,4,"The Parthenon sculptures have been on permanent display since 1817. The frieze shows the procession of the Panathenaic festival, the commemoration of the birthday of the goddess Athena. On either end of the main room are transepts displaying sculptures from the east and west pediments, including Iris, goddess of the rainbow, and Dionysos. On the walls are metopes carved in high relief.",,,,,,
+material,S1,The Parthenon,helper,1,The Parthenon was a temple for Athena.,,,,,,
+material,S1,The Parthenon,helper,2,It stood on the Acropolis in Athens.,,,,,,
+material,S1,The Parthenon,helper,3,It was very large and made with white marble.,,,,,,
+material,S1,The Parthenon,helper,4,The building showed the power and wealth of Athens.,,,,,,
+material,S1,The Parthenon,helper,5,The British Museum displays sculptures from the outside of the temple.,,,,,,
+material,S1,The Parthenon,helper,6,Some sculptures show Greek myths.,,,,,,
+material,S1,The Parthenon,helper,7,The frieze shows a religious procession in Athens.,,,,,,
+material,S1,The Parthenon,helper,8,The procession was part of a festival for Athena.,,,,,,
+material,S1,The Parthenon,helper,9,The sculptures were designed by Pheidias.,,,,,,
+material,S1,The Parthenon,helper,10,They have been displayed in the British Museum since 1817.,,,,,,
+material,S1,The Parthenon,helper,11,Some sculptures show Iris and Dionysos.,,,,,,
+material,S1,The Parthenon,helper,12,The museum also uses videos to explain where the sculptures were placed.,,,,,,
+material,S2,The Gayer-Anderson Cat,original,1,"The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet. The goddess was usually shown as a cat-headed woman, or in the form of a cat. Her principal cult centre was Bubastis in the Nile Delta. Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.",,,,,,
+material,S2,The Gayer-Anderson Cat,original,2,"The cat dates from the Late Period of ancient Egypt around 600 BC. It is named after Major Robert Grenville Gayer-Anderson, who donated the statue to the British Museum in 1939. Gayer-Anderson was a keen collector of small Egyptian sculptures, jewellery and pottery. He showcased these in his home in Cairo, now known as the Gayer-Anderson Museum.",,,,,,
+material,S2,The Gayer-Anderson Cat,original,3,"This bronze figure probably comes from a temple. Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt. The donors of the statues hoped to communicate with the gods. Only the king or someone very wealthy could have afforded to commission an example as fine as this cat, adorned with precious metals.",,,,,,
+material,S2,The Gayer-Anderson Cat,original,4,"The sculpture wears a silver protective pectoral and golden earrings and nose ring. The scarab beetle on the cat's head and chest symbolises rebirth, while the silver wedjat-eye on the pectoral invoked protection and healing. Scientists at the British Museum investigated the cat using X-ray fluorescence and discovered that it is made from bronze containing copper, tin, arsenic and lead.",,,,,,
+material,S2,The Gayer-Anderson Cat,helper,1,The Gayer-Anderson Cat is a bronze statue.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,2,It shows the Egyptian goddess Bastet.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,3,Bastet could appear as a cat or a cat-headed woman.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,4,She was a mother goddess.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,5,She was gentler than the lion goddess Sekhmet.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,6,The statue is from around 600 BC.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,7,Major Gayer-Anderson donated it to the British Museum in 1939.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,8,The cat may have come from a temple.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,9,People gave bronze figures to temples to communicate with gods.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,10,"The cat wears a silver pectoral, gold earrings and a nose ring.",,,,,,
+material,S2,The Gayer-Anderson Cat,helper,11,The scarab beetle means rebirth.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,12,The wedjat-eye means protection and healing.,,,,,,
+material,S2,The Gayer-Anderson Cat,helper,13,Scientists used X-ray fluorescence to study the metal.,,,,,,
+question,S1,The Parthenon,,1,Which goddess was the Parthenon dedicated to?,Aphrodite,Isis,Bastet,Athena,D,Athena
+question,S1,The Parthenon,,2,What did the temple's great size and white marble show?,A private family collection,Athens' power and wealth,A Roman fort,A temple for Bastet,B,Athens' power and wealth
+question,S1,The Parthenon,,3,What does the frieze represent?,Athenians in a religious procession,A bronze cat from Egypt,A Roman birthday invitation,A decree in three scripts,A,Athenians in a religious procession
+question,S1,The Parthenon,,4,Which festival is linked to the procession on the frieze?,Bastet festival,Olympic Games,Panathenaic festival,Saturnalia,C,Panathenaic festival
+question,S1,The Parthenon,,5,By which year were the Parthenon sculptures completed?,600 BC,432 BC,1817,353 BC,B,432 BC
+question,S2,The Gayer-Anderson Cat,,1,Which goddess does the Gayer-Anderson Cat depict?,Aphrodite,Bastet,Iris,Athena,B,Bastet
+question,S2,The Gayer-Anderson Cat,,2,Where was Bastet's main cult centre?,Bubastis in the Nile Delta,The Ramesseum,Vindolanda,The Acropolis of Athens,A,Bubastis in the Nile Delta
+question,S2,The Gayer-Anderson Cat,,3,The statue dates from which period of ancient Egypt?,Old Kingdom,Ptolemaic Period,New Kingdom,Late Period,D,Late Period
+question,S2,The Gayer-Anderson Cat,,4,What does the scarab beetle symbolise?,Military victory,A birthday procession,Rebirth,White marble,C,Rebirth
+question,S2,The Gayer-Anderson Cat,,5,Which method did scientists use to study the cat's metal content?,X-ray fluorescence,Audio recording,Carbon dating only,Ink analysis,A,X-ray fluorescence

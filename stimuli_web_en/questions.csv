@@ -1,11 +1,11 @@
-stimulus_id,title,question_no,question,option_a,option_b,option_c,option_d,correct_option,answer_text
-S1,The Parthenon,1,Which goddess was the Parthenon dedicated to?,Athena,Bastet,Isis,Aphrodite,A,Athena
-S1,The Parthenon,2,What did the temple's great size and white marble show?,Athens' power and wealth,A private family collection,A Roman fort,A temple for Bastet,A,Athens' power and wealth
-S1,The Parthenon,3,What does the frieze represent?,Athenians in a religious procession,A decree in three scripts,A bronze cat from Egypt,A Roman birthday invitation,A,Athenians in a religious procession
-S1,The Parthenon,4,Who designed the Parthenon sculptures?,Pheidias,Ramesses II,Major Gayer-Anderson,Giovanni Belzoni,A,Pheidias
-S1,The Parthenon,5,Since when have the Parthenon sculptures been on permanent display?,1817,1799,1939,AD 100,A,1817
-S2,The Gayer-Anderson Cat,1,Which goddess does the Gayer-Anderson Cat depict?,Bastet,Athena,Iris,Aphrodite,A,Bastet
-S2,The Gayer-Anderson Cat,2,Where was Bastet's main cult centre?,Bubastis in the Nile Delta,The Acropolis of Athens,Vindolanda,The Ramesseum,A,Bubastis in the Nile Delta
-S2,The Gayer-Anderson Cat,3,Who donated the statue to the British Museum in 1939?,Major Robert Grenville Gayer-Anderson,Pheidias,Ramesses II,Claudia Severa,A,Major Robert Grenville Gayer-Anderson
-S2,The Gayer-Anderson Cat,4,What does the scarab beetle symbolise?,Rebirth,Military victory,White marble,A birthday procession,A,Rebirth
-S2,The Gayer-Anderson Cat,5,Which method did scientists use to study the cat's metal content?,X-ray fluorescence,Audio recording,Ink analysis,Carbon dating only,A,X-ray fluorescence
+﻿stimulus_id,title,question_no,question,option_a,option_b,option_c,option_d,correct_option,answer_text
+S1,The Parthenon,1,Which goddess was the Parthenon dedicated to?,Aphrodite,Isis,Bastet,Athena,D,Athena
+S1,The Parthenon,2,What did the temple's great size and white marble show?,A private family collection,Athens' power and wealth,A Roman fort,A temple for Bastet,B,Athens' power and wealth
+S1,The Parthenon,3,What does the frieze represent?,Athenians in a religious procession,A bronze cat from Egypt,A Roman birthday invitation,A decree in three scripts,A,Athenians in a religious procession
+S1,The Parthenon,4,Which festival is linked to the procession on the frieze?,Bastet festival,Olympic Games,Panathenaic festival,Saturnalia,C,Panathenaic festival
+S1,The Parthenon,5,By which year were the Parthenon sculptures completed?,600 BC,432 BC,1817,353 BC,B,432 BC
+S2,The Gayer-Anderson Cat,1,Which goddess does the Gayer-Anderson Cat depict?,Aphrodite,Bastet,Iris,Athena,B,Bastet
+S2,The Gayer-Anderson Cat,2,Where was Bastet's main cult centre?,Bubastis in the Nile Delta,The Ramesseum,Vindolanda,The Acropolis of Athens,A,Bubastis in the Nile Delta
+S2,The Gayer-Anderson Cat,3,The statue dates from which period of ancient Egypt?,Old Kingdom,Ptolemaic Period,New Kingdom,Late Period,D,Late Period
+S2,The Gayer-Anderson Cat,4,What does the scarab beetle symbolise?,Military victory,A birthday procession,Rebirth,White marble,C,Rebirth
+S2,The Gayer-Anderson Cat,5,Which method did scientists use to study the cat's metal content?,X-ray fluorescence,Audio recording,Carbon dating only,Ink analysis,A,X-ray fluorescence

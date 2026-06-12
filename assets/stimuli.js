@@ -29,20 +29,22 @@ window.STIMULI = {
           "The museum also uses videos to explain where the sculptures were placed."
         ],
         dftgen: [
-          "[Object] The Parthenon was a temple dedicated to Athena.",
-          "[Place] It stood on the Acropolis of Athens.",
-          "[Purpose] It was the centrepiece of a major building programme.",
-          "[Visual message] Its size and white marble showed the power and wealth of Athens.",
-          "[Museum display] Room 18 shows sculptures that once decorated the outside of the building.",
-          "[Myth] The pediments and metopes show episodes from Greek myth.",
-          "[Civic life] The frieze shows Athenians taking part in a religious procession.",
-          "[Festival] This procession is linked to the Panathenaic festival, which celebrated Athena's birthday.",
+          "[Object] The Parthenon was built as a temple dedicated to the goddess Athena.",
+          "[Place] It was the centrepiece of an ambitious building programme on the Acropolis of Athens.",
+          "[Visual message] Its great size and lavish white marble showed the city's power and wealth at the height of its empire.",
+          "[Museum display] Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.",
+          "[Architecture] The pediments and metopes illustrate Greek myth; metopes are square spaces between triglyphs in a Doric frieze.",
+          "[Civic life] The frieze represents the people of contemporary Athens in a religious procession.",
+          "[Gallery rooms] Rooms 18a and 18b feature fragments of Parthenon sculpture and pieces of architecture.",
           "[Key term] Parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'.",
-          "[Lost statue] Inside the temple once stood a huge gold-and-ivory image of Athena Parthenos.",
-          "[Artist] The sculptures were designed by Pheidias and completed by 432 BC.",
+          "[Lost statue] Inside stood a colossal gold-and-ivory image of Athena Parthenos.",
+          "[Artist] Sculptures designed by the famous artist Pheidias were completed by 432 BC.",
+          "[Festival] The frieze shows the Panathenaic festival procession, commemorating the birthday of Athena.",
           "[Display history] The Parthenon sculptures have been on permanent display since 1817.",
-          "[Gallery layout] The main room includes pediment sculptures such as Iris and Dionysos.",
-          "[Accessibility] The gallery includes video displays and a touch tour for visually impaired visitors."
+          "[Gallery layout] Transepts at either end display east and west pediment sculptures, including Iris, goddess of the rainbow, and Dionysos.",
+          "[Detail] Metopes on the walls are carved in high relief.",
+          "[Technology] Video displays using computer graphics explain how the sculptures were placed on the building.",
+          "[Accessibility] The gallery also uses video displays and a touch tour for visually impaired visitors."
         ]
       }
     },
@@ -76,20 +78,23 @@ window.STIMULI = {
           "Scientists used X-ray fluorescence to study the metal."
         ],
         dftgen: [
-          "[Object] The Gayer-Anderson Cat is a bronze figure.",
-          "[Deity] It shows Bastet, an Egyptian goddess often represented as a cat.",
-          "[Cult centre] Bastet's main cult centre was Bubastis in the Nile Delta.",
-          "[Role] Bastet was a mother goddess and a gentler counterpart to Sekhmet.",
-          "[Date] The statue dates to the Late Period of ancient Egypt, around 600 BC.",
+          "[Object] The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet.",
+          "[Deity] The goddess was usually shown as a cat-headed woman, or in the form of a cat.",
+          "[Cult centre] Her principal cult centre was Bubastis in the Nile Delta.",
+          "[Role] Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.",
+          "[Date] The cat dates from the Late Period of ancient Egypt around 600 BC.",
           "[Name] It is named after Major Robert Grenville Gayer-Anderson.",
-          "[Donation] He gave the statue to the British Museum in 1939.",
-          "[Collector] Gayer-Anderson collected Egyptian sculptures, jewellery and pottery.",
-          "[Original setting] The figure probably came from a temple.",
-          "[Religious use] Bronze figures of gods were dedicated in temples so donors could communicate with the gods.",
-          "[Status] Only a king or very wealthy person could have commissioned such a fine object.",
-          "[Jewellery] The cat wears a silver pectoral, gold earrings and a nose ring.",
-          "[Symbols] The scarab means rebirth; the wedjat-eye means protection and healing.",
-          "[Science] X-ray fluorescence showed that the bronze contains copper, tin, arsenic and lead."
+          "[Donation] He donated the statue to the British Museum in 1939.",
+          "[Collector] Gayer-Anderson collected Egyptian sculptures, jewellery and pottery and showcased them in his Cairo home.",
+          "[Original setting] This bronze figure probably comes from a temple.",
+          "[Religious use] Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt.",
+          "[Purpose] Donors hoped to communicate with the gods through these temple offerings.",
+          "[Status] Only a king or someone very wealthy could commission a cat as fine as this, adorned with precious metals.",
+          "[Jewellery] The sculpture wears a silver protective pectoral and golden earrings and nose ring.",
+          "[Symbols] The scarab beetle on the cat's head and chest symbolises rebirth.",
+          "[Healing] The silver wedjat-eye on the pectoral invoked protection and healing.",
+          "[Science] Scientists at the British Museum investigated the cat using X-ray fluorescence.",
+          "[Material] The bronze contains copper, tin, arsenic and lead."
         ]
       }
     }

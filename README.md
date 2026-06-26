@@ -22,6 +22,12 @@ Current stimuli:
 
 The ten English multiple-choice comprehension questions are in `stimuli_web_en/questions.csv`.
 
+DFT-GEN workflow appendix page:
+
+```text
+https://<user-or-org>.github.io/<repo>/dftgen-workflow.html
+```
+
 Decode completion codes after export:
 
 ```bash

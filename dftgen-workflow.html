@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DFT-GEN Workflow Appendix</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --text: #172033;
+      --muted: #5c687a;
+      --line: #dfe5ee;
+      --blue: #2563eb;
+      --blue-soft: #eaf2ff;
+      --amber: #b7791f;
+      --amber-soft: #fff6d8;
+      --green: #15803d;
+      --green-soft: #e9f7ee;
+      --red: #b91c1c;
+      --red-soft: #fff0ef;
+      --ink: #111827;
+      --mask: #2f3136;
+      --highlight: rgba(250, 204, 21, .38);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", "Segoe UI", Arial, sans-serif;
+    }
+    body { line-height: 1.65; }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 72px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 8px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+    h2 { font-size: 24px; margin-bottom: 12px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p, li { font-size: 16px; }
+    .muted { color: var(--muted); }
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, .75fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .note {
+      border-left: 4px solid var(--blue);
+      padding: 12px 14px;
+      background: var(--blue-soft);
+      border-radius: 6px;
+    }
+    .section {
+      margin-top: 22px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .step {
+      min-height: 218px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .step[data-tone="red"] { background: var(--red-soft); }
+    .step[data-tone="blue"] { background: var(--blue-soft); }
+    .step[data-tone="amber"] { background: var(--amber-soft); }
+    .step[data-tone="green"] { background: var(--green-soft); }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 800;
+      color: var(--muted);
+    }
+    .step ul, .compact-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .step li, .compact-list li { margin: 6px 0; }
+    .example-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, .95fr) minmax(260px, .9fr) minmax(320px, 1.15fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+      min-width: 0;
+    }
+    .panel.source { border-color: rgba(185, 28, 28, .35); }
+    .panel.helper { border-color: rgba(92, 104, 122, .35); }
+    .panel.dft { border-color: rgba(183, 121, 31, .4); background: #fffdf5; }
+    .source-text {
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 6px;
+      color: var(--ink);
+    }
+    .source-text p {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+    .helper-line {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+    }
+    .helper-line:last-child { border-bottom: 0; }
+    .dft-display {
+      padding: 14px;
+      border: 1px solid #ead79a;
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+    .dft-line {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+      margin: 0;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(223, 229, 238, .95);
+    }
+    .dft-line:last-child { border-bottom: 0; }
+    .line-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      color: #728096;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tag {
+      color: #56637a;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .key-info {
+      font-weight: 800;
+      color: #111827;
+      background: linear-gradient(transparent 58%, var(--highlight) 58%);
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+    .focus-demo {
+      position: relative;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--mask);
+      color: rgba(255, 255, 255, .45);
+      border: 1px solid #1f2937;
+    }
+    .focus-demo .active-line {
+      display: block;
+      margin: 6px 0;
+      padding: 8px 10px;
+      background: #fff7cf;
+      color: #111827;
+      border-left: 4px solid #f59e0b;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .rule {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .rule code {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #0f172a;
+      font-size: 13px;
+    }
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .check {
+      border: 1px solid rgba(21, 128, 61, .22);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--green-soft);
+    }
+    .footer-link {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    a { color: var(--blue); }
+    @media (max-width: 980px) {
+      .hero-grid, .example-grid, .workflow, .matrix, .checklist {
+        grid-template-columns: 1fr;
+      }
+      .step { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1>DFT-GEN workflow appendix</h1>
+          <p class="muted">This page explains when each agent intervenes in the Dyslexia-Friendly Text Generation workflow, what it changes, and how lexical and fidelity constraints prevent over-simplification.</p>
+          <div class="badge-row" aria-label="Scope labels">
+            <span class="badge">Study 2 method supplement</span>
+            <span class="badge">Palace Museum corpus logic</span>
+            <span class="badge">No new participant data</span>
+            <span class="badge">Appendix illustration</span>
+          </div>
+        </div>
+        <aside class="note">
+          <strong>How to cite this page in the manuscript</strong>
+          <p class="muted">A worked example showing source text diagnosis, DFT-GEN revision, dyslexia-aware lexical constraints, and evaluator checks is provided in Appendix X.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Where the agents intervene</h2>
+      <p class="muted">DFT-GEN is not a one-step simplification prompt. The workflow separates extraction, diagnosis, controlled rewriting, verification, and reader-facing presentation.</p>
+      <div class="workflow">
+        <article class="step" data-tone="red">
+          <span class="step-number">1</span>
+          <h3>Content preparation</h3>
+          <ul>
+            <li>Extract readable exhibition text.</li>
+            <li>Protect dates, dimensions, object names, proper nouns, and source-sensitive formatting.</li>
+            <li>Separate curatorial text from metadata such as accession numbers.</li>
+          </ul>
+        </article>
+        <article class="step" data-tone="blue">
+          <span class="step-number">2</span>
+          <h3>Architect Agent</h3>
+          <ul>
+            <li>Diagnoses likely dyslexia-related reading barriers.</li>
+            <li>Flags dense sentence chains, visual crowding, jargon, and weak reading sequence.</li>
+            <li>Marks terms that should be preserved or scaffolded.</li>
+          </ul>
+        </article>
+        <article class="step" data-tone="amber">
+          <span class="step-number">3</span>
+          <h3>Writer Agent</h3>
+          <ul>
+            <li>Rewrites into labelled micro-units.</li>
+            <li>Uses clear sequence: what it is, what it looks like, why it matters.</li>
+            <li>Applies the dyslexia-aware lexicon before producing the final wording.</li>
+          </ul>
+        </article>
+        <article class="step" data-tone="green">
+          <span class="step-number">4</span>
+          <h3>Evaluator Agent</h3>
+          <ul>
+            <li>Compares the rewritten text against protected facts.</li>
+            <li>Flags omissions, unsupported claims, and meaning drift.</li>
+            <li>Triggers revision when fidelity or accessibility checks fail.</li>
+          </ul>
+        </article>
+        <article class="step">
+          <span class="step-number">5</span>
+          <h3>Reader interface</h3>
+          <ul>
+            <li>Restores protected formatting.</li>
+            <li>Displays standard, card, or Focus Mode views.</li>
+            <li>Provides spacing, highlighting, and line-by-line focus support.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Worked text-processing example</h2>
+      <p class="muted">The example below uses shortened excerpts to show the transformation logic. It illustrates the same principle used for the 228 Palace Museum exhibition texts: preserve interpretive meaning while reducing processing burden.</p>
+      <div class="example-grid">
+        <article class="panel source">
+          <h3>Original source problem</h3>
+          <div class="source-text">
+            <p>The official exhibition text often compresses object identity, historical period, dimensions, visual description, and cultural meaning into a single dense curatorial passage.</p>
+            <p>For example, one passage may introduce an inkstone, report its measurements, describe the Lanting gathering motif, and explain why the imagery matters, all before giving the reader a clear path through the object.</p>
+          </div>
+          <ul class="compact-list">
+            <li>High factual value.</li>
+            <li>High visual and sequential burden.</li>
+            <li>Key facts must not be removed.</li>
+          </ul>
+        </article>
+
+        <article class="panel helper">
+          <h3>One-step Helper risk</h3>
+          <div class="helper-line">This is an inkstone.</div>
+          <div class="helper-line">It has a picture on it.</div>
+          <div class="helper-line">The picture shows people gathering.</div>
+          <div class="helper-line">It is easier to read, but many details are gone.</div>
+          <ul class="compact-list">
+            <li>Surface accessibility improves.</li>
+            <li>Curatorial details may disappear.</li>
+            <li>The museum's interpretive purpose becomes weaker.</li>
+          </ul>
+        </article>
+
+        <article class="panel dft">
+          <h3>DFT-GEN Focus Mode output</h3>
+          <div class="dft-display" aria-label="DFT-GEN example">
+            <p class="dft-line"><span class="line-no">1</span><span><span class="tag">[Object]</span> This is a <span class="key-info">Taohe stone inkstone</span>.</span></p>
+            <p class="dft-line"><span class="line-no">2</span><span><span class="tag">[Form]</span> Its shape, size, and carved surface are kept as factual anchors.</span></p>
+            <p class="dft-line"><span class="line-no">3</span><span><span class="tag">[Image]</span> The carving shows the <span class="key-info">Lanting gathering</span> motif.</span></p>
+            <p class="dft-line"><span class="line-no">4</span><span><span class="tag">[Meaning]</span> The image connects the object to literati culture and historical memory.</span></p>
+          </div>
+          <div class="focus-demo">
+            <span>Line 2 is dimmed outside the focus window.</span>
+            <span class="active-line">[Image] The carving shows the Lanting gathering motif.</span>
+            <span>Line 4 remains visible but visually de-emphasized.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Dyslexia-aware lexicon and substitution constraints</h2>
+      <p class="muted">The lexicon is used as a guardrail during rewriting. It does not ban museum terminology; instead, it controls when terms should be preserved, scaffolded, or avoided.</p>
+      <div class="matrix">
+        <article class="rule">
+          <h3>Protected curatorial facts</h3>
+          <p>Object names, dynasties, dates, dimensions, places, persons, material terms, and motif names are protected before rewriting.</p>
+          <p><code>Song dynasty</code><code>22.4 cm</code><code>Lanting gathering</code></p>
+        </article>
+        <article class="rule">
+          <h3>Visually confusable forms</h3>
+          <p>The Writer Agent avoids optional substitutions that introduce visually similar letter shapes or short strings when a clearer alternative is available.</p>
+          <p><code>b/d</code><code>p/q</code><code>bp/pb</code><code>dq/qp</code><code>rn/m</code><code>cl/d</code></p>
+        </article>
+        <article class="rule">
+          <h3>Scaffold rather than delete</h3>
+          <p>Specialist terms are retained when they carry museum meaning, but they are placed in shorter units with brief contextual support.</p>
+          <p><code>metope</code><code>Doric frieze</code><code>provenance</code></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Evaluator checks before release</h2>
+      <div class="checklist">
+        <article class="check">
+          <h3>Factual fidelity</h3>
+          <p>Does the rewritten text preserve the protected facts from the source text?</p>
+        </article>
+        <article class="check">
+          <h3>Interpretive meaning</h3>
+          <p>Does the rewritten text keep the curatorial explanation rather than only naming the object?</p>
+        </article>
+        <article class="check">
+          <h3>Reading burden</h3>
+          <p>Are sentence length, visual density, and reading order improved for dyslexic readers?</p>
+        </article>
+        <article class="check">
+          <h3>Presentation risk</h3>
+          <p>Does highlighting guide attention without looking like answer cueing or excessive emphasis?</p>
+        </article>
+      </div>
+      <p class="footer-link muted">This appendix page is explanatory. The Study 2 automated evaluation remains based on the 228 Palace Museum exhibition texts, while English British Museum stimuli are used separately for Study 4 materials.</p>
+    </section>
+  </main>
+</body>
+</html>

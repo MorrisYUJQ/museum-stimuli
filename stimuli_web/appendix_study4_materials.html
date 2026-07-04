@@ -4,210 +4,566 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Appendix D - Study 4 Materials (Chinese and English)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
+  /* UI unified with table4_compare_en.html / dft-gen-expert-spot-check */
   :root {
-    --bg:#ffffff; --fg:#111827; --muted:#4b5563; --card:#f8fafc; --border:#e5e7eb;
-    --accent:#2563eb;
+    --ink: #1d2533;
+    --muted: #657084;
+    --paper: #f8f5ee;
+    --panel: #fffdf8;
+    --line: #d8d0c2;
+    --blue: #235789;
+    --blue-soft: #d9eafa;
+    --green: #31785f;
+    --shadow: 0 18px 45px rgba(50, 45, 35, .12);
+    --reader-font: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+    --reader-size: 15px;
+    --reader-line-height: 1.75;
+    --reader-letter-spacing: .014em;
+    --reader-word-spacing: .06em;
+    --mask-height: 42px;
   }
-  html,body{background:var(--bg);color:var(--fg);margin:0;padding:0;}
-  body{font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif; line-height:1.65;}
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px;}
-  h1{font-size:20px;margin:0 0 6px;}
-  .subtitle{color:var(--muted);font-size:13px;margin:0 0 18px;}
-  .callout{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--muted);margin-bottom:26px;}
-  .callout b{color:var(--fg);}
-  h2.langHead{font-size:16px;border-bottom:2px solid var(--accent);padding-bottom:6px;margin:34px 0 16px;}
-  .stimulus{border:1px solid var(--border);border-radius:14px;margin-bottom:22px;overflow:hidden;}
-  .stimulusHead{background:#111827;color:#fff;padding:10px 14px;display:flex;gap:10px;align-items:baseline;}
-  .sid{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;}
-  .stitle{font-size:14px;font-weight:700;}
-  .cols{display:grid;gap:1px;background:var(--border);}
-  .cols-3{grid-template-columns:1fr 1fr 1fr;}
-  .cols-2{grid-template-columns:1fr 1fr;}
-  @media (max-width:900px){.cols-3,.cols-2{grid-template-columns:1fr;}}
-  .col{background:#fff;}
-  .colHead{font-weight:700;font-size:12px;letter-spacing:.2px;text-transform:uppercase;color:var(--accent);background:var(--card);padding:8px 12px;border-bottom:1px solid var(--border);}
-  .colBody{padding:12px 14px;font-size:13px;max-height:420px;overflow-y:auto;}
-  .colBody p{margin:0 0 8px;}
-  .colBody p:last-child{margin-bottom:0;}
-  .linkTable{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
-  .linkTable th,.linkTable td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
-  .linkTable th{background:var(--card);}
-  .linkTable a{color:var(--accent);word-break:break-all;}
-  details{margin-top:10px;}
-  summary{cursor:pointer;font-size:12px;color:var(--muted);}
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(35, 87, 137, .14), transparent 32rem),
+      radial-gradient(circle at 90% 20%, rgba(49, 120, 95, .12), transparent 28rem),
+      linear-gradient(135deg, #fbf8f0, #efe8dc);
+    line-height: 1.55;
+  }
+  header {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 36px 22px 12px;
+  }
+  .eyebrow {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .62);
+    color: var(--blue);
+    font: 700 12px/1.2 "Lexend", sans-serif;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 14px 0 8px;
+    font-family: "Lexend", "Atkinson Hyperlegible", sans-serif;
+    font-size: clamp(22px, 3.2vw, 32px);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+  .subtitle { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; }
+  main {
+    max-width: 1240px;
+    margin: 0 auto 48px;
+    padding: 0 22px 32px;
+  }
+  .callout {
+    margin-bottom: 22px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 253, 248, .82);
+    box-shadow: var(--shadow);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .callout b { color: var(--ink); }
+  .callout code {
+    background: var(--blue-soft);
+    color: #0f3f6b;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .display-controls {
+    margin-bottom: 22px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 253, 248, .82);
+    box-shadow: var(--shadow);
+  }
+  .display-controls h2 { margin: 0 0 6px; font-size: 20px; }
+  .display-controls p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+  .control-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .control {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255,255,255,.62);
+    padding: 12px;
+  }
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    color: var(--ink);
+    font: 800 12px "Lexend", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+  .control output { color: var(--blue); font-weight: 800; text-transform: none; letter-spacing: 0; }
+  .control input[type="range"], .control select {
+    width: 100%;
+    accent-color: var(--blue);
+  }
+  .control select {
+    min-height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 6px 8px;
+    background: #fffdf8;
+    color: var(--ink);
+    font: 13px "Lexend", sans-serif;
+  }
+  .control-actions { display: flex; align-items: end; }
+  .control-actions button { width: 100%; }
+  button {
+    cursor: pointer;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 14px;
+    background: var(--panel);
+    color: var(--ink);
+    font: 700 13px "Lexend", sans-serif;
+  }
+  button:hover { box-shadow: 0 8px 22px rgba(0,0,0,.10); }
+  h2.langHead {
+    font-family: "Lexend", sans-serif;
+    font-size: 18px;
+    color: var(--ink);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 8px;
+    margin: 34px 0 16px;
+  }
+  .sample {
+    margin: 0 0 22px;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: rgba(255, 253, 248, .95);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .sample-head {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 12px;
+    padding: 18px 22px;
+    background: linear-gradient(90deg, rgba(35,87,137,.10), rgba(49,120,95,.08));
+    border-bottom: 1px solid var(--line);
+  }
+  .sample-id { font: 800 15px "Lexend", sans-serif; }
+  .badge {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--line);
+    color: var(--blue);
+    font: 700 12px "Lexend", sans-serif;
+  }
+  .stitle { font: 700 15px "Lexend", sans-serif; color: var(--ink); }
+  .texts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    padding: 18px;
+  }
+  .text-box {
+    min-height: 190px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 0;
+    background: #fffaf0;
+    overflow: hidden;
+  }
+  .text-box h3 {
+    margin: 0;
+    padding: 13px 15px 9px;
+    font: 800 12px "Lexend", sans-serif;
+    color: var(--blue);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .reading-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 12px 10px;
+  }
+  .reading-tools button {
+    padding: 6px 9px;
+    font-size: 11px;
+    background: #f3efe6;
+  }
+  .reader-stage {
+    --focus-top: 22px;
+    --focus-height: var(--mask-height);
+    position: relative;
+    border-top: 1px solid var(--line);
+    background: #fffdf8;
+  }
+  .text-content {
+    max-height: 420px;
+    overflow: auto;
+    padding: 14px 15px 20px;
+    white-space: pre-wrap;
+    font-family: var(--reader-font);
+    font-size: var(--reader-size);
+    line-height: var(--reader-line-height);
+    letter-spacing: var(--reader-letter-spacing);
+    word-spacing: var(--reader-word-spacing);
+  }
+  .text-content.reader-html { white-space: normal; }
+  .text-content.reader-html p { margin: 0 0 9px; }
+  .text-content strong {
+    font-weight: 800;
+    color: #0f3f6b;
+    background: rgba(217, 234, 250, .78);
+    border-radius: 5px;
+    padding: 0 .12em;
+  }
+  .text-content mark {
+    background: #ffe680;
+    color: #1d2533;
+    border-radius: 5px;
+    padding: 0 .14em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .focus-mask, .focus-window {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .focus-mask.top { top: 0; height: var(--focus-top); background: rgba(0, 0, 0, .70); }
+  .focus-mask.bottom { top: calc(var(--focus-top) + var(--focus-height)); bottom: 0; background: rgba(0, 0, 0, .70); }
+  .focus-window {
+    top: var(--focus-top);
+    height: var(--focus-height);
+    left: 8px; right: 8px;
+    border-top: 2px solid rgba(255, 230, 128, .95);
+    border-bottom: 2px solid rgba(255, 230, 128, .95);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.26) inset;
+  }
+  .reader-stage.focus-on .focus-mask,
+  .reader-stage.focus-on .focus-window { display: block; }
+  details {
+    margin: 14px 22px 22px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 253, 248, .82);
+  }
+  summary { cursor: pointer; font: 700 13px "Lexend", sans-serif; color: var(--blue); }
+  .linkTable { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+  .linkTable th, .linkTable td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+  .linkTable th { background: rgba(35,87,137,.08); font: 700 11px "Lexend", sans-serif; text-transform: uppercase; letter-spacing: .03em; }
+  .linkTable a { color: var(--blue); word-break: break-all; }
+  .footnote { margin-top: 14px; color: var(--muted); font-size: 12px; }
+  @media (max-width: 900px) { .texts, .control-grid { grid-template-columns: 1fr; } }
+  @media print {
+    .display-controls, .footnote a { display: none !important; }
+    body { background: white; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Appendix D - Study 4 Materials (Chinese mainland sample and English international sample)</h1>
+<header>
+  <span class="eyebrow">Appendix D - Study 4 materials</span>
+  <h1>Study 4 Materials (Chinese mainland sample and English international sample)</h1>
   <p class="subtitle">Full reading materials for the two Study 4 stimuli (S1, S2) across the three between-subjects conditions (Original, Dyslexia Helper, DFT-GEN), reproduced exactly as delivered on the live survey pages.</p>
+</header>
+
+<main>
   <div class="callout">
     <b>Provenance note.</b> The Chinese-language survey pages (Credamo, mainland sample) and the English-language survey pages (international sample) were both served from the same GitHub Pages app (<code>morrisyujq.github.io/museum-stimuli</code>) at different points in the data collection timeline. The Chinese materials below are reproduced from the exact repository state that was live during Chinese data collection (commit <code>676ec1a</code>); the site's underlying data was later replaced with the English British Museum materials for the international sample (commit <code>4239836</code> onward, currently live). Because GitHub Pages always serves the latest deployed commit, the bare Chinese survey links no longer reproduce the Chinese text if opened today - this page exists so reviewers can read the exact text each group saw. The real survey URLs (with their original labels) used for each group are listed under each language section for verification (all six Chinese and six English stimulus/condition combinations are now included). Note that these survey URLs are the live single-page app route (<code>index.html</code> read via <code>?stimulus=...&amp;condition=...</code> query parameters), not individual files in the repository, so they will not appear as a distinct entry when browsing the repository's file tree on GitHub or on the anonymous mirror - the app itself, and the content it currently serves, is what changed over time.
   </div>
 
+  <section class="display-controls" aria-label="Reading display controls">
+    <h2>Reading display</h2>
+    <div class="control-grid">
+      <div class="control">
+        <label for="fontSelect">Friendly font <output id="fontLabel">Atkinson</output></label>
+        <select id="fontSelect">
+          <option value="atkinson">Atkinson Hyperlegible</option>
+          <option value="lexend">Lexend</option>
+          <option value="yahei">Microsoft YaHei UI</option>
+          <option value="verdana">Verdana</option>
+          <option value="arial">Arial</option>
+        </select>
+      </div>
+      <div class="control">
+        <label for="textSize">Text size <output id="textSizeLabel">15px</output></label>
+        <input id="textSize" type="range" min="14" max="24" step="1" value="15">
+      </div>
+      <div class="control">
+        <label for="lineSpacing">Line spacing <output id="lineSpacingLabel">1.75</output></label>
+        <input id="lineSpacing" type="range" min="1.3" max="2.4" step="0.05" value="1.75">
+      </div>
+      <div class="control">
+        <label for="letterSpacing">Letter spacing <output id="letterSpacingLabel">0.014em</output></label>
+        <input id="letterSpacing" type="range" min="0" max="0.12" step="0.005" value="0.014">
+      </div>
+      <div class="control">
+        <label for="wordSpacing">Word spacing <output id="wordSpacingLabel">0.06em</output></label>
+        <input id="wordSpacing" type="range" min="0" max="0.35" step="0.01" value="0.06">
+      </div>
+      <div class="control">
+        <label for="maskHeight">Mask window size <output id="maskHeightLabel">42px</output></label>
+        <input id="maskHeight" type="range" min="24" max="90" step="2" value="42">
+      </div>
+      <div class="control control-actions">
+        <button type="button" id="resetReading">Reset reading display</button>
+      </div>
+    </div>
+  </section>
+
   <h2 class="langHead">Chinese materials (mainland sample)</h2>
-  <div class="stimulus"><div class="stimulusHead"><span class="sid">S1</span><span class="stitle">洮河石雕兰亭集会图砚</span></div><div class="cols cols-3"><div class="col"><div class="colHead">Original</div><div class="colBody"><p>洮河石雕兰亭集会图砚，宋，长22.4厘米，宽13.5厘米，厚6.8厘米。砚长方形，砚面及四侧面浅浮雕兰亭修褉图，描绘东晋永和九年（353年）王羲之同谢安等人在会稽山阴之兰亭修褉聚会时的场景。王羲之的著名法帖《兰亭序》描述的便是这次盛会。砚面主体内容为兰亭图，楼台亭阁，山峦叠嶂，祥云环绕，宛如仙境。作者又以曲水作墨池，为河渠式半环绕，墨池上有镂空的树干、楼栏、小桥，池畔以小桥连接，巧妙而又得体。砚的四面侧壁刻修褉环景图，环景中40多个人物，坐立于林间溪边，或高谈阔论，或烹茶、赏画、沉思、捕鱼、读书、打拳等。另有浴鹅图，描绘群鹅6只嬉戏于水中、岸上、树下。此砚石质细腻古朴，呈豆绿色，为宋砚传世之品。洮河石砚又称洮砚、洮石砚，为我国四大名砚之一。洮河石砚的原料洮河石因产于甘肃省甘南藏族自治州卓尼县洮砚乡洮河之滨而得名，又名辉绿岩，石色基本为绿色。唐代著名书法家柳公权在其《论砚》中评价过名砚。洮砚在宋代成为贡品，并逐渐进入四大名砚之列。宋代鉴赏家赵希鹄曾经在他的《洞天清禄集•古砚辨》中记载洮河绿石，称其“绿如蓝，润如玉”。</p></div></div><div class="col"><div class="colHead">Dyslexia Helper 2025 ver.</div><div class="colBody"><p>这是一方宋代洮河石砚。</p>
-<p>它长约22厘米，宽约13厘米。</p>
-<p>砚台上刻着兰亭聚会的画面。</p>
-<p>这是王羲之和朋友们的著名聚会。</p>
-<p>画中有山水、亭子和祥云。</p>
-<p>还有弯曲的水池用来磨墨。</p>
-<p>水池上有小桥和栏杆。</p>
-<p>砚的四面刻了四十多个人。</p>
-<p>人们在聊天、喝茶、看书。</p>
-<p>还有六只鹅在玩耍。</p>
-<p>砚底是斜坡形状。</p>
-<p>石头是豆绿色的，很光滑。</p>
-<p>这是宋代的传世古砚。</p>
-<p>明末由吴拭收藏。</p>
-<p>洮河砚是中国四大名砚之一。</p>
-<p>它有一千三百多年历史。</p>
-<p>石料来自甘肃的洮河。</p>
-<p>石头多是绿色的。</p>
-<p>唐代书法家就称赞过它。</p>
-<p>宋代开始成为贡品。</p>
-<p>它原本是磨刀的石料。</p>
-<p>在宋代是很珍贵的文具。</p>
-<p>苏东坡也写诗赞美过它。</p></div></div><div class="col"><div class="colHead">DFT-GEN</div><div class="colBody"><p>【器物】洮河石雕兰亭集会图砚，宋代。</p>
-<p>【尺寸】长22.4厘米，宽13.5厘米，厚6.8厘米。</p>
-<p>【形制】长方形砚；砚面和四侧面都有浅浮雕。</p>
-<p>【主题】浮雕表现兰亭集会，也就是王羲之、谢安等人在兰亭修褉的场景。</p>
-<p>【时间】兰亭集会发生在东晋永和九年，即353年。</p>
-<p>【文献】王羲之《兰亭序》记录的就是这次雅集。</p>
-<p>【画面】砚面有楼台、山峦、祥云、小桥和曲水墨池，整体像一幅山水聚会图。</p>
-<p>【墨池】作者把墨池设计成弯曲水道，并加入镂空树干、楼栏和小桥。</p>
-<p>【人物】四周环景刻有40多人，包含交谈、烹茶、赏画、读书、捕鱼、打拳等活动。</p>
-<p>【细节】另有浴鹅图，6只鹅在水边游动、啄食或鸣叫。</p>
-<p>【材质】砚石细腻温润，呈豆绿色，包浆厚，是传世宋砚。</p>
-<p>【收藏】明末曾由收藏家吴拭珍收藏。</p>
-<p>【名称】洮河石砚又称洮砚、洮石砚，是中国四大名砚之一。</p>
-<p>【产地】洮河石来自甘肃甘南卓尼县洮河之滨，古称洮州。</p>
-<p>【石性】洮河石属于水成岩，也称辉绿岩；常见颜色有墨绿、碧绿、翠绿、灰绿。</p>
-<p>【早期评价】唐代柳公权在《论砚》中提到临洮砚，说明洮砚很早已受文人重视。</p>
-<p>【宋代地位】洮砚在宋代成为贡品，并逐渐进入四大名砚之列。</p>
-<p>【名家称赞】宋代赵希鹄称洮河绿石“绿如蓝，润如玉”，发墨效果很好。</p>
-<p>【历史转变】洮河石最初也可作磨刀石；宋代文人因其难得、细密、润泽而珍视它。</p>
-<p>【补充】苏东坡也曾写文称赞黄庭坚收藏的洮河石砚。</p></div></div></div></div>
-  <div class="stimulus"><div class="stimulusHead"><span class="sid">S2</span><span class="stitle">秦石鼓</span></div><div class="cols cols-3"><div class="col"><div class="colHead">Original</div><div class="colBody"><p>石鼓共有十块，为花岗岩质，高约90厘米，直径约60厘米。石鼓文，因文字篆刻在鼓形石上而得名。石上刻大篆书记叙游猎的十首诗，故也称《猎碣》。诗皆四言，同《诗经小雅》中的“车攻”一首有相似处。它是我国现存最早的一组石刻文字。自唐代韦应物、韩愈作《石鼓歌》以表章之，而后大显于世。石鼓的年代曾有西周、春秋战国、秦代、汉代、晋代、北魏、西魏、北周等数说。后经金石学家们从其内容、字体和书法风格等多方面的考证研究，认定是秦国遗物。在主张秦国遗物的意见中，又有秦文公、秦穆公、秦襄公、秦献公等说，确切的年代尚未取得一致的意见。石鼓在唐初时发现于陕西天兴（今陕西凤翔）三畤原。此后宋大观中迁于东京（今开封），金人破宋，辇至燕京（今北京）。数经迁徙，文字磨灭残损甚多。东京时曾以金色填字，运燕京后又被剔去。其中一鼓已无字。石鼓文有些字型与籀文相同。籀文也称大篆，传说是周宣王时太史籀所造。籀文型体齐整稳定，春秋时期已在秦国流行，流行过程中又进一步简化和线条化。此石鼓文书法朴茂浑古，清康有为谓：“如金钿委地，芝草团云，不烦整裁，自有奇采。”清代一些书法家的篆书多得力于此。故宫所藏石鼓文拓本有明初拓本，明代孙克弘旧藏，为国内著名善本。唐李吉甫《元和郡县图志》，宋欧阳修《集古录》、赵明诚《金石录》、郑樵《石鼓文考》等书著录。</p></div></div><div class="col"><div class="colHead">Dyslexia Helper 2025 ver.</div><div class="colBody"><p>石鼓共有十块。
-它们由花岗岩制成。
-每块高约90厘米。
-直径约60厘米。</p>
-<p>文字刻在鼓形石头上。
-所以叫做石鼓文。
-上面刻有十首游猎诗。
-这些诗都是四句话。
-类似《诗经》的风格。</p>
-<p>它是中国最早的石刻文字。
-唐代诗人写过《石鼓歌》。
-从此它被更多人知道。</p>
-<p>关于它的年代有很多说法。
-专家研究内容和字体后。
-认定它是秦国的东西。
-但具体年代还有争论。</p>
-<p>石鼓在陕西凤翔被发现。
-后来被搬到开封和北京。
-多次搬运导致字迹磨损。
-其中一块已经没有了字。</p>
-<p>石鼓文的字体属于大篆。
-大篆在秦国曾经流行。
-字形整齐，线条简单。</p>
-<p>书法风格古朴厚重。
-清代书法家常学习它。</p>
-<p>故宫藏有明代拓本。
-是珍贵的版本。
-许多古书都记录过它。</p></div></div><div class="col"><div class="colHead">DFT-GEN</div><div class="colBody"><p>【器物】秦石鼓，共10块。</p>
-<p>【材质】花岗岩；每块约高90厘米、直径60厘米。</p>
-<p>【名称】因文字刻在鼓形石头上，所以称为石鼓文。</p>
-<p>【内容】石上刻有10首游猎诗，因此又称《猎碣》。</p>
-<p>【文体】诗句多为四言，风格与《诗经·小雅·车攻》相近。</p>
-<p>【价值】石鼓文是中国现存最早的一组石刻文字之一。</p>
-<p>【传播】唐代韦应物、韩愈写《石鼓歌》后，石鼓声名大振。</p>
-<p>【年代争议】石鼓年代曾有西周、春秋战国、秦代、汉代等多种说法。</p>
-<p>【主流判断】金石学者从内容、字体和书法风格分析，多认为它是秦国遗物。</p>
-<p>【仍未定论】具体属于秦文公、秦穆公、秦襄公还是秦献公时期，尚无统一答案。</p>
-<p>【发现地】石鼓在唐初发现于陕西天兴，即今陕西凤翔一带。</p>
-<p>【迁徙】宋代迁至东京开封；金人破宋后又被运至燕京北京。</p>
-<p>【损伤】多次迁徙和风化导致文字磨损，其中一鼓已经无字。</p>
-<p>【修补痕迹】东京时期曾用金色填字，运到燕京后又被剔去。</p>
-<p>【字体】石鼓文使用大篆，也称籀文。</p>
-<p>【字形】籀文字形整齐、结构稳定，后来在秦国逐渐简化和线条化。</p>
-<p>【书法】石鼓文风格古朴厚重，康有为称赞其自然有奇采。</p>
-<p>【影响】清代许多篆书书法家都学习石鼓文。</p>
-<p>【馆藏】故宫收藏明初石鼓文拓本，原为明代孙克弘旧藏，是著名善本。</p>
-<p>【著录】《元和郡县图志》《集古录》《金石录》《石鼓文考》等书都记录过石鼓文。</p></div></div></div></div>
+  <div id="zh-root"></div>
   <details>
     <summary>Show the original live survey URLs used for the Chinese mainland sample</summary>
-    <table class="linkTable"><thead><tr><th>Stimulus</th><th>Survey label</th><th>Live survey URL</th></tr></thead><tbody><tr><td>S1</td><td>S1_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original</a></td></tr><tr><td>S1</td><td>S1_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025</a></td></tr><tr><td>S2</td><td>S2_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original</a></td></tr><tr><td>S2</td><td>S2_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025</a></td></tr><tr><td>S1</td><td>S1_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen</a></td></tr><tr><td>S2</td><td>S2_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen</a></td></tr></tbody></table>
+    <table class="linkTable"><thead><tr><th>Stimulus</th><th>Survey label</th><th>Live survey URL</th></tr></thead><tbody>
+      <tr><td>S1</td><td>S1_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original</a></td></tr>
+      <tr><td>S1</td><td>S1_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025</a></td></tr>
+      <tr><td>S2</td><td>S2_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original</a></td></tr>
+      <tr><td>S2</td><td>S2_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025</a></td></tr>
+      <tr><td>S1</td><td>S1_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen</a></td></tr>
+      <tr><td>S2</td><td>S2_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen</a></td></tr>
+    </tbody></table>
   </details>
 
   <h2 class="langHead">English materials (international sample)</h2>
-  <div class="stimulus"><div class="stimulusHead"><span class="sid">S1</span><span class="stitle">The Parthenon</span></div><div class="cols cols-3"><div class="col"><div class="colHead">Original</div><div class="colBody"><p>The Parthenon was built as a temple dedicated to the goddess Athena. It was the centrepiece of an ambitious building programme on the Acropolis of Athens. The temple's great size and lavish use of white marble was intended to show off the city's power and wealth at the height of its empire. Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.</p>
-<p>The pediments and metopes, the square spaces between triglyphs in a Doric frieze, illustrate episodes from Greek myth. The frieze represents the people of contemporary Athens in religious procession. Rooms 18a and 18b feature fragments of the Parthenon sculpture and pieces of architecture. Video displays using computer graphics explain how the sculptures were placed on the building.</p>
-<p>The word parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'. Inside the original building stood a colossal image of Athena Parthenos, constructed of gold and ivory. The temple was richly decorated with sculptures designed by the famous artist Pheidias, which took until 432 BC to complete.</p>
-<p>The Parthenon sculptures have been on permanent display since 1817. The frieze shows the procession of the Panathenaic festival, the commemoration of the birthday of the goddess Athena. On either end of the main room are transepts displaying sculptures from the east and west pediments, including Iris, goddess of the rainbow, and Dionysos. On the walls are metopes carved in high relief.</p></div></div><div class="col"><div class="colHead">Dyslexia Helper 2025 ver.</div><div class="colBody"><p>The Parthenon was a temple for Athena.</p>
-<p>It stood on the Acropolis in Athens.</p>
-<p>It was very large and made with white marble.</p>
-<p>The building showed the power and wealth of Athens.</p>
-<p>The British Museum displays sculptures from the outside of the temple.</p>
-<p>Some sculptures show Greek myths.</p>
-<p>The frieze shows a religious procession in Athens.</p>
-<p>The procession was part of a festival for Athena.</p>
-<p>The sculptures were designed by Pheidias.</p>
-<p>They have been displayed in the British Museum since 1817.</p>
-<p>Some sculptures show Iris and Dionysos.</p>
-<p>The museum also uses videos to explain where the sculptures were placed.</p></div></div><div class="col"><div class="colHead">DFT-GEN</div><div class="colBody"><p>[Object] The Parthenon was built as a temple dedicated to the goddess Athena.</p>
-<p>[Place] It was the centrepiece of an ambitious building programme on the Acropolis of Athens.</p>
-<p>[Visual message] Its great size and lavish white marble showed the city's power and wealth at the height of its empire.</p>
-<p>[Museum display] Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.</p>
-<p>[Architecture] The pediments and metopes illustrate Greek myth; metopes are square spaces between triglyphs in a Doric frieze.</p>
-<p>[Civic life] The frieze represents the people of contemporary Athens in a religious procession.</p>
-<p>[Gallery rooms] Rooms 18a and 18b feature fragments of Parthenon sculpture and pieces of architecture.</p>
-<p>[Key term] Parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'.</p>
-<p>[Lost statue] Inside stood a colossal gold-and-ivory image of Athena Parthenos.</p>
-<p>[Artist] Sculptures designed by the famous artist Pheidias were completed by 432 BC.</p>
-<p>[Festival] The frieze shows the Panathenaic festival procession, commemorating the birthday of Athena.</p>
-<p>[Display history] The Parthenon sculptures have been on permanent display since 1817.</p>
-<p>[Gallery layout] Transepts at either end display east and west pediment sculptures, including Iris, goddess of the rainbow, and Dionysos.</p>
-<p>[Detail] Metopes on the walls are carved in high relief.</p>
-<p>[Technology] Video displays using computer graphics explain how the sculptures were placed on the building.</p>
-<p>[Accessibility] The gallery also uses video displays and a touch tour for visually impaired visitors.</p></div></div></div></div>
-  <div class="stimulus"><div class="stimulusHead"><span class="sid">S2</span><span class="stitle">The Gayer-Anderson Cat</span></div><div class="cols cols-3"><div class="col"><div class="colHead">Original</div><div class="colBody"><p>The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet. The goddess was usually shown as a cat-headed woman, or in the form of a cat. Her principal cult centre was Bubastis in the Nile Delta. Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.</p>
-<p>The cat dates from the Late Period of ancient Egypt around 600 BC. It is named after Major Robert Grenville Gayer-Anderson, who donated the statue to the British Museum in 1939. Gayer-Anderson was a keen collector of small Egyptian sculptures, jewellery and pottery. He showcased these in his home in Cairo, now known as the Gayer-Anderson Museum.</p>
-<p>This bronze figure probably comes from a temple. Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt. The donors of the statues hoped to communicate with the gods. Only the king or someone very wealthy could have afforded to commission an example as fine as this cat, adorned with precious metals.</p>
-<p>The sculpture wears a silver protective pectoral and golden earrings and nose ring. The scarab beetle on the cat's head and chest symbolises rebirth, while the silver wedjat-eye on the pectoral invoked protection and healing. Scientists at the British Museum investigated the cat using X-ray fluorescence and discovered that it is made from bronze containing copper, tin, arsenic and lead.</p></div></div><div class="col"><div class="colHead">Dyslexia Helper 2025 ver.</div><div class="colBody"><p>The Gayer-Anderson Cat is a bronze statue.</p>
-<p>It shows the Egyptian goddess Bastet.</p>
-<p>Bastet could appear as a cat or a cat-headed woman.</p>
-<p>She was a mother goddess.</p>
-<p>She was gentler than the lion goddess Sekhmet.</p>
-<p>The statue is from around 600 BC.</p>
-<p>Major Gayer-Anderson donated it to the British Museum in 1939.</p>
-<p>The cat may have come from a temple.</p>
-<p>People gave bronze figures to temples to communicate with gods.</p>
-<p>The cat wears a silver pectoral, gold earrings and a nose ring.</p>
-<p>The scarab beetle means rebirth.</p>
-<p>The wedjat-eye means protection and healing.</p>
-<p>Scientists used X-ray fluorescence to study the metal.</p></div></div><div class="col"><div class="colHead">DFT-GEN</div><div class="colBody"><p>[Object] The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet.</p>
-<p>[Deity] The goddess was usually shown as a cat-headed woman, or in the form of a cat.</p>
-<p>[Cult centre] Her principal cult centre was Bubastis in the Nile Delta.</p>
-<p>[Role] Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.</p>
-<p>[Date] The cat dates from the Late Period of ancient Egypt around 600 BC.</p>
-<p>[Name] It is named after Major Robert Grenville Gayer-Anderson.</p>
-<p>[Donation] He donated the statue to the British Museum in 1939.</p>
-<p>[Collector] Gayer-Anderson collected Egyptian sculptures, jewellery and pottery and showcased them in his Cairo home.</p>
-<p>[Original setting] This bronze figure probably comes from a temple.</p>
-<p>[Religious use] Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt.</p>
-<p>[Purpose] Donors hoped to communicate with the gods through these temple offerings.</p>
-<p>[Status] Only a king or someone very wealthy could commission a cat as fine as this, adorned with precious metals.</p>
-<p>[Jewellery] The sculpture wears a silver protective pectoral and golden earrings and nose ring.</p>
-<p>[Symbols] The scarab beetle on the cat's head and chest symbolises rebirth.</p>
-<p>[Healing] The silver wedjat-eye on the pectoral invoked protection and healing.</p>
-<p>[Science] Scientists at the British Museum investigated the cat using X-ray fluorescence.</p>
-<p>[Material] The bronze contains copper, tin, arsenic and lead.</p></div></div></div></div>
+  <div id="en-root"></div>
   <details>
     <summary>Show the original live survey URLs used for the international sample</summary>
-    <table class="linkTable"><thead><tr><th>Stimulus</th><th>Survey label</th><th>Live survey URL</th></tr></thead><tbody><tr><td>S1</td><td>S1_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original&amp;v=b6225b6">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original&amp;v=b6225b6</a></td></tr><tr><td>S1</td><td>S1_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025&amp;v=65843ea</a></td></tr><tr><td>S1</td><td>S1_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen&amp;v=3eb9656">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen&amp;v=3eb9656</a></td></tr><tr><td>S2</td><td>S2_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original&amp;v=65843ea</a></td></tr><tr><td>S2</td><td>S2_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025&amp;v=65843ea</a></td></tr><tr><td>S2</td><td>S2_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen&amp;v=3eb9656">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen&amp;v=3eb9656</a></td></tr></tbody></table>
+    <table class="linkTable"><thead><tr><th>Stimulus</th><th>Survey label</th><th>Live survey URL</th></tr></thead><tbody>
+      <tr><td>S1</td><td>S1_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original&amp;v=b6225b6">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=original&amp;label=S1_original&amp;v=b6225b6</a></td></tr>
+      <tr><td>S1</td><td>S1_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=helper_2025&amp;label=S1_helper_2025&amp;v=65843ea</a></td></tr>
+      <tr><td>S1</td><td>S1_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen&amp;v=3eb9656">https://morrisyujq.github.io/museum-stimuli/?stimulus=S1&amp;condition=dftgen&amp;label=S1_dftgen&amp;v=3eb9656</a></td></tr>
+      <tr><td>S2</td><td>S2_original</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=original&amp;label=S2_original&amp;v=65843ea</a></td></tr>
+      <tr><td>S2</td><td>S2_helper_2025</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025&amp;v=65843ea">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=helper_2025&amp;label=S2_helper_2025&amp;v=65843ea</a></td></tr>
+      <tr><td>S2</td><td>S2_dftgen</td><td><a href="https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen&amp;v=3eb9656">https://morrisyujq.github.io/museum-stimuli/?stimulus=S2&amp;condition=dftgen&amp;label=S2_dftgen&amp;v=3eb9656</a></td></tr>
+    </tbody></table>
   </details>
-</div>
+
+  <p class="footnote">
+    <a href="https://github.com/MorrisYUJQ/museum-stimuli">museum-stimuli</a> ·
+    UI from <a href="https://github.com/MorrisYUJQ/dft-gen-expert-spot-check">dft-gen-expert-spot-check</a>
+  </p>
+</main>
+
+<script>
+  const ZH_STIMULI = [
+    {
+      sid: "S1", title: "洮河石雕兰亭集会图砚",
+      panels: [
+        { title: "Original", body: "<p>洮河石雕兰亭集会图砚，宋，长22.4厘米，宽13.5厘米，厚6.8厘米。砚长方形，砚面及四侧面浅浮雕兰亭修褉图，描绘东晋永和九年（353年）王羲之同谢安等人在会稽山阴之兰亭修褉聚会时的场景。王羲之的著名法帖《兰亭序》描述的便是这次盛会。砚面主体内容为兰亭图，楼台亭阁，山峦叠嶂，祥云环绕，宛如仙境。作者又以曲水作墨池，为河渠式半环绕，墨池上有镂空的树干、楼栏、小桥，池畔以小桥连接，巧妙而又得体。砚的四面侧壁刻修褉环景图，环景中40多个人物，坐立于林间溪边，或高谈阔论，或烹茶、赏画、沉思、捕鱼、读书、打拳等。另有浴鹅图，描绘群鹅6只嬉戏于水中、岸上、树下。此砚石质细腻古朴，呈豆绿色，为宋砚传世之品。洮河石砚又称洮砚、洮石砚，为我国四大名砚之一。洮河石砚的原料洮河石因产于甘肃省甘南藏族自治州卓尼县洮砚乡洮河之滨而得名，又名辉绿岩，石色基本为绿色。唐代著名书法家柳公权在其《论砚》中评价过名砚。洮砚在宋代成为贡品，并逐渐进入四大名砚之列。宋代鉴赏家赵希鹄曾经在他的《洞天清禄集·古砚辨》中记载洮河绿石，称其“绿如蓝，润如玉”。</p>" },
+        { title: "Dyslexia Helper 2025 ver.", body: "<p>这是一方宋代洮河石砚。</p><p>它长约22厘米，宽约13厘米。</p><p>砚台上刻着兰亭聚会的画面。</p><p>这是王羲之和朋友们的著名聚会。</p><p>画中有山水、亭子和祥云。</p><p>还有弯曲的水池用来磨墨。</p><p>水池上有小桥和栏杆。</p><p>砚的四面刻了四十多个人。</p><p>人们在聊天、喝茶、看书。</p><p>还有六只鹅在玩耍。</p><p>砚底是斜坡形状。</p><p>石头是豆绿色的，很光滑。</p><p>这是宋代的传世古砚。</p><p>明末由吴拭收藏。</p><p>洮河砚是中国四大名砚之一。</p><p>它有一千三百多年历史。</p><p>石料来自甘肃的洮河。</p><p>石头多是绿色的。</p><p>唐代书法家就称赞过它。</p><p>宋代开始成为贡品。</p><p>它原本是磨刀的石料。</p><p>在宋代是很珍贵的文具。</p><p>苏东坡也写诗赞美过它。</p>" },
+        { title: "DFT-GEN", body: "<p>【器物】洮河石雕兰亭集会图砚，宋代。</p><p>【尺寸】长22.4厘米，宽13.5厘米，厚6.8厘米。</p><p>【形制】长方形砚；砚面和四侧面都有浅浮雕。</p><p>【主题】浮雕表现兰亭集会，也就是王羲之、谢安等人在兰亭修褉的场景。</p><p>【时间】兰亭集会发生在东晋永和九年，即353年。</p><p>【文献】王羲之《兰亭序》记录的就是这次雅集。</p><p>【画面】砚面有楼台、山峦、祥云、小桥和曲水墨池，整体像一幅山水聚会图。</p><p>【墨池】作者把墨池设计成弯曲水道，并加入镂空树干、楼栏和小桥。</p><p>【人物】四周环景刻有40多人，包含交谈、烹茶、赏画、读书、捕鱼、打拳等活动。</p><p>【细节】另有浴鹅图，6只鹅在水边游动、啄食或鸣叫。</p><p>【材质】砚石细腻温润，呈豆绿色，包浆厚，是传世宋砚。</p><p>【收藏】明末曾由收藏家吴拭珍收藏。</p><p>【名称】洮河石砚又称洮砚、洮石砚，是中国四大名砚之一。</p><p>【产地】洮河石来自甘肃甘南卓尼县洮河之滨，古称洮州。</p><p>【石性】洮河石属于水成岩，也称辉绿岩；常见颜色有墨绿、碧绿、翠绿、灰绿。</p><p>【早期评价】唐代柳公权在《论砚》中提到临洮砚，说明洮砚很早已受文人重视。</p><p>【宋代地位】洮砚在宋代成为贡品，并逐渐进入四大名砚之列。</p><p>【名家称赞】宋代赵希鹄称洮河绿石“绿如蓝，润如玉”，发墨效果很好。</p><p>【历史转变】洮河石最初也可作磨刀石；宋代文人因其难得、细密、润泽而珍视它。</p><p>【补充】苏东坡也曾写文称赞黄庭坚收藏的洮河石砚。</p>" }
+      ]
+    },
+    {
+      sid: "S2", title: "秦石鼓",
+      panels: [
+        { title: "Original", body: "<p>石鼓共有十块，为花岗岩质，高约90厘米，直径约60厘米。石鼓文，因文字篆刻在鼓形石上而得名。石上刻大篆书记叙游猎的十首诗，故也称《猎碣》。诗皆四言，同《诗经小雅》中的“车攻”一首有相似处。它是我国现存最早的一组石刻文字。自唐代韦应物、韩愈作《石鼓歌》以表章之，而后大显于世。石鼓的年代曾有西周、春秋战国、秦代、汉代、晋代、北魏、西魏、北周等数说。后经金石学家们从其内容、字体和书法风格等多方面的考证研究，认定是秦国遗物。在主张秦国遗物的意见中，又有秦文公、秦穆公、秦襄公、秦献公等说，确切的年代尚未取得一致的意见。石鼓在唐初时发现于陕西天兴（今陕西凤翔）三畤原。此后宋大观中迁于东京（今开封），金人破宋，辇至燕京（今北京）。数经迁徙，文字磨灭残损甚多。东京时曾以金色填字，运燕京后又被剔去。其中一鼓已无字。石鼓文有些字型与籀文相同。籀文也称大篆，传说是周宣王时太史籀所造。籀文型体齐整稳定，春秋时期已在秦国流行，流行过程中又进一步简化和线条化。此石鼓文书法朴茂浑古，清康有为谓：“如金钿委地，芝草团云，不烦整裁，自有奇采。”清代一些书法家的篆书多得力于此。故宫所藏石鼓文拓本有明初拓本，明代孙克弘旧藏，为国内著名善本。唐李吉甫《元和郡县图志》，宋欧阳修《集古录》、赵明诚《金石录》、郑樵《石鼓文考》等书著录。</p>" },
+        { title: "Dyslexia Helper 2025 ver.", body: "<p>石鼓共有十块。它们由花岗岩制成。每块高约90厘米。直径约60厘米。</p><p>文字刻在鼓形石头上。所以叫做石鼓文。上面刻有十首游猎诗。这些诗都是四句话。类似《诗经》的风格。</p><p>它是中国最早的石刻文字。唐代诗人写过《石鼓歌》。从此它被更多人知道。</p><p>关于它的年代有很多说法。专家研究内容和字体后。认定它是秦国的东西。但具体年代还有争论。</p><p>石鼓在陕西凤翔被发现。后来被搬到开封和北京。多次搬运导致字迹磨损。其中一块已经没有了字。</p><p>石鼓文的字体属于大篆。大篆在秦国曾经流行。字形整齐，线条简单。</p><p>书法风格古朴厚重。清代书法家常学习它。</p><p>故宫藏有明代拓本。是珍贵的版本。许多古书都记录过它。</p>" },
+        { title: "DFT-GEN", body: "<p>【器物】秦石鼓，共10块。</p><p>【材质】花岗岩；每块约高90厘米、直径60厘米。</p><p>【名称】因文字刻在鼓形石头上，所以称为石鼓文。</p><p>【内容】石上刻有10首游猎诗，因此又称《猎碣》。</p><p>【文体】诗句多为四言，风格与《诗经·小雅·车攻》相近。</p><p>【价值】石鼓文是中国现存最早的一组石刻文字之一。</p><p>【传播】唐代韦应物、韩愈写《石鼓歌》后，石鼓声名大振。</p><p>【年代争议】石鼓年代曾有西周、春秋战国、秦代、汉代等多种说法。</p><p>【主流判断】金石学者从内容、字体和书法风格分析，多认为它是秦国遗物。</p><p>【仍未定论】具体属于秦文公、秦穆公、秦襄公还是秦献公时期，尚无统一答案。</p><p>【发现地】石鼓在唐初发现于陕西天兴，即今陕西凤翔一带。</p><p>【迁徙】宋代迁至东京开封；金人破宋后又被运至燕京北京。</p><p>【损伤】多次迁徙和风化导致文字磨损，其中一鼓已经无字。</p><p>【修补痕迹】东京时期曾用金色填字，运到燕京后又被剔去。</p><p>【字体】石鼓文使用大篆，也称籀文。</p><p>【字形】籀文字形整齐、结构稳定，后来在秦国逐渐简化和线条化。</p><p>【书法】石鼓文风格古朴厚重，康有为称赞其自然有奇采。</p><p>【影响】清代许多篆书书法家都学习石鼓文。</p><p>【馆藏】故宫收藏明初石鼓文拓本，原为明代孙克弘旧藏，是著名善本。</p><p>【著录】《元和郡县图志》《集古录》《金石录》《石鼓文考》等书都记录过石鼓文。</p>" }
+      ]
+    }
+  ];
+
+  const EN_STIMULI = [
+    {
+      sid: "S1", title: "The Parthenon",
+      panels: [
+        { title: "Original", body: "<p>The Parthenon was built as a temple dedicated to the goddess Athena. It was the centrepiece of an ambitious building programme on the Acropolis of Athens. The temple's great size and lavish use of white marble was intended to show off the city's power and wealth at the height of its empire. Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.</p><p>The pediments and metopes, the square spaces between triglyphs in a Doric frieze, illustrate episodes from Greek myth. The frieze represents the people of contemporary Athens in religious procession. Rooms 18a and 18b feature fragments of the Parthenon sculpture and pieces of architecture. Video displays using computer graphics explain how the sculptures were placed on the building.</p><p>The word parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'. Inside the original building stood a colossal image of Athena Parthenos, constructed of gold and ivory. The temple was richly decorated with sculptures designed by the famous artist Pheidias, which took until 432 BC to complete.</p><p>The Parthenon sculptures have been on permanent display since 1817. The frieze shows the procession of the Panathenaic festival, the commemoration of the birthday of the goddess Athena. On either end of the main room are transepts displaying sculptures from the east and west pediments, including Iris, goddess of the rainbow, and Dionysos. On the walls are metopes carved in high relief.</p>" },
+        { title: "Dyslexia Helper 2025 ver.", body: "<p>The Parthenon was a temple for Athena.</p><p>It stood on the Acropolis in Athens.</p><p>It was very large and made with white marble.</p><p>The building showed the power and wealth of Athens.</p><p>The British Museum displays sculptures from the outside of the temple.</p><p>Some sculptures show Greek myths.</p><p>The frieze shows a religious procession in Athens.</p><p>The procession was part of a festival for Athena.</p><p>The sculptures were designed by Pheidias.</p><p>They have been displayed in the British Museum since 1817.</p><p>Some sculptures show Iris and Dionysos.</p><p>The museum also uses videos to explain where the sculptures were placed.</p>" },
+        { title: "DFT-GEN", body: "<p>[Object] The Parthenon was built as a temple dedicated to the goddess Athena.</p><p>[Place] It was the centrepiece of an ambitious building programme on the Acropolis of Athens.</p><p>[Visual message] Its great size and lavish white marble showed the city's power and wealth at the height of its empire.</p><p>[Museum display] Room 18 at the British Museum exhibits sculptures that once decorated the outside of the building.</p><p>[Architecture] The pediments and metopes illustrate Greek myth; metopes are square spaces between triglyphs in a Doric frieze.</p><p>[Civic life] The frieze represents the people of contemporary Athens in a religious procession.</p><p>[Gallery rooms] Rooms 18a and 18b feature fragments of Parthenon sculpture and pieces of architecture.</p><p>[Key term] Parthenos meant 'maiden', 'girl', or 'virgin, unmarried woman'.</p><p>[Lost statue] Inside stood a colossal gold-and-ivory image of Athena Parthenos.</p><p>[Artist] Sculptures designed by the famous artist Pheidias were completed by 432 BC.</p><p>[Festival] The frieze shows the Panathenaic festival procession, commemorating the birthday of Athena.</p><p>[Display history] The Parthenon sculptures have been on permanent display since 1817.</p><p>[Gallery layout] Transepts at either end display east and west pediment sculptures, including Iris, goddess of the rainbow, and Dionysos.</p><p>[Detail] Metopes on the walls are carved in high relief.</p><p>[Technology] Video displays using computer graphics explain how the sculptures were placed on the building.</p><p>[Accessibility] The gallery also uses video displays and a touch tour for visually impaired visitors.</p>" }
+      ]
+    },
+    {
+      sid: "S2", title: "The Gayer-Anderson Cat",
+      panels: [
+        { title: "Original", body: "<p>The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet. The goddess was usually shown as a cat-headed woman, or in the form of a cat. Her principal cult centre was Bubastis in the Nile Delta. Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.</p><p>The cat dates from the Late Period of ancient Egypt around 600 BC. It is named after Major Robert Grenville Gayer-Anderson, who donated the statue to the British Museum in 1939. Gayer-Anderson was a keen collector of small Egyptian sculptures, jewellery and pottery. He showcased these in his home in Cairo, now known as the Gayer-Anderson Museum.</p><p>This bronze figure probably comes from a temple. Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt. The donors of the statues hoped to communicate with the gods. Only the king or someone very wealthy could have afforded to commission an example as fine as this cat, adorned with precious metals.</p><p>The sculpture wears a silver protective pectoral and golden earrings and nose ring. The scarab beetle on the cat's head and chest symbolises rebirth, while the silver wedjat-eye on the pectoral invoked protection and healing. Scientists at the British Museum investigated the cat using X-ray fluorescence and discovered that it is made from bronze containing copper, tin, arsenic and lead.</p>" },
+        { title: "Dyslexia Helper 2025 ver.", body: "<p>The Gayer-Anderson Cat is a bronze statue.</p><p>It shows the Egyptian goddess Bastet.</p><p>Bastet could appear as a cat or a cat-headed woman.</p><p>She was a mother goddess.</p><p>She was gentler than the lion goddess Sekhmet.</p><p>The statue is from around 600 BC.</p><p>Major Gayer-Anderson donated it to the British Museum in 1939.</p><p>The cat may have come from a temple.</p><p>People gave bronze figures to temples to communicate with gods.</p><p>The cat wears a silver pectoral, gold earrings and a nose ring.</p><p>The scarab beetle means rebirth.</p><p>The wedjat-eye means protection and healing.</p><p>Scientists used X-ray fluorescence to study the metal.</p>" },
+        { title: "DFT-GEN", body: "<p>[Object] The Gayer-Anderson cat is a bronze figure depicting one form of the goddess Bastet.</p><p>[Deity] The goddess was usually shown as a cat-headed woman, or in the form of a cat.</p><p>[Cult centre] Her principal cult centre was Bubastis in the Nile Delta.</p><p>[Role] Bastet was a mother goddess and benign counterpart to the more aggressive lion goddess Sekhmet.</p><p>[Date] The cat dates from the Late Period of ancient Egypt around 600 BC.</p><p>[Name] It is named after Major Robert Grenville Gayer-Anderson.</p><p>[Donation] He donated the statue to the British Museum in 1939.</p><p>[Collector] Gayer-Anderson collected Egyptian sculptures, jewellery and pottery and showcased them in his Cairo home.</p><p>[Original setting] This bronze figure probably comes from a temple.</p><p>[Religious use] Thousands of bronze figures of gods, in varying sizes and forms, were dedicated in temples throughout Egypt.</p><p>[Purpose] Donors hoped to communicate with the gods through these temple offerings.</p><p>[Status] Only a king or someone very wealthy could commission a cat as fine as this, adorned with precious metals.</p><p>[Jewellery] The sculpture wears a silver protective pectoral and golden earrings and nose ring.</p><p>[Symbols] The scarab beetle on the cat's head and chest symbolises rebirth.</p><p>[Healing] The silver wedjat-eye on the pectoral invoked protection and healing.</p><p>[Science] Scientists at the British Museum investigated the cat using X-ray fluorescence.</p><p>[Material] The bronze contains copper, tin, arsenic and lead.</p>" }
+      ]
+    }
+  ];
+
+  const PREFS_STORAGE_KEY = 'study4-materials-reading-display-v1';
+  const DEFAULT_PREFS = { font: 'atkinson', textSize: 15, lineSpacing: 1.75, letterSpacing: 0.014, wordSpacing: 0.06, maskHeight: 42 };
+  const FONT_STACKS = {
+    atkinson: '"Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif',
+    lexend: '"Lexend", "Atkinson Hyperlegible", "Noto Sans SC", sans-serif',
+    yahei: '"Microsoft YaHei UI", "Noto Sans SC", "Atkinson Hyperlegible", sans-serif',
+    verdana: 'Verdana, "Microsoft YaHei UI", sans-serif',
+    arial: 'Arial, "Microsoft YaHei UI", sans-serif'
+  };
+  const FONT_LABELS = { atkinson: 'Atkinson', lexend: 'Lexend', yahei: 'YaHei UI', verdana: 'Verdana', arial: 'Arial' };
+
+  const fontSelect = document.getElementById('fontSelect');
+  const textSizeInput = document.getElementById('textSize');
+  const lineSpacingInput = document.getElementById('lineSpacing');
+  const letterSpacingInput = document.getElementById('letterSpacing');
+  const wordSpacingInput = document.getElementById('wordSpacing');
+  const maskHeightInput = document.getElementById('maskHeight');
+
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch]));
+  }
+
+  function setFocusPosition(stage, index) {
+    const content = stage.querySelector('.text-content');
+    const computed = window.getComputedStyle(content);
+    const lineHeight = Number.parseFloat(computed.lineHeight) || 34;
+    const focusHeight = Number.parseFloat(window.getComputedStyle(stage).getPropertyValue('--focus-height')) || lineHeight;
+    const step = Math.max(lineHeight, focusHeight * 0.75);
+    const visibleSlots = Math.max(0, Math.floor((stage.clientHeight - focusHeight - 16) / step));
+    const scrollSlots = Math.max(0, Math.ceil((content.scrollHeight - content.clientHeight) / step));
+    const maxVisibleIndex = Math.max(visibleSlots, scrollSlots);
+    const nextIndex = Math.max(0, Math.min(index, maxVisibleIndex));
+    stage.dataset.focusIndex = String(nextIndex);
+    const focusTop = 12 + Math.min(nextIndex, visibleSlots) * step;
+    stage.style.setProperty('--focus-top', focusTop + 'px');
+    content.scrollTop = Math.max(0, (nextIndex - visibleSlots) * step);
+  }
+
+  function textPanel(panelId, title, bodyHtml) {
+    return `
+      <section class="text-box">
+        <h3>${escapeHtml(title)}</h3>
+        <div class="reading-tools" aria-label="Reading focus controls for ${escapeHtml(title)}">
+          <button type="button" data-mask-toggle="${panelId}">Focus line</button>
+          <button type="button" data-mask-move="${panelId}" data-direction="-1">Move up</button>
+          <button type="button" data-mask-move="${panelId}" data-direction="1">Move down</button>
+        </div>
+        <div class="reader-stage" id="${panelId}" data-focus-index="0">
+          <div class="text-content reader-html">${bodyHtml}</div>
+          <div class="focus-mask top"></div>
+          <div class="focus-window"></div>
+          <div class="focus-mask bottom"></div>
+        </div>
+      </section>`;
+  }
+
+  function renderStimulus(langPrefix, stim) {
+    const panelsHtml = stim.panels.map((p, pIdx) => textPanel(`panel-${langPrefix}-${stim.sid}-${pIdx}`, p.title, p.body)).join('');
+    return `
+      <article class="sample">
+        <div class="sample-head"><span class="badge">${escapeHtml(stim.sid)}</span><span class="stitle">${escapeHtml(stim.title)}</span></div>
+        <div class="texts">${panelsHtml}</div>
+      </article>`;
+  }
+
+  function initReaderTools(root) {
+    root.addEventListener('click', (event) => {
+      const toggle = event.target.closest('[data-mask-toggle]');
+      const move = event.target.closest('[data-mask-move]');
+      if (!toggle && !move) return;
+      const targetId = (toggle || move).dataset.maskToggle || (toggle || move).dataset.maskMove;
+      const stage = document.getElementById(targetId);
+      if (!stage) return;
+      if (toggle) {
+        stage.classList.toggle('focus-on');
+        toggle.textContent = stage.classList.contains('focus-on') ? 'Hide mask' : 'Focus line';
+        setFocusPosition(stage, Number(stage.dataset.focusIndex || 0));
+        return;
+      }
+      const direction = Number(move.dataset.direction || 0);
+      stage.classList.add('focus-on');
+      const tools = move.closest('.reading-tools');
+      const toggleButton = tools?.querySelector('[data-mask-toggle]');
+      if (toggleButton) toggleButton.textContent = 'Hide mask';
+      setFocusPosition(stage, Number(stage.dataset.focusIndex || 0) + direction);
+    });
+  }
+
+  function loadPrefs() {
+    try { return { ...DEFAULT_PREFS, ...(JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY)) || {}) }; }
+    catch { return { ...DEFAULT_PREFS }; }
+  }
+  function savePrefs(prefs) { try { localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs)); } catch {} }
+  function currentPrefsFromControls() {
+    return {
+      font: fontSelect.value,
+      textSize: Number(textSizeInput.value),
+      lineSpacing: Number(lineSpacingInput.value),
+      letterSpacing: Number(letterSpacingInput.value),
+      wordSpacing: Number(wordSpacingInput.value),
+      maskHeight: Number(maskHeightInput.value)
+    };
+  }
+  function setControlValues(prefs) {
+    fontSelect.value = prefs.font;
+    textSizeInput.value = prefs.textSize;
+    lineSpacingInput.value = prefs.lineSpacing;
+    letterSpacingInput.value = prefs.letterSpacing;
+    wordSpacingInput.value = prefs.wordSpacing;
+    maskHeightInput.value = prefs.maskHeight;
+  }
+  function updateControlLabels(prefs) {
+    document.getElementById('fontLabel').textContent = FONT_LABELS[prefs.font] || 'Custom';
+    document.getElementById('textSizeLabel').textContent = `${prefs.textSize}px`;
+    document.getElementById('lineSpacingLabel').textContent = prefs.lineSpacing.toFixed(2);
+    document.getElementById('letterSpacingLabel').textContent = `${prefs.letterSpacing.toFixed(3)}em`;
+    document.getElementById('wordSpacingLabel').textContent = `${prefs.wordSpacing.toFixed(2)}em`;
+    document.getElementById('maskHeightLabel').textContent = `${prefs.maskHeight}px`;
+  }
+  function applyReadingPrefs(prefs) {
+    document.documentElement.style.setProperty('--reader-font', FONT_STACKS[prefs.font] || FONT_STACKS.atkinson);
+    document.documentElement.style.setProperty('--reader-size', `${prefs.textSize}px`);
+    document.documentElement.style.setProperty('--reader-line-height', prefs.lineSpacing);
+    document.documentElement.style.setProperty('--reader-letter-spacing', `${prefs.letterSpacing}em`);
+    document.documentElement.style.setProperty('--reader-word-spacing', `${prefs.wordSpacing}em`);
+    document.documentElement.style.setProperty('--mask-height', `${prefs.maskHeight}px`);
+    updateControlLabels(prefs);
+    document.querySelectorAll('.reader-stage.focus-on').forEach(stage => setFocusPosition(stage, Number(stage.dataset.focusIndex || 0)));
+  }
+  function bindReadingControls() {
+    const controls = [fontSelect, textSizeInput, lineSpacingInput, letterSpacingInput, wordSpacingInput, maskHeightInput];
+    controls.forEach(control => {
+      const handler = () => { const prefs = currentPrefsFromControls(); savePrefs(prefs); applyReadingPrefs(prefs); };
+      control.addEventListener('input', handler);
+      control.addEventListener('change', handler);
+    });
+    document.getElementById('resetReading').addEventListener('click', () => {
+      const prefs = { ...DEFAULT_PREFS };
+      setControlValues(prefs);
+      savePrefs(prefs);
+      applyReadingPrefs(prefs);
+    });
+  }
+
+  function init() {
+    document.getElementById('zh-root').innerHTML = ZH_STIMULI.map(s => renderStimulus('zh', s)).join('');
+    document.getElementById('en-root').innerHTML = EN_STIMULI.map(s => renderStimulus('en', s)).join('');
+    initReaderTools(document);
+    const prefs = loadPrefs();
+    setControlValues(prefs);
+    applyReadingPrefs(prefs);
+    bindReadingControls();
+  }
+  init();
+</script>
 </body>
 </html>

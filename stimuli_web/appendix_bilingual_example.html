@@ -4,299 +4,533 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Appendix Web Example | Original vs DFT-GEN (Bilingual)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#ffffff;
-      --fg:#111;
-      --muted:#4b5563;
-      --card:#f8fafc;
-      --border:#e5e7eb;
-      --hl:#fff1a8;
+    /* UI unified with table4_compare_en.html / dft-gen-expert-spot-check */
+    :root {
+      --ink: #1d2533;
+      --muted: #657084;
+      --paper: #f8f5ee;
+      --panel: #fffdf8;
+      --line: #d8d0c2;
+      --blue: #235789;
+      --blue-soft: #d9eafa;
+      --green: #31785f;
+      --shadow: 0 18px 45px rgba(50, 45, 35, .12);
+      --reader-font: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+      --reader-size: 16px;
+      --reader-line-height: 1.8;
+      --reader-letter-spacing: .018em;
+      --reader-word-spacing: .08em;
+      --mask-height: 42px;
     }
-    html,body{background:var(--bg); color:var(--fg); margin:0; padding:0;}
-    body{
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height:1.65;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(35, 87, 137, .14), transparent 32rem),
+        radial-gradient(circle at 90% 20%, rgba(49, 120, 95, .12), transparent 28rem),
+        linear-gradient(135deg, #fbf8f0, #efe8dc);
+      line-height: 1.55;
     }
-    .wrap{max-width:1040px; margin:0 auto; padding:24px;}
-    .top{
-      display:flex; gap:12px; align-items:flex-end; justify-content:space-between;
-      border-bottom:1px solid var(--border); padding-bottom:14px; margin-bottom:18px;
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 22px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
     }
-    .title{
-      font-size:18px; font-weight:700; margin:0;
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .62);
+      color: var(--blue);
+      font: 700 12px/1.2 "Lexend", sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
-    .subtitle{margin:6px 0 0 0; color:var(--muted); font-size:13px;}
-    .btn{
-      border:1px solid var(--border); background:#fff; color:#111;
-      padding:8px 10px; border-radius:10px; cursor:pointer; font-size:13px;
+    h1 {
+      margin: 14px 0 8px;
+      font-family: "Lexend", "Atkinson Hyperlegible", sans-serif;
+      font-size: clamp(24px, 3.6vw, 36px);
+      line-height: 1.08;
+      letter-spacing: -.03em;
     }
-    .btn:hover{background:#f9fafb;}
-
-    .section{margin:18px 0 22px 0;}
-    .sectionHead{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; margin:0 0 10px 0;
+    .subtitle { max-width: 780px; margin: 0; color: var(--muted); font-size: 15px; }
+    .headActions { flex-shrink: 0; }
+    main {
+      max-width: 1180px;
+      margin: 0 auto 48px;
+      padding: 0 22px 32px;
     }
-    .badge{
-      display:inline-block;
-      background:#111; color:#fff;
-      padding:4px 10px; border-radius:999px;
-      font-size:12px; font-weight:700; letter-spacing:.2px;
+    .artifact {
+      margin-bottom: 18px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, .82);
+      box-shadow: var(--shadow);
+      font: 800 15px "Lexend", sans-serif;
+      color: var(--blue);
     }
-    .artifact{
-      font-weight:700;
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:12px;
-      padding:14px 14px;
-      margin:12px 0;
+    .display-controls {
+      margin-bottom: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 253, 248, .82);
+      box-shadow: var(--shadow);
     }
-
-    .grid{
-      display:grid;
+    .display-controls h2 { margin: 0 0 6px; font-size: 22px; }
+    .display-controls p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .control {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.62);
+      padding: 12px;
+    }
+    .control label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font: 800 12px "Lexend", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    .control output { color: var(--blue); font-weight: 800; text-transform: none; letter-spacing: 0; }
+    .control input[type="range"], .control select {
+      width: 100%;
+      accent-color: var(--blue);
+    }
+    .control select {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 8px;
+      background: #fffdf8;
+      color: var(--ink);
+      font: 13px "Lexend", sans-serif;
+    }
+    .control-actions { display: flex; align-items: end; }
+    .control-actions button { width: 100%; }
+    button {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--panel);
+      color: var(--ink);
+      font: 700 13px "Lexend", sans-serif;
+    }
+    button:hover { box-shadow: 0 8px 22px rgba(0,0,0,.10); }
+    .sample {
+      margin: 0 0 22px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 253, 248, .95);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sample-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 22px;
+      background: linear-gradient(90deg, rgba(35,87,137,.10), rgba(49,120,95,.08));
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .sample-id { font: 800 15px "Lexend", sans-serif; }
+    .badge {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--blue);
+      font: 700 12px "Lexend", sans-serif;
+    }
+    .texts {
+      display: grid;
       grid-template-columns: 1fr 1fr;
-      gap:14px;
+      gap: 14px;
+      padding: 18px;
     }
-    @media (max-width: 860px){
-      .grid{grid-template-columns:1fr;}
+    .text-box {
+      min-height: 190px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 0;
+      background: #fffaf0;
+      overflow: hidden;
     }
-    .panel{
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      background:#fff;
+    .text-box h3 {
+      margin: 0;
+      padding: 13px 15px 9px;
+      font: 800 13px "Lexend", sans-serif;
+      color: var(--blue);
+      letter-spacing: .04em;
+      text-transform: uppercase;
     }
-    .panelHead{
-      padding:10px 12px;
-      background:var(--card);
-      border-bottom:1px solid var(--border);
-      font-weight:700;
-      font-size:13px;
-      display:flex; align-items:center; justify-content:space-between;
+    .reading-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 12px 10px;
     }
-    .panelBody{padding:12px 12px;}
-    p{margin:0 0 10px 0;}
-    p:last-child{margin-bottom:0;}
-    mark.hl{
-      background:var(--hl);
-      padding:0 2px;
-      border-radius:3px;
+    .reading-tools button {
+      padding: 6px 9px;
+      font-size: 11px;
+      background: #f3efe6;
     }
-    .note{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:10px;
+    .reader-stage {
+      --focus-top: 22px;
+      --focus-height: var(--mask-height);
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: #fffdf8;
     }
-
-    /* Focus mode (flashcard): show one unit per page */
-    .focus .panelBody{padding:14px;}
-    .card{
-      border:1px dashed #e5e7eb;
-      border-radius:12px;
-      padding:14px 14px;
-      background:#ffffff;
-      min-height:120px;
-      display:flex;
-      align-items:flex-start;
+    .text-content {
+      max-height: 365px;
+      overflow: auto;
+      padding: 16px 17px 22px;
+      white-space: pre-wrap;
+      font-family: var(--reader-font);
+      font-size: var(--reader-size);
+      line-height: var(--reader-line-height);
+      letter-spacing: var(--reader-letter-spacing);
+      word-spacing: var(--reader-word-spacing);
     }
-    .cardText{width:100%;}
-    .cardText p{margin:0;}
-    .controls{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      justify-content:flex-end;
-      margin-left:auto;
+    .text-content.reader-html { white-space: normal; }
+    .text-content.reader-html p { margin: 0 0 10px; }
+    .text-content strong {
+      font-weight: 800;
+      color: #0f3f6b;
+      background: rgba(217, 234, 250, .78);
+      border-radius: 5px;
+      padding: 0 .12em;
     }
-    .pill{
-      border:1px solid var(--border);
-      background:#fff;
-      color:#111;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      white-space:nowrap;
+    .text-content mark {
+      background: #ffe680;
+      color: #1d2533;
+      border-radius: 5px;
+      padding: 0 .14em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .focus-mask, .focus-window {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .focus-mask.top {
+      top: 0;
+      height: var(--focus-top);
+      background: rgba(0, 0, 0, .70);
+    }
+    .focus-mask.bottom {
+      top: calc(var(--focus-top) + var(--focus-height));
+      bottom: 0;
+      background: rgba(0, 0, 0, .70);
+    }
+    .focus-window {
+      top: var(--focus-top);
+      height: var(--focus-height);
+      left: 8px;
+      right: 8px;
+      border-top: 2px solid rgba(255, 230, 128, .95);
+      border-bottom: 2px solid rgba(255, 230, 128, .95);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.26) inset;
+    }
+    .reader-stage.focus-on .focus-mask,
+    .reader-stage.focus-on .focus-window { display: block; }
+    .note {
+      margin: 0 18px 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.55);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .footnote { margin-top: 14px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 860px) {
+      .texts, .control-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      .display-controls, .footnote a { display: none !important; }
+      body { background: white; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <h1 class="title">Appendix Web Example: Original vs DFT-GEN (Bilingual)</h1>
-        <p class="subtitle">One exhibit item, Chinese–English parallel text, with manually selected keyword highlights.</p>
-      </div>
-      <button class="btn" type="button" onclick="window.print()">Print / Save as PDF</button>
+  <header>
+    <div>
+      <span class="eyebrow">Appendix - Bilingual worked example</span>
+      <h1>Original vs DFT-GEN (Bilingual)</h1>
+      <p class="subtitle">One exhibit item, Chinese-English parallel text, with manually selected keyword highlights.</p>
     </div>
-
-    <div class="artifact">
-      Exhibit item: 白玻璃渣斗 / White Glass Zhadou
+    <div class="headActions">
+      <button type="button" onclick="window.print()">Print / Save as PDF</button>
     </div>
+  </header>
 
-    <!-- ORIGINAL -->
-    <div class="section">
-      <div class="sectionHead">
-        <span class="badge">原文 / Original</span>
-      </div>
-      <div class="grid">
-        <div class="panel">
-        <div class="panelHead"><span>中文（原文）</span></div>
-          <div class="panelBody">
-            <p>白玻璃渣斗，高 8.7 厘米，口径 7.7 厘米。通体磨制大小龟背纹，具有玲珑剔透、晶莹澄澈的视觉效果。</p>
-            <p>在赏赐西藏的物品中，有玻璃渣斗的记录。渣斗，又名奓（音乍）斗，造型来源于瓷器，或可溯源至商周时期的青铜觚。当渣斗作为实用器使用时，其功能相当于唾盂。</p>
-            <p>玻璃渣斗只流行于清康熙、雍正、乾隆三朝。据清宫档案，清廷对西藏地方僧俗官员，无论官阶大小，赏赐品中都有玻璃器的身影。</p>
-          </div>
+  <main>
+    <div class="artifact">Exhibit item: 白玻璃渣斗 / White Glass Zhadou</div>
+
+    <section class="display-controls" aria-label="Reading display controls">
+      <h2>Reading display</h2>
+      <div class="control-grid">
+        <div class="control">
+          <label for="fontSelect">Friendly font <output id="fontLabel">Atkinson</output></label>
+          <select id="fontSelect">
+            <option value="atkinson">Atkinson Hyperlegible</option>
+            <option value="lexend">Lexend</option>
+            <option value="yahei">Microsoft YaHei UI</option>
+            <option value="verdana">Verdana</option>
+            <option value="arial">Arial</option>
+          </select>
         </div>
-
-        <div class="panel">
-          <div class="panelHead"><span>English (Translation)</span></div>
-          <div class="panelBody">
-            <p>White glass zhadou, height 8.7 cm, mouth diameter 7.7 cm. The entire surface is ground with a turtle-shell pattern, creating a clear and crystalline visual effect.</p>
-            <p>Records show glass zhadou among items bestowed on Tibet. The zhadou (also written 奓斗, pronounced “zha”) takes its shape from porcelain and may trace back to a bronze gu vessel from the Shang–Zhou period. When used as a practical object, it functioned like a spittoon.</p>
-            <p>Glass zhadou were popular only during the Qing Kangxi, Yongzheng, and Qianlong reigns. According to the Qing court archives, when the Qing court rewarded Tibetan monastic and secular officials—regardless of rank—glassware was included among the gifts.</p>
-          </div>
+        <div class="control">
+          <label for="textSize">Text size <output id="textSizeLabel">16px</output></label>
+          <input id="textSize" type="range" min="14" max="24" step="1" value="16">
         </div>
-      </div>
-    </div>
-
-    <!-- DYSLEXIA HELPER (ONE-STEP) -->
-    <div class="section">
-      <div class="sectionHead">
-        <span class="badge">Dyslexia Helper（one-step）/ Dyslexia Helper (One-step)</span>
-      </div>
-      <div class="grid">
-        <div class="panel">
-          <div class="panelHead"><span>中文（Dyslexia Helper）</span></div>
-          <div class="panelBody">
-            <p>这是一个白玻璃渣斗。</p>
-            <p>它高 8.7 厘米，口径 7.7 厘米。表面磨出龟背纹，看起来透明、发亮。</p>
-            <p>渣斗也叫“奓斗”，外形有点像一些瓷器器形。过去常被当作唾盂使用。</p>
-            <p>这种玻璃渣斗在清代较常见，主要在康熙、雍正、乾隆时期流行。</p>
-          </div>
+        <div class="control">
+          <label for="lineSpacing">Line spacing <output id="lineSpacingLabel">1.80</output></label>
+          <input id="lineSpacing" type="range" min="1.3" max="2.4" step="0.05" value="1.8">
         </div>
-
-        <div class="panel">
-          <div class="panelHead"><span>English (Dyslexia Helper Translation)</span></div>
-          <div class="panelBody">
-            <p>This is a white glass zhadou.</p>
-            <p>It is 8.7 cm tall, with a 7.7 cm mouth diameter. The surface is ground with a turtle-shell pattern, and it looks clear and glossy.</p>
-            <p>The zhadou is also called “奓斗”. Its shape resembles some porcelain vessel forms. In the past, it was often used as a spittoon.</p>
-            <p>This type of glass zhadou was common in the Qing dynasty, especially during the Kangxi, Yongzheng, and Qianlong reigns.</p>
-          </div>
+        <div class="control">
+          <label for="letterSpacing">Letter spacing <output id="letterSpacingLabel">0.02em</output></label>
+          <input id="letterSpacing" type="range" min="0" max="0.12" step="0.005" value="0.018">
+        </div>
+        <div class="control">
+          <label for="wordSpacing">Word spacing <output id="wordSpacingLabel">0.08em</output></label>
+          <input id="wordSpacing" type="range" min="0" max="0.35" step="0.01" value="0.08">
+        </div>
+        <div class="control">
+          <label for="maskHeight">Mask window size <output id="maskHeightLabel">42px</output></label>
+          <input id="maskHeight" type="range" min="24" max="90" step="2" value="42">
+        </div>
+        <div class="control control-actions">
+          <button type="button" id="resetReading">Reset reading display</button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- DFT-GEN -->
-    <div class="section" id="dftSection">
-      <div class="sectionHead">
-        <span class="badge">DFT-GEN（示例）/ DFT-GEN (Example)</span>
-        <div class="controls">
-          <button class="btn" id="btnPrev" type="button" disabled>←</button>
-          <span class="pill" id="page">1 / 1</span>
-          <button class="btn" id="btnNext" type="button" disabled>→</button>
-          <button class="btn" id="btnFocus" type="button">Focus mode (flashcard): OFF</button>
-        </div>
-      </div>
-      <div class="grid">
-        <div class="panel">
-          <div class="panelHead"><span>中文（DFT-GEN）</span></div>
-          <div class="panelBody" id="dftZhBody">
-            <p><mark class="hl">白玻璃渣斗</mark>。高 <mark class="hl">8.7 厘米</mark>。口径 <mark class="hl">7.7 厘米</mark>。</p>
-            <p>表面有<mark class="hl">龟背纹</mark>。看起来透明、发亮。</p>
-            <p>渣斗也叫“<mark class="hl">奓斗</mark>”。外形来自<mark class="hl">瓷器</mark>。也可能源自商周时期的<mark class="hl">青铜觚</mark>。</p>
-            <p>它常用作<mark class="hl">唾盂</mark>。</p>
-            <p>玻璃渣斗只流行于清<mark class="hl">康熙</mark>、雍正、乾隆三朝。</p>
-            <p><mark class="hl">清宫档案</mark>里有记录：清廷赏赐<mark class="hl">西藏</mark>地方僧俗官员时，赏赐品中常包含玻璃器。</p>
-          </div>
-        </div>
+    <div id="samples-root"></div>
 
-        <div class="panel">
-          <div class="panelHead"><span>English (DFT-GEN Translation)</span></div>
-          <div class="panelBody" id="dftEnBody">
-            <p><mark class="hl">White glass zhadou</mark>. Height <mark class="hl">8.7 cm</mark>. Mouth diameter <mark class="hl">7.7 cm</mark>.</p>
-            <p>It has a <mark class="hl">turtle-shell pattern</mark>. It looks clear and glossy.</p>
-            <p>The zhadou is also called <mark class="hl">奓斗</mark>. Its shape comes from <mark class="hl">porcelain</mark>. It may also trace back to a Shang–Zhou <mark class="hl">bronze gu</mark> vessel.</p>
-            <p>It was often used as a <mark class="hl">spittoon</mark>.</p>
-            <p>Glass zhadou were popular only during the Qing <mark class="hl">Kangxi</mark>, Yongzheng, and Qianlong reigns.</p>
-            <p>The <mark class="hl">Qing court archives</mark> record that when the court rewarded monastic and secular officials in <mark class="hl">Tibet</mark>, glassware was often included among the gifts.</p>
-          </div>
-        </div>
-      </div>
-      <p class="note">Note: Keywords were selected manually (e.g., object name, dimensions, key terms, dynasty/reigns, and archival source) and highlighted by hand to ensure consistency and precision.</p>
-    </div>
-  </div>
+    <p class="footnote">
+      <a href="https://github.com/MorrisYUJQ/museum-stimuli">museum-stimuli</a> ·
+      UI from <a href="https://github.com/MorrisYUJQ/dft-gen-expert-spot-check">dft-gen-expert-spot-check</a>
+    </p>
+  </main>
 
   <script>
-    const dft = document.getElementById('dftSection');
-    const btn = document.getElementById('btnFocus');
-    const btnPrev = document.getElementById('btnPrev');
-    const btnNext = document.getElementById('btnNext');
-    const page = document.getElementById('page');
-    const zhBody = document.getElementById('dftZhBody');
-    const enBody = document.getElementById('dftEnBody');
-
-    const zhFullHtml = zhBody.innerHTML;
-    const enFullHtml = enBody.innerHTML;
-
-    function extractUnits(bodyEl) {
-      return Array.from(bodyEl.querySelectorAll('p')).map(p => p.innerHTML.trim()).filter(Boolean);
-    }
-
-    const zhUnits = extractUnits(zhBody);
-    const enUnits = extractUnits(enBody);
-    const total = Math.max(zhUnits.length, enUnits.length, 1);
-    let idx = 0;
-    let on = false;
-
-    function updateNav() {
-      page.textContent = (idx + 1) + ' / ' + total;
-      btnPrev.disabled = !on || idx <= 0;
-      btnNext.disabled = !on || idx >= total - 1;
-    }
-
-    function renderCard() {
-      const zh = zhUnits[idx] ?? '';
-      const en = enUnits[idx] ?? '';
-      zhBody.innerHTML = '<div class="card"><div class="cardText"><p>' + zh + '</p></div></div>';
-      enBody.innerHTML = '<div class="card"><div class="cardText"><p>' + en + '</p></div></div>';
-      updateNav();
-    }
-
-    function restoreFull() {
-      zhBody.innerHTML = zhFullHtml;
-      enBody.innerHTML = enFullHtml;
-      updateNav();
-    }
-
-    btnPrev.addEventListener('click', () => {
-      if (!on) return;
-      idx = Math.max(0, idx - 1);
-      renderCard();
-    });
-
-    btnNext.addEventListener('click', () => {
-      if (!on) return;
-      idx = Math.min(total - 1, idx + 1);
-      renderCard();
-    });
-
-    btn.addEventListener('click', () => {
-      on = !on;
-      dft.classList.toggle('focus', on);
-      btn.textContent = 'Focus mode (flashcard): ' + (on ? 'ON' : 'OFF');
-      if (on) {
-        idx = 0;
-        renderCard();
-      } else {
-        restoreFull();
+    const SAMPLES = [
+      {
+        badge: "原文 / Original",
+        panels: [
+          { title: "中文（原文）", body: "<p>白玻璃渣斗，高 8.7 厘米，口径 7.7 厘米。通体磨制大小龟背纹，具有玲珑剔透、晶莹澄澈的视觉效果。</p><p>在赏赐西藏的物品中，有玻璃渣斗的记录。渣斗，又名奓（音乍）斗，造型来源于瓷器，或可溯源至商周时期的青铜觚。当渣斗作为实用器使用时，其功能相当于唾盂。</p><p>玻璃渣斗只流行于清康熙、雍正、乾隆三朝。据清宫档案，清廷对西藏地方僧俗官员，无论官阶大小，赏赐品中都有玻璃器的身影。</p>" },
+          { title: "English (Translation)", body: "<p>White glass zhadou, height 8.7 cm, mouth diameter 7.7 cm. The entire surface is ground with a turtle-shell pattern, creating a clear and crystalline visual effect.</p><p>Records show glass zhadou among items bestowed on Tibet. The zhadou (also written 奓斗, pronounced \u201czha\u201d) takes its shape from porcelain and may trace back to a bronze gu vessel from the Shang-Zhou period. When used as a practical object, it functioned like a spittoon.</p><p>Glass zhadou were popular only during the Qing Kangxi, Yongzheng, and Qianlong reigns. According to the Qing court archives, when the Qing court rewarded Tibetan monastic and secular officials\u2014regardless of rank\u2014glassware was included among the gifts.</p>" }
+        ]
+      },
+      {
+        badge: "Dyslexia Helper（one-step）/ Dyslexia Helper (One-step)",
+        panels: [
+          { title: "中文（Dyslexia Helper）", body: "<p>这是一个白玻璃渣斗。</p><p>它高 8.7 厘米，口径 7.7 厘米。表面磨出龟背纹，看起来透明、发亮。</p><p>渣斗也叫“奓斗”，外形有点像一些瓷器器形。过去常被当作唾盂使用。</p><p>这种玻璃渣斗在清代较常见，主要在康熙、雍正、乾隆时期流行。</p>" },
+          { title: "English (Dyslexia Helper Translation)", body: "<p>This is a white glass zhadou.</p><p>It is 8.7 cm tall, with a 7.7 cm mouth diameter. The surface is ground with a turtle-shell pattern, and it looks clear and glossy.</p><p>The zhadou is also called \u201c奓斗\u201d. Its shape resembles some porcelain vessel forms. In the past, it was often used as a spittoon.</p><p>This type of glass zhadou was common in the Qing dynasty, especially during the Kangxi, Yongzheng, and Qianlong reigns.</p>" }
+        ]
+      },
+      {
+        badge: "DFT-GEN（示例）/ DFT-GEN (Example)",
+        note: "Note: Keywords were selected manually (e.g., object name, dimensions, key terms, dynasty/reigns, and archival source) and highlighted by hand to ensure consistency and precision.",
+        panels: [
+          { title: "中文（DFT-GEN）", body: "<p><mark>白玻璃渣斗</mark>。高 <mark>8.7 厘米</mark>。口径 <mark>7.7 厘米</mark>。</p><p>表面有<mark>龟背纹</mark>。看起来透明、发亮。</p><p>渣斗也叫“<mark>奓斗</mark>”。外形来自<mark>瓷器</mark>。也可能源自商周时期的<mark>青铜觚</mark>。</p><p>它常用作<mark>唾盂</mark>。</p><p>玻璃渣斗只流行于清<mark>康熙</mark>、雍正、乾隆三朝。</p><p><mark>清宫档案</mark>里有记录：清廷赏赐<mark>西藏</mark>地方僧俗官员时，赏赐品中常包含玻璃器。</p>" },
+          { title: "English (DFT-GEN Translation)", body: "<p><mark>White glass zhadou</mark>. Height <mark>8.7 cm</mark>. Mouth diameter <mark>7.7 cm</mark>.</p><p>It has a <mark>turtle-shell pattern</mark>. It looks clear and glossy.</p><p>The zhadou is also called <mark>奓斗</mark>. Its shape comes from <mark>porcelain</mark>. It may also trace back to a Shang-Zhou <mark>bronze gu</mark> vessel.</p><p>It was often used as a <mark>spittoon</mark>.</p><p>Glass zhadou were popular only during the Qing <mark>Kangxi</mark>, Yongzheng, and Qianlong reigns.</p><p>The <mark>Qing court archives</mark> record that when the court rewarded monastic and secular officials in <mark>Tibet</mark>, glassware was often included among the gifts.</p>" }
+        ]
       }
-    });
+    ];
 
-    // init
-    updateNav();
+    const PREFS_STORAGE_KEY = 'bilingual-reading-display-v1';
+    const DEFAULT_PREFS = {
+      font: 'atkinson', textSize: 16, lineSpacing: 1.8, letterSpacing: 0.018, wordSpacing: 0.08, maskHeight: 42
+    };
+    const FONT_STACKS = {
+      atkinson: '"Atkinson Hyperlegible", "Lexend", "Noto Sans SC", "Microsoft YaHei UI", sans-serif',
+      lexend: '"Lexend", "Atkinson Hyperlegible", "Noto Sans SC", sans-serif',
+      yahei: '"Microsoft YaHei UI", "Noto Sans SC", "Atkinson Hyperlegible", sans-serif',
+      verdana: 'Verdana, "Microsoft YaHei UI", sans-serif',
+      arial: 'Arial, "Microsoft YaHei UI", sans-serif'
+    };
+    const FONT_LABELS = { atkinson: 'Atkinson', lexend: 'Lexend', yahei: 'YaHei UI', verdana: 'Verdana', arial: 'Arial' };
+
+    const fontSelect = document.getElementById('fontSelect');
+    const textSizeInput = document.getElementById('textSize');
+    const lineSpacingInput = document.getElementById('lineSpacing');
+    const letterSpacingInput = document.getElementById('letterSpacing');
+    const wordSpacingInput = document.getElementById('wordSpacing');
+    const maskHeightInput = document.getElementById('maskHeight');
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch]));
+    }
+
+    function setFocusPosition(stage, index) {
+      const content = stage.querySelector('.text-content');
+      const computed = window.getComputedStyle(content);
+      const lineHeight = Number.parseFloat(computed.lineHeight) || 34;
+      const focusHeight = Number.parseFloat(window.getComputedStyle(stage).getPropertyValue('--focus-height')) || lineHeight;
+      const step = Math.max(lineHeight, focusHeight * 0.75);
+      const visibleSlots = Math.max(0, Math.floor((stage.clientHeight - focusHeight - 16) / step));
+      const scrollSlots = Math.max(0, Math.ceil((content.scrollHeight - content.clientHeight) / step));
+      const maxVisibleIndex = Math.max(visibleSlots, scrollSlots);
+      const nextIndex = Math.max(0, Math.min(index, maxVisibleIndex));
+      stage.dataset.focusIndex = String(nextIndex);
+      const focusTop = 12 + Math.min(nextIndex, visibleSlots) * step;
+      stage.style.setProperty('--focus-top', focusTop + 'px');
+      content.scrollTop = Math.max(0, (nextIndex - visibleSlots) * step);
+    }
+
+    function textPanel(panelId, title, bodyHtml) {
+      return `
+        <section class="text-box">
+          <h3>${escapeHtml(title)}</h3>
+          <div class="reading-tools" aria-label="Reading focus controls for ${escapeHtml(title)}">
+            <button type="button" data-mask-toggle="${panelId}">Focus line</button>
+            <button type="button" data-mask-move="${panelId}" data-direction="-1">Move up</button>
+            <button type="button" data-mask-move="${panelId}" data-direction="1">Move down</button>
+          </div>
+          <div class="reader-stage" id="${panelId}" data-focus-index="0">
+            <div class="text-content reader-html">${bodyHtml}</div>
+            <div class="focus-mask top"></div>
+            <div class="focus-window"></div>
+            <div class="focus-mask bottom"></div>
+          </div>
+        </section>`;
+    }
+
+    function renderSample(sample, sIdx) {
+      const panelsHtml = sample.panels.map((p, pIdx) => textPanel(`panel-${sIdx}-${pIdx}`, p.title, p.body)).join('');
+      const noteHtml = sample.note ? `<p class="note">${escapeHtml(sample.note)}</p>` : '';
+      return `
+        <article class="sample">
+          <div class="sample-head"><span class="badge">${escapeHtml(sample.badge)}</span></div>
+          <div class="texts">${panelsHtml}</div>
+          ${noteHtml}
+        </article>`;
+    }
+
+    function initReaderTools(root) {
+      root.addEventListener('click', (event) => {
+        const toggle = event.target.closest('[data-mask-toggle]');
+        const move = event.target.closest('[data-mask-move]');
+        if (!toggle && !move) return;
+        const targetId = (toggle || move).dataset.maskToggle || (toggle || move).dataset.maskMove;
+        const stage = document.getElementById(targetId);
+        if (!stage) return;
+        if (toggle) {
+          stage.classList.toggle('focus-on');
+          toggle.textContent = stage.classList.contains('focus-on') ? 'Hide mask' : 'Focus line';
+          setFocusPosition(stage, Number(stage.dataset.focusIndex || 0));
+          return;
+        }
+        const direction = Number(move.dataset.direction || 0);
+        stage.classList.add('focus-on');
+        const tools = move.closest('.reading-tools');
+        const toggleButton = tools?.querySelector('[data-mask-toggle]');
+        if (toggleButton) toggleButton.textContent = 'Hide mask';
+        setFocusPosition(stage, Number(stage.dataset.focusIndex || 0) + direction);
+      });
+    }
+
+    function loadPrefs() {
+      try { return { ...DEFAULT_PREFS, ...(JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY)) || {}) }; }
+      catch { return { ...DEFAULT_PREFS }; }
+    }
+    function savePrefs(prefs) {
+      try { localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(prefs)); } catch {}
+    }
+    function currentPrefsFromControls() {
+      return {
+        font: fontSelect.value,
+        textSize: Number(textSizeInput.value),
+        lineSpacing: Number(lineSpacingInput.value),
+        letterSpacing: Number(letterSpacingInput.value),
+        wordSpacing: Number(wordSpacingInput.value),
+        maskHeight: Number(maskHeightInput.value)
+      };
+    }
+    function setControlValues(prefs) {
+      fontSelect.value = prefs.font;
+      textSizeInput.value = prefs.textSize;
+      lineSpacingInput.value = prefs.lineSpacing;
+      letterSpacingInput.value = prefs.letterSpacing;
+      wordSpacingInput.value = prefs.wordSpacing;
+      maskHeightInput.value = prefs.maskHeight;
+    }
+    function updateControlLabels(prefs) {
+      document.getElementById('fontLabel').textContent = FONT_LABELS[prefs.font] || 'Custom';
+      document.getElementById('textSizeLabel').textContent = `${prefs.textSize}px`;
+      document.getElementById('lineSpacingLabel').textContent = prefs.lineSpacing.toFixed(2);
+      document.getElementById('letterSpacingLabel').textContent = `${prefs.letterSpacing.toFixed(3)}em`;
+      document.getElementById('wordSpacingLabel').textContent = `${prefs.wordSpacing.toFixed(2)}em`;
+      document.getElementById('maskHeightLabel').textContent = `${prefs.maskHeight}px`;
+    }
+    function applyReadingPrefs(prefs) {
+      document.documentElement.style.setProperty('--reader-font', FONT_STACKS[prefs.font] || FONT_STACKS.atkinson);
+      document.documentElement.style.setProperty('--reader-size', `${prefs.textSize}px`);
+      document.documentElement.style.setProperty('--reader-line-height', prefs.lineSpacing);
+      document.documentElement.style.setProperty('--reader-letter-spacing', `${prefs.letterSpacing}em`);
+      document.documentElement.style.setProperty('--reader-word-spacing', `${prefs.wordSpacing}em`);
+      document.documentElement.style.setProperty('--mask-height', `${prefs.maskHeight}px`);
+      updateControlLabels(prefs);
+      document.querySelectorAll('.reader-stage.focus-on').forEach(stage => setFocusPosition(stage, Number(stage.dataset.focusIndex || 0)));
+    }
+    function bindReadingControls() {
+      const controls = [fontSelect, textSizeInput, lineSpacingInput, letterSpacingInput, wordSpacingInput, maskHeightInput];
+      controls.forEach(control => {
+        const handler = () => { const prefs = currentPrefsFromControls(); savePrefs(prefs); applyReadingPrefs(prefs); };
+        control.addEventListener('input', handler);
+        control.addEventListener('change', handler);
+      });
+      document.getElementById('resetReading').addEventListener('click', () => {
+        const prefs = { ...DEFAULT_PREFS };
+        setControlValues(prefs);
+        savePrefs(prefs);
+        applyReadingPrefs(prefs);
+      });
+    }
+
+    function init() {
+      document.getElementById('samples-root').innerHTML = SAMPLES.map(renderSample).join('');
+      initReaderTools(document);
+      const prefs = loadPrefs();
+      setControlValues(prefs);
+      applyReadingPrefs(prefs);
+      bindReadingControls();
+    }
+    init();
   </script>
 </body>
 </html>
-

@@ -15,6 +15,8 @@ https://<user-or-org>.github.io/<repo>/?stimulus=S2&condition=dftgen&label=S2_df
 
 No backend submission is used in this static version. The page starts a local hidden timer on load and only shows a completion code after the participant clicks "I have finished reading". For Credamo/JianShu, S1 and S2 are intended to be opened separately so each exhibit can have its own completion-code field.
 
+The DFT-GEN condition provides adjustable font size, line spacing, letter spacing, word spacing, and an optional focus mask. Its completion code retains the original condition/stimulus/time prefix and appends the final display settings plus interaction counts. Original and Dyslexia Helper codes keep the legacy format.
+
 Current stimuli:
 
 - S1: The Parthenon
@@ -34,4 +36,4 @@ Decode completion codes after export:
 node decode_completion_codes.js OS1173
 ```
 
-Completion code format: condition + stimulus + octal seconds. Example: `OS1173` means Original, S1, 123 seconds because octal `173` equals decimal `123`.
+Completion code format: condition + stimulus + octal seconds. Example: `OS1173` means Original, S1, 123 seconds because octal `173` equals decimal `123`. A DFT-GEN code may include an optional telemetry suffix, for example `DS1173-F20L240A020W000X1100E1M1C3R0`. Run `decode_completion_codes.js` to split either format into analysis columns.

@@ -5,6 +5,20 @@ const stimulusIds = (params.get('stimuli') || stimulusId).split(',').map((id) =>
 const conditionRaw = params.get('condition') || params.get('version') || 'original';
 const label = params.get('label') || `${stimulusIds.join('-')}_${conditionRaw}`;
 const readingStartMs = performance.now();
+const defaultReadingSettings = {
+  fontSize: 20,
+  lineSpacing: 2.4,
+  letterSpacing: 0.02,
+  wordSpacing: 0
+};
+const interactionState = {
+  settings: { ...defaultReadingSettings },
+  changes: { fontSize: 0, lineSpacing: 0, letterSpacing: 0, wordSpacing: 0 },
+  maskEnabled: false,
+  maskToggles: 0,
+  focusMoves: 0,
+  resets: 0
+};
 
 function normalizeCondition(condition) {
   if (condition === 'helper_2025' || condition === 'dyslexia_helper_2025') return 'helper';
@@ -89,9 +103,27 @@ function visualChunksForDftgen(value) {
 }
 function dftgenControlsHtml() {
   return `
-    <div class="dftgen-controls" aria-label="DFT-GEN reading support settings">
-      <button class="dftgen-toggle" type="button" data-dftgen-toggle="space" aria-pressed="false">Spacious spacing</button>
+    <div class="reading-settings" aria-label="DFT-GEN reading display settings">
+      <div class="reading-setting">
+        <label for="fontSize">Font size <output id="fontSizeValue">20px</output></label>
+        <input id="fontSize" data-reading-setting="fontSize" type="range" min="16" max="32" step="1" value="20">
+      </div>
+      <div class="reading-setting">
+        <label for="lineSpacing">Line spacing <output id="lineSpacingValue">2.40</output></label>
+        <input id="lineSpacing" data-reading-setting="lineSpacing" type="range" min="1.4" max="3" step="0.1" value="2.4">
+      </div>
+      <div class="reading-setting">
+        <label for="letterSpacing">Letter spacing <output id="letterSpacingValue">0.02em</output></label>
+        <input id="letterSpacing" data-reading-setting="letterSpacing" type="range" min="0" max="0.12" step="0.01" value="0.02">
+      </div>
+      <div class="reading-setting">
+        <label for="wordSpacing">Word spacing <output id="wordSpacingValue">0.00em</output></label>
+        <input id="wordSpacing" data-reading-setting="wordSpacing" type="range" min="0" max="0.24" step="0.02" value="0">
+      </div>
+    </div>
+    <div class="dftgen-controls">
       <button class="dftgen-toggle" type="button" data-dftgen-toggle="mask" aria-pressed="false">Focus mask</button>
+      <button class="dftgen-toggle dftgen-reset" type="button" data-reading-reset>Reset settings</button>
     </div>`;
 }
 function renderOriginalOrHelper(paragraphs, cls) {
@@ -101,7 +133,7 @@ function renderDftgen(paragraphs) {
   return `
     <article class="reading-card reading-card-dftgen">
       <div class="dftgen-toolbar"><span>DFT-GEN Focus</span></div>
-      <p class="dftgen-help">You can use spacious spacing or focus mask if it helps you read.</p>
+      <p class="dftgen-help">Adjust the display if it helps you read. These settings do not change the text.</p>
       ${dftgenControlsHtml()}
       <div class="dftgen-blocks">
         ${paragraphs.map((p, index) => {
@@ -130,25 +162,83 @@ function generateCompletionCode(seconds, condition) {
   const encodedSeconds = seconds.toString(8).padStart(3, '0');
   return `${conditionCode(condition)}${materialKey}${encodedSeconds}`;
 }
+function telemetrySuffix() {
+  const settings = interactionState.settings;
+  const changes = interactionState.changes;
+  return [
+    `F${Math.round(settings.fontSize)}`,
+    `L${String(Math.round(settings.lineSpacing * 100)).padStart(3, '0')}`,
+    `A${String(Math.round(settings.letterSpacing * 1000)).padStart(3, '0')}`,
+    `W${String(Math.round(settings.wordSpacing * 1000)).padStart(3, '0')}`,
+    `X${Math.min(changes.fontSize, 9)}${Math.min(changes.lineSpacing, 9)}${Math.min(changes.letterSpacing, 9)}${Math.min(changes.wordSpacing, 9)}`,
+    `E${interactionState.maskEnabled ? 1 : 0}`,
+    `M${interactionState.maskToggles}`,
+    `C${interactionState.focusMoves}`,
+    `R${interactionState.resets}`
+  ].join('');
+}
+function updateReadingSetting(card, key, value) {
+  const numericValue = Number(value);
+  interactionState.settings[key] = numericValue;
+  const cssVariables = {
+    fontSize: ['--reading-font-size', `${numericValue}px`],
+    lineSpacing: ['--reading-line-spacing', numericValue],
+    letterSpacing: ['--reading-letter-spacing', `${numericValue}em`],
+    wordSpacing: ['--reading-word-spacing', `${numericValue}em`]
+  };
+  const [property, cssValue] = cssVariables[key];
+  card.style.setProperty(property, cssValue);
+  const output = card.querySelector(`#${key}Value`);
+  if (output) {
+    output.textContent = key === 'fontSize'
+      ? `${Math.round(numericValue)}px`
+      : key === 'lineSpacing'
+        ? numericValue.toFixed(2)
+        : `${numericValue.toFixed(2)}em`;
+  }
+}
 function setupDftgenControls() {
   document.querySelectorAll('.reading-card-dftgen').forEach((card) => {
+    card.querySelectorAll('[data-reading-setting]').forEach((control) => {
+      const key = control.dataset.readingSetting;
+      control.addEventListener('input', () => updateReadingSetting(card, key, control.value));
+      control.addEventListener('change', () => {
+        interactionState.changes[key] += 1;
+      });
+      updateReadingSetting(card, key, control.value);
+    });
     card.querySelectorAll('[data-dftgen-toggle]').forEach((button) => {
       button.addEventListener('click', () => {
         const mode = button.dataset.dftgenToggle;
-        const className = mode === 'space' ? 'dftgen-spacious' : 'dftgen-mask';
+        const className = 'dftgen-mask';
         const enabled = !card.classList.contains(className);
         card.classList.toggle(className, enabled);
         button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+        interactionState.maskEnabled = enabled;
+        interactionState.maskToggles += 1;
         if (mode === 'mask' && enabled && !card.querySelector('.dftgen-line-active')) {
           card.querySelector('.dftgen-line')?.classList.add('dftgen-line-active');
         }
       });
     });
+    card.querySelector('[data-reading-reset]')?.addEventListener('click', () => {
+      Object.entries(defaultReadingSettings).forEach(([key, value]) => {
+        const control = card.querySelector(`[data-reading-setting="${key}"]`);
+        if (control) control.value = value;
+        updateReadingSetting(card, key, value);
+      });
+      card.classList.remove('dftgen-mask');
+      card.querySelector('[data-dftgen-toggle="mask"]')?.setAttribute('aria-pressed', 'false');
+      interactionState.maskEnabled = false;
+      interactionState.resets += 1;
+    });
     card.querySelectorAll('.dftgen-line').forEach((line) => {
       line.addEventListener('click', () => {
         if (!card.classList.contains('dftgen-mask')) return;
+        if (line.classList.contains('dftgen-line-active')) return;
         card.querySelectorAll('.dftgen-line-active').forEach((active) => active.classList.remove('dftgen-line-active'));
         line.classList.add('dftgen-line-active');
+        interactionState.focusMoves += 1;
       });
     });
   });
@@ -159,7 +249,9 @@ function setupFinishReading() {
   if (!button || !result) return;
   button.addEventListener('click', () => {
     const totalSeconds = Math.max(0, Math.round((performance.now() - readingStartMs) / 1000));
-    const completionCode = generateCompletionCode(totalSeconds, normalizeCondition(conditionRaw));
+    const condition = normalizeCondition(conditionRaw);
+    const baseCode = generateCompletionCode(totalSeconds, condition);
+    const completionCode = condition === 'dftgen' ? `${baseCode}-${telemetrySuffix()}` : baseCode;
     button.disabled = true;
     button.textContent = 'Completion code generated';
     result.hidden = false;
@@ -167,7 +259,7 @@ function setupFinishReading() {
       <strong>Completion code</strong>
       <code class="completion-code">${completionCode}</code>
       <span>Please enter this code in the survey to confirm that you have finished this page.</span>
-      <span class="return-survey-hint">After copying the code, please close this reading-material tab and return to the survey tab that is still open.</span>
+      <span class="return-survey-hint"><strong>After copying the code, close this reading-material tab immediately and return to the survey. Please do not reopen the material while answering the questions.</strong></span>
     `;
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
